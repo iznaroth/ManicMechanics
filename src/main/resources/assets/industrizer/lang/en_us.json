@@ -1,0 +1,9 @@
+{
+  "item.industrizer.dyspersium_dust": "Dyspersium Dust",
+  "item.industrizer.dusted_ingot": "Dyspersium-Dusted Ingot",
+  "item.industrizer.dyspersium_alloy": "Dyspersium Alloy",
+
+  "block.industrizer.dyspersium_ore": "Dyspersium Ore",
+
+  "itemGroup.industrizerModTab": "Industrizer Items"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "industrizer:dusted_ingot"
+  },
+  "result": "industrizer:dyspersium_alloy",
+  "experience": 0.9,
+  "cookingtime": 200
+}
