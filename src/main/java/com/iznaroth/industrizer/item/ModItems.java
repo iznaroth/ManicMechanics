@@ -16,6 +16,9 @@ public class ModItems {
     public static final RegistryObject<Item> WIRE_CUTTER = ITEMS.register("wire_cutter",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
+    public static final RegistryObject<Item> WALLET = ITEMS.register("wallet",
+            () -> new WalletItem(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
     //Intermediaries
     public static final RegistryObject<Item> PINCH = ITEMS.register("pinch",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));

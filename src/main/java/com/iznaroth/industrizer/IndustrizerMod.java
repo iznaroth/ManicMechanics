@@ -1,6 +1,7 @@
 package com.iznaroth.industrizer;
 
 import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
@@ -64,11 +65,13 @@ public class IndustrizerMod
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
+    public void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        CurrencyCapability.register();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
