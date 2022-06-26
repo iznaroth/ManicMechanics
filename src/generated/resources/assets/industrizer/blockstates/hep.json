@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=down,powered=false": {
+      "model": "industrizer:block/hep",
+      "x": 90
+    },
+    "facing=up,powered=false": {
+      "model": "industrizer:block/hep",
+      "x": -90
+    },
+    "facing=north,powered=false": {
+      "model": "industrizer:block/hep"
+    },
+    "facing=south,powered=false": {
+      "model": "industrizer:block/hep",
+      "y": 180
+    },
+    "facing=west,powered=false": {
+      "model": "industrizer:block/hep",
+      "y": 270
+    },
+    "facing=east,powered=false": {
+      "model": "industrizer:block/hep",
+      "y": 90
+    },
+    "facing=down,powered=true": {
+      "model": "industrizer:block/hep_powered",
+      "x": 90
+    },
+    "facing=up,powered=true": {
+      "model": "industrizer:block/hep_powered",
+      "x": -90
+    },
+    "facing=north,powered=true": {
+      "model": "industrizer:block/hep_powered"
+    },
+    "facing=south,powered=true": {
+      "model": "industrizer:block/hep_powered",
+      "y": 180
+    },
+    "facing=west,powered=true": {
+      "model": "industrizer:block/hep_powered",
+      "y": 270
+    },
+    "facing=east,powered=true": {
+      "model": "industrizer:block/hep_powered",
+      "y": 90
+    }
+  }
+}

@@ -4,6 +4,9 @@
   "item.industrizer.dyspersium_alloy": "Dyspersium Alloy",
 
   "block.industrizer.dyspersium_ore": "Dyspersium Ore",
+  "block.industrizer.hep": "Hyperfield Extraction Polarizer",
 
-  "itemGroup.industrizerModTab": "Industrizer Items"
+  "message.hep.tooltip": "Specialized extraction mainframe with internal polarization centrifuge. Utilizes the unique dimensionally-agnostic properties of Dyspersium to extract power from adjacent, terminal dimensionality.",
+
+  "itemGroup.industrizerItemTab": "Industrizer Items"
 }

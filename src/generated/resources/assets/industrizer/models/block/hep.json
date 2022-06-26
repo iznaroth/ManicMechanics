@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "industrizer:block/hep",
+    "up": "industrizer:block/hep",
+    "north": "industrizer:block/hep_front",
+    "south": "industrizer:block/hep",
+    "east": "industrizer:block/hep",
+    "west": "industrizer:block/hep"
+  }
+}

@@ -1,0 +1,6 @@
+d1c63d6b6a0f7207eefdcfe2533f017c627df5f5 assets/industrizer/blockstates/hep.json
+73b6b3d98230c0ac85691c27c9c596e20cd474ef assets/industrizer/models/block/hep.json
+da9e1a5b38f58ab943ef65cd3e1c99396e86b45b assets/industrizer/models/block/hep_powered.json
+36996875036987bf3cc9b26a6fb62fd03a994889 assets/industrizer/models/item/hep.json
+a25fbb7025dece0bdf9795f0e50787a620ca4c1d data/industrizer/loot_tables/blocks/dyspersium_ore.json
+c45bc1fabebb4d37b8d6e43042ebccc7b940da1a data/industrizer/loot_tables/blocks/hep.json
