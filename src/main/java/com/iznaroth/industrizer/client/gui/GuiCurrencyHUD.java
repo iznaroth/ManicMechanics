@@ -5,6 +5,7 @@ import com.iznaroth.industrizer.api.ICurrency;
 import com.iznaroth.industrizer.api.client.IDisplayCurrency;
 import com.iznaroth.industrizer.capability.Currency;
 import com.iznaroth.industrizer.client.ClientInfo;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gui.AbstractGui;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -12,6 +13,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 
 public class GuiCurrencyHUD extends AbstractGui {
     private static final Minecraft minecraft = Minecraft.getInstance();
@@ -25,7 +30,6 @@ public class GuiCurrencyHUD extends AbstractGui {
 
     public void drawHUD(MatrixStack ms, float pt) {
         if(!shouldDisplayBar()) {
-            System.out.println("Cannot display balance.");
             return;
         }
 
@@ -33,17 +37,21 @@ public class GuiCurrencyHUD extends AbstractGui {
         if(curr == null)
             return;
 
-        int offsetLeft = 10;
-        int manaLength = 96;
-        manaLength = (int) ((manaLength) * ((curr.getCurrentBalance()) / ((double) curr.getCurrentBalance() - 0.0)));
-
         int height = minecraft.getWindow().getGuiScaledHeight() - 5;
 
         Minecraft.getInstance().textureManager.bind(new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/mdd.png"));
-        blit(ms,offsetLeft, height - 18, 0, 0, 108, 18, 256, 256);
-        int manaOffset = (int) (((ClientInfo.ticksInGame + pt) / 3 % (33))) * 6;
+        blit(ms, 3, 3, 0, 0, 16, 16, 16, 16);
 
-        // 96
+        StringTextComponent tc = new StringTextComponent(" " + curr.getCurrentBalance());
+
+        int i = this.minecraft.getWindow().getGuiScaledWidth();
+        int j = 12;
+
+        int l = this.minecraft.font.width(tc);
+        int i1 = i / 2 - l / 2;
+        int j1 = j - 9;
+        this.minecraft.font.drawShadow(ms, tc, (float)22, (float)8, 16777215);
+
         //Minecraft.getInstance().textureManager.bind(new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/manabar_gui_mana.png"));
         //blit(ms,offsetLeft + 9, height - 9, 0, manaOffset, manaLength,6, 256, 256);
 
