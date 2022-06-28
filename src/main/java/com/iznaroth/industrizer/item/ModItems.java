@@ -39,6 +39,9 @@ public class ModItems {
     public static final RegistryObject<Item> COPPER_INGOT = ITEMS.register("copper_ingot",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
+    public static final RegistryObject<Item> OBAMIUM_INGOT = ITEMS.register("obamium_ingot",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
     //WIRING
     public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));

@@ -2,10 +2,13 @@
   "item.industrizer.dyspersium_dust": "Dyspersium Dust",
   "item.industrizer.dusted_ingot": "Dyspersium-Dusted Ingot",
   "item.industrizer.dyspersium_alloy": "Dyspersium Alloy",
+  "item.industrizer.obamium_ingot": "Obamium Ingot",
   "item.industrizer.wallet": "Wallet",
 
   "block.industrizer.dyspersium_ore": "Dyspersium Ore",
   "block.industrizer.hep": "Hyperfield Extraction Polarizer",
+  "block.industrizer.obamium_block": "Obamium Block",
+  "block.industrizer.obamium_ore": "Obamium Ore",
 
   "message.industrizer.tooltip": "<Hold SHIFT for more details.>",
 
