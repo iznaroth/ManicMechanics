@@ -1,6 +1,5 @@
 package com.iznaroth.industrizer.block;
 
-import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.Registration;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,67 +20,29 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class GeneratorBlockContainer extends Container {
+public class BureauBlockContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
-    public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(Registration.GENERATOR_CONTAINER.get(), windowId);
+    public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+        super(Registration.BUREAU_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 64, 24));
+                addSlot(new SlotItemHandler(h, 0, 79, 99));
             });
         }
-        layoutPlayerInventorySlots(10, 70);
-        trackPower();
+        layoutPlayerInventorySlots(8, 130);
     }
 
-    // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
-    private void trackPower() {
-        // Unfortunatelly on a dedicated server ints are actually truncated to short so we need
-        // to split our integer here (split our 32 bit integer into two 16 bit integers)
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return getEnergy() & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0xffff0000;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored + (value & 0xffff));
-                });
-            }
-        });
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return (getEnergy() >> 16) & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0x0000ffff;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored | (value << 16));
-                });
-            }
-        });
-    }
-
-    public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-    }
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.HEP.get());
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.CURRENCY_BUREAU.get());
     }
 
     @Override
@@ -97,7 +58,7 @@ public class GeneratorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == ModItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() == Items.DIAMOND) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

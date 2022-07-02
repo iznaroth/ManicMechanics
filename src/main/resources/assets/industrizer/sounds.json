@@ -1,0 +1,7 @@
+{
+  "cop_siren": {
+    "category": "entity",
+    "subtitle": "industrizer.cop_siren",
+    "sounds": [ "industrizer:cop_siren" ]
+  }
+}

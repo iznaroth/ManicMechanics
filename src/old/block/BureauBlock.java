@@ -29,8 +29,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GeneratorBlock extends Block {
-    public GeneratorBlock(Properties properties) {
+public class BureauBlock extends Block {
+    public BureauBlock(Properties properties) {
         super(properties);
     }
 
@@ -39,7 +39,7 @@ public class GeneratorBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){ return new GeneratorBlockTile(); }
+    public TileEntity createTileEntity(BlockState state, IBlockReader world){ return new BureauBlockTile(); }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
@@ -57,7 +57,7 @@ public class GeneratorBlock extends Block {
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace) {
         if (!world.isClientSide) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof GeneratorBlockTile) {
+            if (tileEntity instanceof BureauBlockTile) {
                 INamedContainerProvider containerProvider = new INamedContainerProvider() {
                     @Override
                     public ITextComponent getDisplayName() {
@@ -66,7 +66,7 @@ public class GeneratorBlock extends Block {
 
                     @Override
                     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                        return new GeneratorBlockContainer(i, world, pos, playerInventory, playerEntity);
+                        return new BureauBlockContainer(i, world, pos, playerInventory, playerEntity);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider, tileEntity.getBlockPos());

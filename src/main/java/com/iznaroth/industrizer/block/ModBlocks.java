@@ -9,14 +9,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.function.Supplier;
 
@@ -41,6 +39,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> HEP = registerBlock("hep", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().lightLevel(state -> state.getValue(BlockStateProperties.POWERED) ? 14 : 0).harvestTool(ToolType.PICKAXE).strength(2.5f)));
     public static final RegistryObject<TileEntityType<GeneratorBlockTile>> GENERATOR_TILE = TILES.register("hep", () -> TileEntityType.Builder.of(GeneratorBlockTile::new, HEP.get()).build(null)); //FIGURE THIS SHIT OUT!
 
+    public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new BureauBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<TileEntityType<BureauBlockTile>> BUREAU_TILE = TILES.register("currency_bureau", () -> TileEntityType.Builder.of(BureauBlockTile::new, CURRENCY_BUREAU.get()).build(null)); //FIGURE THIS SHIT OUT!
+
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
     public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
@@ -51,7 +52,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
     public static final RegistryObject<Block> TRANSMISSION_STATION = registerBlock("transmission_station", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+
     public static final RegistryObject<Block> EXPORT_CENTER = registerBlock("export_center", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
 

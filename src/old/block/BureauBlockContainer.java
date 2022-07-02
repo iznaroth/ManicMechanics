@@ -1,6 +1,5 @@
 package com.iznaroth.industrizer.block;
 
-import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.Registration;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,12 +20,12 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class GeneratorBlockContainer extends Container {
+public class BureauBlockContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
-    public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(Registration.GENERATOR_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
@@ -97,7 +96,7 @@ public class GeneratorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == ModItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() == Items.DIAMOND) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

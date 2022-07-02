@@ -35,7 +35,7 @@ public class Items extends ItemModelProvider {
          */
 
         withExistingParent(ModBlocks.HEP.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep"));
-        //withExistingParent(Registration.DEMO_ITEM.get().getRegistryName().getPath(), new ResourceLocation(Tutorial.MODID, "block/demo"));
+        withExistingParent(ModBlocks.CURRENCY_BUREAU.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/currency_bureau"));
     }
 
     private ItemModelBuilder createTestModel(int suffix) {

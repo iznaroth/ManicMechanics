@@ -2,10 +2,14 @@ package com.iznaroth.industrizer;
 
 import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
+import com.iznaroth.industrizer.capability.SuspicionCapability;
+import com.iznaroth.industrizer.entity.ModEntityTypes;
+import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.setup.Registration;
+import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,6 +18,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -44,6 +49,10 @@ public class IndustrizerMod
         ModItems.register(eventBus);
         ModBlocks.register(eventBus);
 
+        ModSoundEvents.register(eventBus);
+
+        ModEntityTypes.register(eventBus);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
@@ -72,10 +81,13 @@ public class IndustrizerMod
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 
         CurrencyCapability.register();
+        SuspicionCapability.register();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
+
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

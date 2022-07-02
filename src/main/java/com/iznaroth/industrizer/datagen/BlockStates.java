@@ -25,6 +25,7 @@ public class BlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         registerHEPBlock();
+        registerBureauBlock();
     }
 
     private void registerHEPBlock() {
@@ -37,6 +38,14 @@ public class BlockStates extends BlockStateProvider {
             } else {
                 return modelFirstblock;
             }
+        });
+    }
+
+    private void registerBureauBlock() {
+        ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/currency_bureau");
+        BlockModelBuilder modelFirstblock = models().cube("currency_bureau", txt, txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/bureau_front"), txt, txt, txt);
+        orientedBlock(ModBlocks.CURRENCY_BUREAU.get(), state -> {
+                return modelFirstblock;
         });
     }
 

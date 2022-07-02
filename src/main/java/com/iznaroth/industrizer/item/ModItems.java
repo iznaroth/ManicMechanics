@@ -1,6 +1,8 @@
 package com.iznaroth.industrizer.item;
 
 import com.iznaroth.industrizer.IndustrizerMod;
+import com.iznaroth.industrizer.entity.ModEntityTypes;
+import com.iznaroth.industrizer.item.custom.ModSpawnEggItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -95,6 +97,10 @@ public class ModItems {
     //CUBES
     public static final RegistryObject<Item> PSEUDORACT = ITEMS.register("pseudoract",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
+    //ENTITY
+    public static final RegistryObject<Item> COP_CAR_SPAWN_EGG = ITEMS.register("cop_car_spawn_egg",
+            () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
 
     //OTHERS

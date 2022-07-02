@@ -1,14 +1,9 @@
 package com.iznaroth.industrizer.setup;
 
 import com.iznaroth.industrizer.IndustrizerMod;
+import com.iznaroth.industrizer.block.BureauBlockContainer;
 import com.iznaroth.industrizer.block.GeneratorBlockContainer;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -42,5 +37,11 @@ public class Registration {
         BlockPos pos = data.readBlockPos();
         World world = inv.player.getCommandSenderWorld();
         return new GeneratorBlockContainer(windowId, world, pos, inv, inv.player);
+    }));
+
+    public static final RegistryObject<ContainerType<BureauBlockContainer>> BUREAU_CONTAINER = CONTAINERS.register("bureau", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        World world = inv.player.getCommandSenderWorld();
+        return new BureauBlockContainer(windowId, world, pos, inv, inv.player);
     }));
 }
