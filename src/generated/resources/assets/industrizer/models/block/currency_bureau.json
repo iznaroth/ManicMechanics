@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "industrizer:block/currency_bureau",
+    "up": "industrizer:block/currency_bureau",
+    "north": "industrizer:block/bureau_front",
+    "south": "industrizer:block/currency_bureau",
+    "east": "industrizer:block/currency_bureau",
+    "west": "industrizer:block/currency_bureau"
+  }
+}
