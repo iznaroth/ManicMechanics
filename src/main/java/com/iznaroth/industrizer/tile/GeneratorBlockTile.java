@@ -1,5 +1,6 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.industrizer.tile;
 
+import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;

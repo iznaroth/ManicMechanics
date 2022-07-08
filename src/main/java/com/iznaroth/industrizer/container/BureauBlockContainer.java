@@ -1,12 +1,17 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.industrizer.container;
 
-import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.api.ICurrency;
+import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.iznaroth.industrizer.setup.Registration;
+import com.iznaroth.industrizer.tools.BlockValueGenerator;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
@@ -20,68 +25,73 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public class GeneratorBlockContainer extends Container {
+import java.util.HashMap;
+import java.util.Random;
+
+public class BureauBlockContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
-    public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(Registration.GENERATOR_CONTAINER.get(), windowId);
+    private static final Minecraft minecraft = Minecraft.getInstance();
+
+    public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+        super(Registration.BUREAU_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 64, 24));
+                addSlot(new SlotItemHandler(h, 0, 79, 99));
             });
         }
-        layoutPlayerInventorySlots(10, 70);
-        trackPower();
+        layoutPlayerInventorySlots(8, 130);
     }
 
-    // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
-    private void trackPower() {
-        // Unfortunatelly on a dedicated server ints are actually truncated to short so we need
-        // to split our integer here (split our 32 bit integer into two 16 bit integers)
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return getEnergy() & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0xffff0000;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored + (value & 0xffff));
-                });
-            }
-        });
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return (getEnergy() >> 16) & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0x0000ffff;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored | (value << 16));
-                });
-            }
-        });
-    }
-
-    public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-    }
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.HEP.get());
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.CURRENCY_BUREAU.get());
+    }
+
+    @Override
+    public boolean clickMenuButton(PlayerEntity player, int k) { //On click, sell item for displayed amount.
+
+        System.out.println("Let's sell da bit");
+
+        Slot sellSlot = this.slots.get(0);
+
+        Item to_sell = sellSlot.getItem().getItem();
+        int quantity = sellSlot.getItem().getCount();
+
+        if(to_sell == null){
+            System.out.println("Empty slot.");
+            return false;
+        } else {
+
+            HashMap<Item, Integer> mappings = BlockValueGenerator.populateEconomyMapping(1, 1); //TEMP - how the fuck do I get the world seed?
+
+            Integer profit = mappings.get(to_sell);
+
+            if(profit == null){
+                System.out.println("I don't got a value for that item");
+                return false;
+            } else {
+                ICurrency curr = CurrencyCapability.getBalance(player).orElse(null);
+                if(curr == null) {
+                    System.out.println("This dude has no money.");
+                    return false;
+                }
+
+                curr.addCurrency((double) profit * quantity);
+                sellSlot.set(Items.AIR.getDefaultInstance());
+
+                return true;
+            }
+        }
     }
 
     @Override
@@ -97,10 +107,8 @@ public class GeneratorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == ModItems.DYSPERSIUM_DUST.get()) {
-                    if (!this.moveItemStackTo(stack, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
+                if (!this.moveItemStackTo(stack, 0, 1, false)) {
+                    return ItemStack.EMPTY;
                 } else if (index < 28) {
                     if (!this.moveItemStackTo(stack, 28, 37, false)) {
                         return ItemStack.EMPTY;

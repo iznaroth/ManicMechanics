@@ -1,6 +1,7 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.industrizer.screen;
 
 import com.iznaroth.industrizer.IndustrizerMod;
+import com.iznaroth.industrizer.container.GeneratorBlockContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

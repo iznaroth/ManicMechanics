@@ -1,8 +1,8 @@
 package com.iznaroth.industrizer.setup;
 
 import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.block.BureauBlockContainer;
-import com.iznaroth.industrizer.block.GeneratorBlockContainer;
+import com.iznaroth.industrizer.container.BureauBlockContainer;
+import com.iznaroth.industrizer.container.GeneratorBlockContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

@@ -1,5 +1,6 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.industrizer.tile;
 
+import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -70,15 +71,12 @@ public class BureauBlockTile extends TileEntity {
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == Items.DIAMOND;
+                return true;
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != Items.DIAMOND) {
-                    return stack;
-                }
                 return super.insertItem(slot, stack, simulate);
             }
         };
@@ -92,6 +90,10 @@ public class BureauBlockTile extends TileEntity {
             return handler.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    public void sell(){
+
     }
 
 }

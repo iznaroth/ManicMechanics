@@ -1,6 +1,8 @@
 package com.iznaroth.industrizer.block;
 
 
+import com.iznaroth.industrizer.container.GeneratorBlockContainer;
+import com.iznaroth.industrizer.tile.GeneratorBlockTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;

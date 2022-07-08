@@ -2,38 +2,41 @@ package com.iznaroth.industrizer.tools;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class BlockValueGenerator {
 
-    HashMap<String, Integer> current_mapping;
+    public static HashMap<Item, Integer> current_mapping = new HashMap<Item, Integer>();
 
-    Class blocks = net.minecraft.block.Blocks.class;
-
-    Random rand = new Random();
+    static Class blocks = net.minecraft.block.Blocks.class;
 
 
-    public HashMap<String, Integer> populateEconomyMapping(String biome_key, double seed){
+    public static HashMap<Item, Integer> populateEconomyMapping(int biome_key, double seed){
         Field[] fields = blocks.getDeclaredFields();
-        current_mapping.clear();
+        if(!current_mapping.isEmpty()) {
+            current_mapping.clear();
+        }
 
         //Use SEED and Biome to generate consistent biome-world-bound mappings.
+        Random rand = new Random((long)seed * biome_key);
 
-        for(int i = 0; i < fields.length; i++){
-            current_mapping.put(fields[i].getName(), rand.nextInt(5000)); //assign random price between 1 and 5000 to all named blocks
+        Collection<Item> items = ForgeRegistries.ITEMS.getValues();
+        List<Item> itemlist = new ArrayList(items);
+
+        for(int i = 0; i < items.size(); i++){
+            current_mapping.put(itemlist.get(i), rand.nextInt(5000)); //assign random price between 1 and 5000 to all named blocks
         }
 
         return current_mapping;
-
     }
 
-    public HashMap<String, Integer> getPrevMap(){
+    public HashMap<Item, Integer> getPrevMap(){
         return current_mapping;
     }
 

@@ -1,8 +1,8 @@
 package com.iznaroth.industrizer.setup;
 
 import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.block.BureauBlockScreen;
-import com.iznaroth.industrizer.block.GeneratorBlockScreen;
+import com.iznaroth.industrizer.screen.BureauBlockScreen;
+import com.iznaroth.industrizer.screen.GeneratorBlockScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.RenderTooltipEvent;

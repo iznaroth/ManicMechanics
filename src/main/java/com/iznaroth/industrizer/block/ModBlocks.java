@@ -3,6 +3,8 @@ package com.iznaroth.industrizer.block;
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.item.ModItemGroup;
 import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.tile.BureauBlockTile;
+import com.iznaroth.industrizer.tile.GeneratorBlockTile;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
