@@ -39,23 +39,20 @@ public class ModBlocks {
 
     //MACHINES (CORE - TIER I)
     public static final RegistryObject<Block> HEP = registerBlock("hep", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().lightLevel(state -> state.getValue(BlockStateProperties.POWERED) ? 14 : 0).harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<TileEntityType<GeneratorBlockTile>> GENERATOR_TILE = TILES.register("hep", () -> TileEntityType.Builder.of(GeneratorBlockTile::new, HEP.get()).build(null)); //FIGURE THIS SHIT OUT!
-
     public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new BureauBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<TileEntityType<BureauBlockTile>> BUREAU_TILE = TILES.register("currency_bureau", () -> TileEntityType.Builder.of(BureauBlockTile::new, CURRENCY_BUREAU.get()).build(null)); //FIGURE THIS SHIT OUT!
 
-    public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
-    public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
-    public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
-    public static final RegistryObject<Block> TRANSMISSION_STATION = registerBlock("transmission_station", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> COMMUNICATOR = registerBlock("communicator", () -> new CommunicatorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
-    public static final RegistryObject<Block> EXPORT_CENTER = registerBlock("export_center", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
+    public static final RegistryObject<Block> EXCHANGE_CENTER = registerBlock("exchange_center", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
 
 

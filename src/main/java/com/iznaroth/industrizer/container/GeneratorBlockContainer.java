@@ -2,14 +2,12 @@ package com.iznaroth.industrizer.container;
 
 import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.item.ModItems;
-import com.iznaroth.industrizer.setup.Registration;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
@@ -28,7 +26,7 @@ public class GeneratorBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(Registration.GENERATOR_CONTAINER.get(), windowId);
+        super(ModContainers.GENERATOR_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);

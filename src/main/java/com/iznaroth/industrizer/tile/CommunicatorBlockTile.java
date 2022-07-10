@@ -1,30 +1,22 @@
 package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.setup.Config;
-import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class BureauBlockTile extends TileEntity {
+public class CommunicatorBlockTile extends TileEntity {
+
     private ItemStackHandler itemHandler = createHandler();
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
@@ -32,8 +24,8 @@ public class BureauBlockTile extends TileEntity {
 
     private int counter;
 
-    public BureauBlockTile() {
-        super(ModTileEntities.BUREAU_TILE.get());
+    public CommunicatorBlockTile() {
+        super(ModTileEntities.COMMUNICATOR_TILE.get());
     }
 
     @Override
@@ -90,10 +82,6 @@ public class BureauBlockTile extends TileEntity {
             return handler.cast();
         }
         return super.getCapability(cap, side);
-    }
-
-    public void sell(){
-
     }
 
 }

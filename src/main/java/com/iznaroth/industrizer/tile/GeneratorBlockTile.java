@@ -36,7 +36,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     private int counter;
 
     public GeneratorBlockTile() {
-        super(ModBlocks.GENERATOR_TILE.get());
+        super(ModTileEntities.GENERATOR_TILE.get());
     }
 
     @Override

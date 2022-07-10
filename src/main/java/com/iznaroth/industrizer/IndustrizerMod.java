@@ -3,12 +3,13 @@ package com.iznaroth.industrizer;
 import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.iznaroth.industrizer.capability.SuspicionCapability;
+import com.iznaroth.industrizer.container.ModContainers;
 import com.iznaroth.industrizer.entity.ModEntityTypes;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.item.ModItems;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
-import com.iznaroth.industrizer.setup.Registration;
+import com.iznaroth.industrizer.tile.ModTileEntities;
 import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -53,10 +54,12 @@ public class IndustrizerMod
 
         ModEntityTypes.register(eventBus);
 
+        ModTileEntities.register(eventBus);
+
+        ModContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-
-        Registration.init();
 
         // Register the setup method for modloading
         //FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);

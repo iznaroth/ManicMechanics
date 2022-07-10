@@ -16,5 +16,6 @@ public class LootTables extends BaseLootTableProvider {
         //lootTables.put(ModBlocks.DYSPERSIUM_ORE.get(), createStandardTable("dyspersium_ore", ModBlocks.DYSPERSIUM_ORE.get()));
         lootTables.put(ModBlocks.HEP.get(), createStandardTable("hep", ModBlocks.HEP.get()).setParamSet(LootParameterSets.BLOCK));
         lootTables.put(ModBlocks.CURRENCY_BUREAU.get(), createStandardTable("currency_bureau", ModBlocks.CURRENCY_BUREAU.get()).setParamSet(LootParameterSets.BLOCK));
+        lootTables.put(ModBlocks.COMMUNICATOR.get(), createStandardTable("communicator", ModBlocks.COMMUNICATOR.get()).setParamSet(LootParameterSets.BLOCK));
     }
 }

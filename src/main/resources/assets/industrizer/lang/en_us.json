@@ -16,5 +16,10 @@
 
   "message.hep.tooltip": "Specialized extraction mainframe with internal polarization centrifuge. Utilizes the unique dimensionally-agnostic properties of Dyspersium to extract power from adjacent, terminal dimensionality.",
 
-  "itemGroup.industrizerItemTab": "Industrizer Items"
+  "itemGroup.industrizerItemTab": "Industrizer Items",
+
+  "commGroup.email": "ID-MAIL Client",
+  "commGroup.wiki": "Blueprint DB",
+  "commGroup.employment": "Employment",
+  "commGroup.contracts": "Contracts"
 }

@@ -3,9 +3,7 @@ package com.iznaroth.industrizer.container;
 import com.iznaroth.industrizer.api.ICurrency;
 import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
-import com.iznaroth.industrizer.setup.Registration;
 import com.iznaroth.industrizer.tools.BlockValueGenerator;
-import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,19 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class BureauBlockContainer extends Container {
     private TileEntity tileEntity;
@@ -38,7 +31,7 @@ public class BureauBlockContainer extends Container {
     private static final Minecraft minecraft = Minecraft.getInstance();
 
     public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(Registration.BUREAU_CONTAINER.get(), windowId);
+        super(ModContainers.BUREAU_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
