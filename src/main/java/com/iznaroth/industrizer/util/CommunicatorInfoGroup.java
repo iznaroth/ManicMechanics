@@ -145,7 +145,11 @@ public abstract class CommunicatorInfoGroup {
     }
 
     public boolean hasSearchBar() {
-        return true; //afaik all Communicator tabs have a search bar.
+        if(this == CommunicatorInfoGroup.TAB_EMPLOYMENT) {
+            return false;
+        }else {
+            return true; //afaik all other Communicator tabs have a search bar.
+        }
     }
 
     /**

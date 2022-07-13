@@ -2,10 +2,13 @@ package com.iznaroth.industrizer.screen;
 
 
 import com.google.common.collect.Maps;
+import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.container.CommunicatorBlockContainer;
 import com.iznaroth.industrizer.util.CommunicatorInfoGroup;
+import com.iznaroth.industrizer.util.EmailHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.CreativeCraftingListener;
@@ -24,6 +27,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -46,6 +50,13 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
     private int maxPages = 0;
     private boolean hasClickedOutside;
     private final Map<ResourceLocation, ITag<Item>> visibleTags = Maps.newTreeMap();
+
+    //MY STUFF
+    private boolean email_expand;
+    private int open_mail = -1;
+
+    private boolean wiki_expand;
+    private int open_wiki = -1;
 
     public CommunicatorBlockScreen(CommunicatorBlockContainer container, PlayerInventory inv, ITextComponent name)
     {
@@ -173,7 +184,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         return super.keyReleased(p_223281_1_, p_223281_2_, p_223281_3_);
     }
 
-    private void refreshSearchResults() { //TODO - Basically this entire function needs to be rewritten once the tabs are set-up.
+    private void refreshSearchResults() { //TODO - Basically this entire function needs to be rewritten once the tabs are set-up. Look at CreativeScreen's implementation for reference.
         (this.menu).items.clear();
         this.visibleTags.clear();
 
@@ -188,27 +199,6 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             menu.scrollTo(0.0F);
             return;
         }
-
-        //This appears to be logic for populating creative search queries, so it's commented, but I'm not 100% sure it's unnecessary, so it stays.
-        /*
-        String s = this.searchBox.getValue();
-        if (s.isEmpty()) {
-            for(Item item : Registry.ITEM) {
-                item.fillItemCategory(CommunicatorInfoGroup.TAB_SEARCH, (this.menu).items);
-            }
-        } else {
-            ISearchTree<ItemStack> isearchtree;
-            if (s.startsWith("#")) {
-                s = s.substring(1);
-                isearchtree = this.minecraft.getSearchTree(SearchTreeManager.CREATIVE_TAGS);
-                this.updateVisibleTags(s);
-            } else {
-                isearchtree = this.minecraft.getSearchTree(SearchTreeManager.CREATIVE_NAMES);
-            }
-
-            (this.menu).items.addAll(isearchtree.search(s.toLowerCase(Locale.ROOT)));
-        }
-        */
 
 
         this.scrollOffs = 0.0F;
@@ -256,6 +246,14 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
                 }
             }
 
+            if(CommunicatorInfoGroup.TABS[selectedTab] == CommunicatorInfoGroup.TAB_EMAIL){
+                for(int i = 0; i < 5; i++){
+                    if(d0 > 8.0D && d0 < 168.0D && d1 > 18.0D + (i*18.0D) && d1 < 18.0D + ((i+1)*18.0D)){ //This horrific block SHOULD check in 18x160px increments across the five possible email slots.
+                        return true;
+                    }
+                }
+            }
+
             if (this.insideScrollbar(p_231044_1_, p_231044_3_)) { //After prior statement, a selected tab is operated on.
                 this.scrolling = this.canScroll();                //In this case, activating the scrollbar if necessary. Removed a conditional related to the Inventory tab.
                 return true;
@@ -277,9 +275,32 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
                     return true;
                 }
             }
+
+            if(CommunicatorInfoGroup.TABS[selectedTab] == CommunicatorInfoGroup.TAB_EMAIL){
+                for(int i = 0; i < 5; i++){
+                    if(d0 > 8.0D && d0 < 168.0D && d1 > 18.0D + (i*18.0D) && d1 < 18.0D + ((i+1)*18.0D)){ //This horrific block SHOULD check in 18x160px increments across the five possible email slots.
+                        email_expand = openEmail(i);
+                        return true;
+                    }
+                }
+            }
+
         }
 
         return super.mouseReleased(p_231048_1_, p_231048_3_, p_231048_5_);
+    }
+
+    private boolean openEmail(int to_open){
+        System.out.println(to_open);
+        System.out.println(EmailHandler.isSlotEmpty(to_open));
+        System.out.println(EmailHandler.active_entries[0]);
+
+        if(EmailHandler.isSlotEmpty(to_open)){
+            return false;
+        } else {
+            open_mail = to_open;
+            return true;
+        }
     }
 
     private boolean canScroll() { //TODO - Keep, change tab identifiers.
@@ -288,6 +309,8 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
     }
 
     private void selectTab(CommunicatorInfoGroup p_147050_1_) { //TODO - Obviously needs a deep rework.
+        System.out.println("SHOULD NOT FIRE ON EMAIL RESET!");
+
         if (p_147050_1_ == null) return;
         int i = selectedTab;
         selectedTab = p_147050_1_.getId();
@@ -295,84 +318,10 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         this.quickCraftSlots.clear();
         (this.menu).items.clear();
 
-        //NOTE - This segment relates to the Hotbar tab, and is awaiting deletion.
         /*
-        if (p_147050_1_ == CommunicatorInfoGroup.TAB_HOTBAR) {
-            CreativeSettings creativesettings = this.minecraft.getHotbarManager();
-
-            for(int j = 0; j < 9; ++j) {
-                HotbarSnapshot hotbarsnapshot = creativesettings.get(j);
-                if (hotbarsnapshot.isEmpty()) {
-                    for(int k = 0; k < 9; ++k) {
-                        if (k == j) {
-                            ItemStack itemstack = new ItemStack(Items.PAPER);
-                            itemstack.getOrCreateTagElement("CustomCreativeLock");
-                            ITextComponent itextcomponent = this.minecraft.options.keyHotbarSlots[j].getTranslatedKeyMessage();
-                            ITextComponent itextcomponent1 = this.minecraft.options.keySaveHotbarActivator.getTranslatedKeyMessage();
-                            itemstack.setHoverName(new TranslationTextComponent("inventory.hotbarInfo", itextcomponent1, itextcomponent));
-                            (this.menu).items.add(itemstack);
-                        } else {
-                            (this.menu).items.add(ItemStack.EMPTY);
-                        }
-                    }
-                } else {
-                    (this.menu).items.addAll(hotbarsnapshot);
-                }
-            }
-
-
          //NOTE - This just populates a tab with all items. Maybe keep it for the Wiki?
         if (p_147050_1_ != CommunicatorInfoGroup.TAB_SEARCH) {
             p_147050_1_.fillItemList((this.menu).items);
-        }
-
-        //NOTE - This segment is for activating the INVENTORY tab of the creative menu. It should not be necessary. Preserved in case of error.
-
-        if (p_147050_1_ == ItemGroup.TAB_INVENTORY) {
-            Container container = this.minecraft.player.inventoryMenu;
-            if (this.originalSlots == null) {
-                this.originalSlots = ImmutableList.copyOf((this.menu).slots);
-            }
-
-            (this.menu).slots.clear();
-
-            for(int l = 0; l < container.slots.size(); ++l) {
-                int i1;
-                int j1;
-                if (l >= 5 && l < 9) {
-                    int l1 = l - 5;
-                    int j2 = l1 / 2;
-                    int l2 = l1 % 2;
-                    i1 = 54 + j2 * 54;
-                    j1 = 6 + l2 * 27;
-                } else if (l >= 0 && l < 5) {
-                    i1 = -2000;
-                    j1 = -2000;
-                } else if (l == 45) {
-                    i1 = 35;
-                    j1 = 20;
-                } else {
-                    int k1 = l - 9;
-                    int i2 = k1 % 9;
-                    int k2 = k1 / 9;
-                    i1 = 9 + i2 * 18;
-                    if (l >= 36) {
-                        j1 = 112;
-                    } else {
-                        j1 = 54 + k2 * 18;
-                    }
-                }
-
-                Slot slot = new CreativeScreen.CreativeSlot(container.slots.get(l), l, i1, j1);
-                (this.menu).slots.add(slot);
-            }
-
-            this.destroyItemSlot = new Slot(CONTAINER, 0, 173, 112);
-            (this.menu).slots.add(this.destroyItemSlot);
-        } else if (i == ItemGroup.TAB_INVENTORY.getId()) {
-            (this.menu).slots.clear();
-            (this.menu).slots.addAll(this.originalSlots);
-            this.originalSlots = null;
         }*/
 
         if (this.searchBox != null) { //This bit should be good as-is. Might need tweaking.
@@ -479,50 +428,14 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
 
     protected void renderTooltip(MatrixStack p_230457_1_, ItemStack p_230457_2_, int p_230457_3_, int p_230457_4_) { //TODO - Probably needs a full rewrite.
 
-        //NOTE - I believe this is meant to show advanced info on the search tab, since certain tooltips/rendering utils aren't used on all tabs. Should be useless in our case unless those specific things come up.
-
-        /*if (selectedTab == CommunicatorInfoGroup.TAB_SEARCH.getId()) {
-            List<ITextComponent> list = p_230457_2_.getTooltipLines(this.minecraft.player, this.minecraft.options.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-            List<ITextComponent> list1 = Lists.newArrayList(list);
-            Item item = p_230457_2_.getItem();
-            CommunicatorInfoGroup comgroup = item.getItemCategory();
-            if (comgroup== null && item == Items.ENCHANTED_BOOK) {
-                Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(p_230457_2_);
-                if (map.size() == 1) {
-                    Enchantment enchantment = map.keySet().iterator().next();
-
-                    for(CommunicatorInfoGroup comgroup1 : CommunicatorInfoGroup.TABS) {
-                        if (comgroup1.hasEnchantmentCategory(enchantment.category)) {
-                            comgroup= comgroup1;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            this.visibleTags.forEach((p_214083_2_, p_214083_3_) -> {
-                if (p_214083_3_.contains(item)) {
-                    list1.add(1, (new StringTextComponent("#" + p_214083_2_)).withStyle(TextFormatting.DARK_PURPLE));
-                }
-
-            });
-            if (comgroup!= null) {
-                list1.add(1, comgroup.getDisplayName().copy().withStyle(TextFormatting.BLUE));
-            }
-
-            net.minecraft.client.gui.FontRenderer font = p_230457_2_.getItem().getFontRenderer(p_230457_2_);
-            net.minecraftforge.fml.client.gui.GuiUtils.preItemToolTip(p_230457_2_);
-            this.renderWrappedToolTip(p_230457_1_, list1, p_230457_3_, p_230457_4_, (font == null ? this.font : font));
-            net.minecraftforge.fml.client.gui.GuiUtils.postItemToolTip();
-        } else { */
-
+        //NOTE: Original implementation was for unique tooltips in the search bar. Can possibly be deleted?
         super.renderTooltip(p_230457_1_, p_230457_2_, p_230457_3_, p_230457_4_);
 
         //}
 
     }
 
-    protected void renderBg(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) { //TODO - mimick the structure, but each Communicator tab is a little different.
+    protected void renderBg(MatrixStack ms, float p_230450_2_, int p_230450_3_, int p_230450_4_) { //TODO - mimick the structure, but each Communicator tab is a little different.
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         CommunicatorInfoGroup comgroup = CommunicatorInfoGroup.TABS[selectedTab];
 
@@ -534,24 +447,13 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             CommunicatorInfoGroup comgroup1 = CommunicatorInfoGroup.TABS[idx];
             if (comgroup1 != null && comgroup1.getId() != selectedTab) {
                 this.minecraft.getTextureManager().bind(comgroup1.getTabsImage());
-                this.renderTabButton(p_230450_1_, comgroup1);
+                this.renderTabButton(ms, comgroup1);
             }
         }
 
-        /*if (tabPage != 0) { //This is a special block for rendering the SEARCH and INVENTORY tabs when scrolled to a new tab page. It is therefore unnecessary.
-            if (comgroup != CommunicatorInfoGroup.TAB_SEARCH) {
-                this.minecraft.getTextureManager().bind(CommunicatorInfoGroup.TAB_SEARCH.getTabsImage());
-                renderTabButton(p_230450_1_, CommunicatorInfoGroup.TAB_SEARCH);
-            }
-            if (comgroup != CommunicatorInfoGroup.TAB_INVENTORY) {
-                this.minecraft.getTextureManager().bind(CommunicatorInfoGroup.TAB_INVENTORY.getTabsImage());
-                renderTabButton(p_230450_1_, CommunicatorInfoGroup.TAB_INVENTORY);
-            }
-        }*/
-
         this.minecraft.getTextureManager().bind(comgroup.getBackgroundImage());
-        this.blit(p_230450_1_, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
-        this.searchBox.render(p_230450_1_, p_230450_3_, p_230450_4_, p_230450_2_);
+        this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        this.searchBox.render(ms, p_230450_3_, p_230450_4_, p_230450_2_);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.leftPos + 175;
         int j = this.topPos + 18;
@@ -559,18 +461,58 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         this.minecraft.getTextureManager().bind(comgroup.getTabsImage());
 
         if (comgroup.canScroll()) { //BLIT FOR SCROLLBAR
-            this.blit(p_230450_1_, i, j + (int)((float)(k - j - 17) * this.scrollOffs), 232 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+            this.blit(ms, i, j + (int)((float)(k - j - 17) * this.scrollOffs), 232 + (this.canScroll() ? 0 : 12), 0, 12, 15);
         }
 
-        //TODO - This might be a problem... keep an eye here during debug
+        //NOTE - THIS NEEDS TO BE PLACED SOMEWHERE THAT THE COMGROUP TAB IMAGE IS BOUND TO THE TEXTURE MANAGER. MOVE WITH CAUTION!
         if ((comgroup == null || comgroup.getTabPage() != tabPage))// && (comgroup != CommunicatorInfoGroup.TAB_SEARCH && comgroup != CommunicatorInfoGroup.TAB_INVENTORY))
             return;
 
-        this.renderTabButton(p_230450_1_, comgroup);
+        this.renderTabButton(ms, comgroup);
+        //ENDNOTE
 
-        //if (comgroup == CommunicatorInfoGroup.TAB_INVENTORY) {
-        //    InventoryScreen.renderEntityInInventory(this.leftPos + 88, this.topPos + 45, 20, (float)(this.leftPos + 88 - p_230450_3_), (float)(this.topPos + 45 - 30 - p_230450_4_), this.minecraft.player);
-        //}
+        if(comgroup == CommunicatorInfoGroup.TAB_EMAIL && !email_expand){
+            open_mail = 0;
+            for(int l = 0; l < 5; l++){
+
+                this.minecraft.getTextureManager().bind(comgroup.getTabsImage());
+                this.blit(ms, leftPos + 9, topPos + 17 + ((l) * 18), 0, 139 + (EmailHandler.isSlotEmpty(open_mail) ? 18 : 0), 160, 18);
+
+                if(!EmailHandler.isSlotEmpty(l)){ //Draw subjects & mail icon.
+                    this.minecraft.getTextureManager().bind(new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/mail_icon.png"));
+                    blit(ms, leftPos + 12, topPos + 18 + (l * 18), 0, 0, 16, 16, 16, 16);
+                    this.minecraft.font.drawShadow(ms, EmailHandler.active_entries[l].subject, leftPos + (float) 30, topPos + (float) 22 + (l * 18), 16777215);
+                }
+                open_mail++;
+            }
+        } else if(comgroup == CommunicatorInfoGroup.TAB_EMAIL && email_expand){
+
+            //TODO - DO NOT DO FRIGGIN' STRING FORMATTING IN YOUR RENDER LOOP MORON!
+            TranslationTextComponent tc = EmailHandler.active_entries[open_mail].body;
+
+            int tx_width = 160;
+            int tx_height = 88;
+
+            ArrayList<String> split_list = new ArrayList<String>();
+            String latest = tc.getString();
+
+            while(this.minecraft.font.width(latest) > tx_width){
+                int idx = this.minecraft.font.getSplitter().plainIndexAtWidth(latest, tx_width, tc.getStyle());
+
+                split_list.add(latest.substring(0, idx).trim());
+                latest = latest.substring(idx);
+                //System.out.println("Sure do hope this don't loop infinitely!");
+            }
+
+            split_list.add(latest);
+
+            for(int inc = 0; inc < 9; inc++) { //THE MAX LINES FOR GUI HEIGHT IS CURRENTLY 9. SCROLLING IS NOT IMPLEMENTED.
+                this.minecraft.font.drawShadow(ms, split_list.get(inc), leftPos + (float) 10, topPos + (float) 20 + (inc * this.minecraft.font.lineHeight), 16777215);
+                //System.out.println(split_list.get(inc));
+            }
+        }
+
+
 
     }
 

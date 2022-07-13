@@ -3,6 +3,7 @@ package com.iznaroth.industrizer.block;
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.item.ModItemGroup;
 import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.logistics.VacuumHighwaySegmentBlock;
 import com.iznaroth.industrizer.tile.BureauBlockTile;
 import com.iznaroth.industrizer.tile.GeneratorBlockTile;
 import net.minecraft.block.AbstractBlock;
@@ -54,6 +55,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> EXCHANGE_CENTER = registerBlock("exchange_center", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)));
 
+    public static final RegistryObject<Block> VACUUM_HIGHWAY_SEGMENT = registerBlock("vacuum_highway_segment", () -> new VacuumHighwaySegmentBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

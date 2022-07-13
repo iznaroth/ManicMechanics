@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.block;
 
 
 import com.iznaroth.industrizer.container.BureauBlockContainer;
+import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.tile.BureauBlockTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -31,7 +32,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BureauBlock extends Block {
+public class BureauBlock extends Block implements ILogisticTube {
     public BureauBlock(Properties properties) {
         super(properties);
     }
