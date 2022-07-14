@@ -61,8 +61,8 @@ public class CurrencyCapability {
         return entity.getCapability(CURRENCY_CAPABILITY, DEFAULT_FACING);
     }
 
-    public static ICapabilityProvider createProvider(final ICurrency mana) {
-        return new SerializableCapabilityProvider<>(CURRENCY_CAPABILITY, DEFAULT_FACING, mana);
+    public static ICapabilityProvider createProvider(final ICurrency money) {
+        return new SerializableCapabilityProvider<>(CURRENCY_CAPABILITY, DEFAULT_FACING, money);
     }
 
     /**

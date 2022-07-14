@@ -14,6 +14,7 @@ public class RenderTypeRegistry {
     public static void onRenderTypeSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(ModBlocks.VACUUM_HIGHWAY_SEGMENT.get(), RenderType.translucent());
+            RenderTypeLookup.setRenderLayer(ModBlocks.TRANSPORT_TUBE.get(), RenderType.translucent());
         });
     }
 }

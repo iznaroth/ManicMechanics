@@ -1,15 +1,19 @@
-package com.iznaroth.industrizer.logistics;
+package com.iznaroth.industrizer.block;
 
 import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.logistics.ILogisticTube;
+import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import net.minecraft.block.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -22,6 +26,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -30,30 +35,30 @@ import java.util.HashMap;
 //Big thanks to TheGreyGhost's MinecraftByExample repo. Go check it out! --> https://github.com/TheGreyGhost/MinecraftByExample
 
 
-public class VacuumHighwaySegmentBlock extends Block {
+public class TransportTubeBlock extends Block implements INetworkNavigable, ILogisticTube {
 
-    public VacuumHighwaySegmentBlock(Properties properties){
+    public TransportTubeBlock(Properties properties) {
         super(properties);
 
         BlockState defaultBlockState = this.defaultBlockState()
                 .setValue(UP, false).setValue(DOWN, false)
                 .setValue(EAST, false).setValue(WEST, false)
-                .setValue(NORTH, false).setValue(SOUTH, false)
-                .setValue(INJECTED, false); //2^7 blockstates, 128 -
+                .setValue(NORTH, false).setValue(SOUTH, false);
         this.registerDefaultState(defaultBlockState);
         initialiseShapeCache();
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN, INJECTED, BlockStateProperties.FACING);
+        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN);
     }
 
 
     /**
      * when the block is placed into the world, calculates the correct BlockState based on whether there is already water
-     *   in this block or not
-     *   Copied from StandingSignBlock
+     * in this block or not
+     * Copied from StandingSignBlock
+     *
      * @param blockItemUseContext
      * @return
      */
@@ -64,51 +69,45 @@ public class VacuumHighwaySegmentBlock extends Block {
         BlockPos blockPos = blockItemUseContext.getClickedPos();
 
         BlockState blockState = this.defaultBlockState();
+        blockState = setConnections(world, blockPos, blockState);
 
-        blockState.setValue(BlockStateProperties.FACING, blockItemUseContext.getNearestLookingDirection().getOpposite());
-        System.out.println(blockItemUseContext.getNearestLookingDirection().getOpposite());
-        System.out.println(blockState.getValue(BlockStateProperties.FACING));
-
-        blockState = setConnections(world, blockPos, blockState, blockItemUseContext.getNearestLookingDirection().getOpposite());
-
-        System.out.println(blockState.getValue(BlockStateProperties.FACING));
         return blockState;
     }
 
-
-    /*public BlockState updatePostPlacement(BlockState thisBlockState, Direction directionFromThisToNeighbor, BlockState neighborState,
-                                          IWorld world, BlockPos thisBlockPos, BlockPos neighborBlockPos) {
+    @Override
+    public BlockState updateShape(BlockState thisBlockState, Direction directionFromThisToNeighbor, BlockState neighborState,
+                                  IWorld world, BlockPos thisBlockPos, BlockPos neighborBlockPos) {
 
         switch (directionFromThisToNeighbor) {  // Only update the specified direction.  Uses a switch for clarity but probably a map or similar is better for real code
             case UP:
-                thisBlockState = thisBlockState.setValue(UP, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(UP, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             case DOWN:
-                thisBlockState = thisBlockState.setValue(DOWN, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(DOWN, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             case EAST:
-                thisBlockState = thisBlockState.setValue(EAST, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(EAST, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             case WEST:
-                thisBlockState = thisBlockState.setValue(WEST, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(WEST, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             case NORTH:
-                thisBlockState = thisBlockState.setValue(NORTH, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(NORTH, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             case SOUTH:
-                thisBlockState = thisBlockState.setValue(SOUTH, canHighwayLinkToNeighbor(world, thisBlockPos, directionFromThisToNeighbor));
+                thisBlockState = thisBlockState.setValue(SOUTH, canTubeLink(world, thisBlockPos, directionFromThisToNeighbor));
                 break;
             default:
                 LOGGER.error("Unexpected facing:" + directionFromThisToNeighbor);
         }
         return thisBlockState;
-    }*/
+    }
 
     @Override
-    public ActionResultType use(BlockState p_225533_1_, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_){
-        System.out.println(p_225533_1_.getValue(BlockStateProperties.FACING));
+    public ActionResultType use(BlockState p_225533_1_, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+
         return ActionResultType.PASS;
-   }
+    }
 
 
     // the link properties below are used to communicate to the model renderer which of the web strands should be drawn, and whether any water should be drawn
@@ -119,68 +118,43 @@ public class VacuumHighwaySegmentBlock extends Block {
     //   for each property which is true.
 
 
-    private BlockState setConnections(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState, Direction facing) {
+    private BlockState setConnections(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState) {
 
 
         return blockState
-                .setValue(UP, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.UP, facing))
-                .setValue(DOWN, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.DOWN, facing))
-                .setValue(NORTH, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.NORTH, facing))
-                .setValue(SOUTH, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.SOUTH, facing))
-                .setValue(EAST, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.EAST, facing))
-                .setValue(WEST, canHighwayLinkToNeighbor(iBlockReader, blockPos, Direction.WEST, facing))
-                .setValue(INJECTED, isInnerTubeInjected(iBlockReader, blockPos))
-                .setValue(BlockStateProperties.FACING, facing);
+                .setValue(UP, canTubeLink(iBlockReader, blockPos, Direction.UP))
+                .setValue(DOWN, canTubeLink(iBlockReader, blockPos, Direction.DOWN))
+                .setValue(NORTH, canTubeLink(iBlockReader, blockPos, Direction.NORTH))
+                .setValue(SOUTH, canTubeLink(iBlockReader, blockPos, Direction.SOUTH))
+                .setValue(EAST, canTubeLink(iBlockReader, blockPos, Direction.EAST))
+                .setValue(WEST, canTubeLink(iBlockReader, blockPos, Direction.WEST));
     }
 
-    private boolean canHighwayLinkToNeighbor(IBlockReader iBlockReader, BlockPos blockPos, Direction direction, Direction facing) {
+    private boolean canTubeLink(IBlockReader iBlockReader, BlockPos blockPos, Direction direction) {
 
-        //These two sides are illegal.
-        if(direction == facing || direction == facing.getOpposite()){
-            return false;
-        }
 
 
         BlockPos neighborPos = blockPos.relative(direction);
         BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
         Block neighborBlock = neighborBlockState.getBlock();
+        TileEntity tile = createTileEntity(neighborBlockState, iBlockReader);
+
 
         if (neighborBlock == Blocks.BARRIER) return false;
-        if (neighborBlock instanceof ILogisticTube) return true;
         if (isExceptionForConnection(neighborBlock)) return false;
+        if (neighborBlock instanceof INetworkNavigable || neighborBlock instanceof ILogisticTube || neighborBlock instanceof ContainerBlock ||  (tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) != null)) return true;
 
         return false;
     }
 
 
-    private boolean isInnerTubeInjected(IBlockReader iBlockReader, BlockPos blockPos){
-        for(Direction dir : Direction.values()){
-            BlockPos neighborPos = blockPos.relative(dir);
-            BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
-            Block neighborBlock = neighborBlockState.getBlock();
-
-            if(neighborBlock == ModBlocks.VACUUM_HIGHWAY_SEGMENT.get() && neighborBlockState.getValue(INJECTED)){ //Injection is passed down pipelines.
-                return true;
-            }
-        }
-
-        return false; //Only fail injection if no adjacent tubes
-    }
-
-
-
-    //This will seem confusing -
     public static final BooleanProperty UP = BlockStateProperties.UP;
     public static final BooleanProperty DOWN = BlockStateProperties.DOWN;
-
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
 
-    //public static final DirectionProperty FACING = BlockStateProperties.FACING;
-
-    private static final Property<Boolean> INJECTED = BooleanProperty.create("injected"); //Probably illegal..
 
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -188,7 +162,7 @@ public class VacuumHighwaySegmentBlock extends Block {
         return voxelShape != null ? voxelShape : VoxelShapes.block();  // should always find it... just being defensive
     }
 
-    // TODO - This is the Tube's bounding box. It needs to be set to the size of a normal cube - 2 on each side normally.
+
     private static final Vector3d CORE_MIN_CORNER = new Vector3d(5.5, 5.5, 5.5);
     private static final Vector3d CORE_MAX_CORNER = new Vector3d(10.5, 10.5, 10.5);
 
@@ -215,8 +189,9 @@ public class VacuumHighwaySegmentBlock extends Block {
      * @return
      */
 
-    /**NOTE: Injection can be ignored here. This is describing the shape of the block from a collision standpoint as it changes.
-       Model decisions occur based on the JSON.
+    /**
+     * NOTE: Injection can be ignored here. This is describing the shape of the block from a collision standpoint as it changes.
+     * Model decisions occur based on the JSON.
      **/
     private void initialiseShapeCache() {
         for (BlockState blockState : getStateDefinition().getPossibleStates()) {
@@ -251,5 +226,18 @@ public class VacuumHighwaySegmentBlock extends Block {
     private static HashMap<BlockState, VoxelShape> voxelShapeCache = new HashMap<>();
 
 
+    @Override
+    public boolean onItemPassesPoint() {
+        return INetworkNavigable.super.onItemPassesPoint();
+    }
 
+    @Override
+    public boolean shouldFilter() {
+        return INetworkNavigable.super.shouldFilter();
+    }
+
+    @Override
+    public boolean runFilterFor(ItemStack itemStack) {
+        return false;
+    }
 }

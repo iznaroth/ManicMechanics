@@ -21,6 +21,8 @@ public class ModTileEntities {
 
     public static final RegistryObject<TileEntityType<CommunicatorBlockTile>> COMMUNICATOR_TILE = TILE_ENTITIES.register("communicator", () -> TileEntityType.Builder.of(CommunicatorBlockTile::new, ModBlocks.COMMUNICATOR.get()).build(null)); //FIGURE THIS SHIT OUT!
 
+    public static final RegistryObject<TileEntityType<HighwayControllerBlockTile>> HIGHWAY_CONTROLLER_TILE = TILE_ENTITIES.register("highway_controller", () -> TileEntityType.Builder.of(HighwayControllerBlockTile::new, ModBlocks.HIGHWAY_CONTROLLER.get()).build(null)); //FIGURE THIS SHIT OUT!
+
 
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);
