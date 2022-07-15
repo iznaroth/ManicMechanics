@@ -156,6 +156,11 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
 
 
+    @Override
+    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = voxelShapeCache.get(state);

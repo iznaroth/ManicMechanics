@@ -3,6 +3,7 @@ package com.iznaroth.industrizer.block;
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.item.ModItemGroup;
 import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.render.BlockRenderTester;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -57,7 +58,12 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> HIGHWAY_CONTROLLER = registerBlock("highway_controller", () -> new HighwayControllerBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f)), ModItemGroup.INDUSTRIZER_MACHINES);
 
-    public static final RegistryObject<Block> TRANSPORT_TUBE = registerBlock("transport_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f)), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> TRANSPORT_TUBE = registerBlock("transport_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+
+
+
+
+    public static final RegistryObject<Block> RENDER_TESTER = registerBlock("render_tester", () -> new BlockRenderTester(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, ItemGroup tab){
