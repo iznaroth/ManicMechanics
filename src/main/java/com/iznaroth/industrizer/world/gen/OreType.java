@@ -1,12 +1,12 @@
 package com.iznaroth.industrizer.world.gen;
 
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.util.Lazy;
 
 public enum OreType {
 
-    DYSPERSIUM(Lazy.of(ModBlocks.DYSPERSIUM_ORE), 5, 4, 25); //material type - initializer for block - constructor
+    DYSPERSIUM(Lazy.of(IndustrizerBlocks.DYSPERSIUM_ORE), 5, 4, 25); //material type - initializer for block - constructor
 
     private final Lazy<Block> block;
     private final int maxVeinSize;

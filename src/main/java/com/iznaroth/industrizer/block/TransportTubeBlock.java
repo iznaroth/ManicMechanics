@@ -1,16 +1,15 @@
 package com.iznaroth.industrizer.block;
 
-import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
+import com.iznaroth.industrizer.tile.TubeBundleTile;
 import net.minecraft.block.*;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
@@ -104,7 +103,20 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
     }
 
     @Override
-    public ActionResultType use(BlockState p_225533_1_, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+
+        ItemStack with = player.getItemInHand(hand);
+
+        if(with.getItem().equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())) {
+            world.setBlock(pos, IndustrizerBlocks.TUBE_BUNDLE.get().defaultBlockState(), 0);
+
+            TubeBundleTile new_tile = (TubeBundleTile) world.getBlockEntity(pos);
+            new_tile.addTubeToBlock(this.getTubeType());
+            new_tile.addTubeToBlock(getTubeType(with.getItem()));
+
+
+            return ActionResultType.SUCCESS; //This should create the tile-entity as well?
+        }
 
         return ActionResultType.PASS;
     }
@@ -154,13 +166,6 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
-
-
-    @Override
-    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
-    }
-
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         VoxelShape voxelShape = voxelShapeCache.get(state);
@@ -245,4 +250,24 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
     public boolean runFilterFor(ItemStack itemStack) {
         return false;
     }
+
+    public int getTubeType(){
+        return 0; //THIS IS OVERRIDEN BY CHILDREN - 0 is Logistic, 1 is Fluid, 2 is Gas, 3 is Power
+    }
+
+    public int getTubeType(Item from){
+
+        if(from.equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())){
+            return 0;
+        } else if (from.equals(IndustrizerBlocks.FLUID_TUBE.get().asItem())){
+            return 1;
+        } else if(from.equals(IndustrizerBlocks.GAS_TUBE.get().asItem())){
+            return 2;
+        } else if(from.equals(IndustrizerBlocks.POWER_TUBE.get().asItem())){
+            return 3;
+        }
+
+        return -1;
+    }
+
 }

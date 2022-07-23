@@ -1,6 +1,5 @@
 package com.iznaroth.industrizer.tile;
 
-import com.iznaroth.industrizer.block.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,7 +24,7 @@ public class CommunicatorBlockTile extends TileEntity {
     private int counter;
 
     public CommunicatorBlockTile() {
-        super(ModTileEntities.COMMUNICATOR_TILE.get());
+        super(IndustrizerTileEntities.COMMUNICATOR_TILE.get());
     }
 
     @Override

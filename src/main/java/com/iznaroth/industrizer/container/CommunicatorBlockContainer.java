@@ -4,7 +4,6 @@ import com.iznaroth.industrizer.screen.CommunicatorBlockScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +24,7 @@ public class CommunicatorBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public CommunicatorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(ModContainers.COMMUNICATOR_CONTAINER.get(), windowId);
+        super(IndustrizerContainers.COMMUNICATOR_CONTAINER.get(), windowId);
         PlayerInventory playerinventory = player.inventory;
 
         tileEntity = world.getBlockEntity(pos);

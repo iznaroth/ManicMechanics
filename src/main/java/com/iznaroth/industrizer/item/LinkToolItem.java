@@ -1,10 +1,9 @@
 package com.iznaroth.industrizer.item;
 
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.item.interfaces.IPositionSelector;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -16,7 +15,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -42,10 +40,10 @@ public class LinkToolItem extends Item implements IPositionSelector {
 
         System.out.println("CLICKED LINK_TOOL WITH PROPERTIES - " + first + " " + second + " " + case_type);
 
-        if(world.getBlockState(pos).getBlock() == ModBlocks.HIGHWAY_CONTROLLER.get() && case_type == null){
+        if(world.getBlockState(pos).getBlock() == IndustrizerBlocks.HIGHWAY_CONTROLLER.get() && case_type == null){
             ITextComponent msg = new StringTextComponent("Attempting to create Vacuum Highway from this controller. Right click your desired endpoint.");
 
-            case_type = ModBlocks.HIGHWAY_CONTROLLER.get();
+            case_type = IndustrizerBlocks.HIGHWAY_CONTROLLER.get();
             first = pos;
 
             System.out.println("Clicked Highway Controller");
@@ -53,7 +51,7 @@ public class LinkToolItem extends Item implements IPositionSelector {
             return ActionResultType.SUCCESS;
         }
 
-        if(case_type == ModBlocks.HIGHWAY_CONTROLLER.get() && world.getBlockState(pos).getBlock() instanceof INetworkNavigable && first != null){
+        if(case_type == IndustrizerBlocks.HIGHWAY_CONTROLLER.get() && world.getBlockState(pos).getBlock() instanceof INetworkNavigable && first != null){
             second = pos;
 
             System.out.println("Start build attempt");
@@ -70,9 +68,9 @@ public class LinkToolItem extends Item implements IPositionSelector {
 
             for(int i = 0; i < items.size(); i++){
                 ItemStack comp = items.get(i);
-                System.out.println(comp + " | " + new ItemStack(ModBlocks.VACUUM_HIGHWAY_SEGMENT.get(), comp.getCount()));
+                System.out.println(comp + " | " + new ItemStack(IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get(), comp.getCount()));
 
-                if(comp.toString().equals(new ItemStack(ModBlocks.VACUUM_HIGHWAY_SEGMENT.get(), comp.getCount()).toString())){
+                if(comp.toString().equals(new ItemStack(IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get(), comp.getCount()).toString())){
                     vacuum_inv_ct += comp.getCount();
                 }
             }
@@ -136,8 +134,8 @@ public class LinkToolItem extends Item implements IPositionSelector {
             }
 
             for(BlockPos new_highway : to_edit){
-                world.setBlock(new_highway, ModBlocks.VACUUM_HIGHWAY_SEGMENT.get().defaultBlockState().setValue(BlockStateProperties.FACING, dir), 0);
-                player.inventory.removeItem(new ItemStack(ModBlocks.VACUUM_HIGHWAY_SEGMENT.get(), 1));
+                world.setBlock(new_highway, IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get().defaultBlockState().setValue(BlockStateProperties.FACING, dir), 0);
+                player.inventory.removeItem(new ItemStack(IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get(), 1));
             }
 
             clearParams();

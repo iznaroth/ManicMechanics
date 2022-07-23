@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.datagen;
 
 //import com.mcjty.mytutorial.setup.Registration;
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.loot.LootParameterSets;
 
@@ -14,8 +14,8 @@ public class LootTables extends BaseLootTableProvider {
     @Override
     protected void addTables() {
         //lootTables.put(ModBlocks.DYSPERSIUM_ORE.get(), createStandardTable("dyspersium_ore", ModBlocks.DYSPERSIUM_ORE.get()));
-        lootTables.put(ModBlocks.HEP.get(), createStandardTable("hep", ModBlocks.HEP.get()).setParamSet(LootParameterSets.BLOCK));
-        lootTables.put(ModBlocks.CURRENCY_BUREAU.get(), createStandardTable("currency_bureau", ModBlocks.CURRENCY_BUREAU.get()).setParamSet(LootParameterSets.BLOCK));
-        lootTables.put(ModBlocks.COMMUNICATOR.get(), createStandardTable("communicator", ModBlocks.COMMUNICATOR.get()).setParamSet(LootParameterSets.BLOCK));
+        lootTables.put(IndustrizerBlocks.HEP.get(), createStandardTable("hep", IndustrizerBlocks.HEP.get()).setParamSet(LootParameterSets.BLOCK));
+        lootTables.put(IndustrizerBlocks.CURRENCY_BUREAU.get(), createStandardTable("currency_bureau", IndustrizerBlocks.CURRENCY_BUREAU.get()).setParamSet(LootParameterSets.BLOCK));
+        lootTables.put(IndustrizerBlocks.COMMUNICATOR.get(), createStandardTable("communicator", IndustrizerBlocks.COMMUNICATOR.get()).setParamSet(LootParameterSets.BLOCK));
     }
 }

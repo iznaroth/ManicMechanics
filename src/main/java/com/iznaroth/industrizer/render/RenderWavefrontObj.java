@@ -1,7 +1,6 @@
 package com.iznaroth.industrizer.render;
 
-import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.render.TileRenderTester;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.tools.UsefulFunctions;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -81,7 +80,7 @@ public class RenderWavefrontObj {
 
     Color artifactColour = tileEntityMBE21.getArtifactColour();
 
-    BlockState state = ModBlocks.RENDER_TESTER.get().defaultBlockState().setValue(BlockRenderTester.USE_WAVEFRONT_OBJ_MODEL, true);
+    BlockState state = IndustrizerBlocks.RENDER_TESTER.get().defaultBlockState().setValue(BlockRenderTester.USE_WAVEFRONT_OBJ_MODEL, true);
     BlockRendererDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
     IBakedModel model = dispatcher.getBlockModel(state);
 

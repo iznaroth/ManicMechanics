@@ -1,11 +1,5 @@
 package com.iznaroth.industrizer.setup;
 
-import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.render.TileRenderTester;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
 public class CommonSetup {
 
     /*

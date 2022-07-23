@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "industrizer:block/etcher"
+    },
+    "facing=up": {
+      "model": "industrizer:block/etcher"
+    },
+    "facing=north": {
+      "model": "industrizer:block/etcher"
+    },
+    "facing=south": {
+      "model": "industrizer:block/etcher",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "industrizer:block/etcher",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "industrizer:block/etcher",
+      "y": 90
+    }
+  }
+}

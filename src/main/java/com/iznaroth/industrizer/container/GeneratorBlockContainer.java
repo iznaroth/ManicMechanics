@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.container;
 
-import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,7 +26,7 @@ public class GeneratorBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(ModContainers.GENERATOR_CONTAINER.get(), windowId);
+        super(IndustrizerContainers.GENERATOR_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -80,7 +80,7 @@ public class GeneratorBlockContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.HEP.get());
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, IndustrizerBlocks.HEP.get());
     }
 
     @Override
@@ -96,7 +96,7 @@ public class GeneratorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == ModItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

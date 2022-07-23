@@ -1,8 +1,5 @@
 package com.iznaroth.industrizer.render;
 
-import com.iznaroth.industrizer.render.RenderLines;
-import com.iznaroth.industrizer.render.RenderQuads;
-import com.iznaroth.industrizer.render.TileRenderTester;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -38,9 +35,9 @@ import static com.iznaroth.industrizer.render.RenderWavefrontObj.renderWavefront
  * 4) Reads a custom wavefront object (as a block model), and renders it using block rendering methods
  *
  */
-public class TileEntityRendererRT extends TileEntityRenderer<TileRenderTester> {
+public class TileRendererRT extends TileEntityRenderer<TileRenderTester> {
 
-  public TileEntityRendererRT(TileEntityRendererDispatcher tileEntityRendererDispatcher) {
+  public TileRendererRT(TileEntityRendererDispatcher tileEntityRendererDispatcher) {
     super(tileEntityRendererDispatcher);
   }
 

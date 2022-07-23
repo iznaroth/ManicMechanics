@@ -2,7 +2,7 @@ package com.iznaroth.industrizer.block;
 
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.item.ModItemGroup;
-import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.render.BlockRenderTester;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
-public class ModBlocks {
+public class IndustrizerBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, IndustrizerMod.MOD_ID);
     private static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, IndustrizerMod.MOD_ID);
@@ -42,23 +42,28 @@ public class ModBlocks {
     public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new BureauBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
 
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
-    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
-    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
-    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
-
+    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new UpgradableMachine(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new UpgradableMachine(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachine(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new UpgradableMachine(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
     public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
     public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
     public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
-
     public static final RegistryObject<Block> COMMUNICATOR = registerBlock("communicator", () -> new CommunicatorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
 
     public static final RegistryObject<Block> EXCHANGE_CENTER = registerBlock("exchange_center", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
 
+    //LOGISTICS
     public static final RegistryObject<Block> VACUUM_HIGHWAY_SEGMENT = registerBlock("vacuum_highway_segment", () -> new VacuumHighwaySegmentBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f)), ModItemGroup.INDUSTRIZER_MACHINES);
-
     public static final RegistryObject<Block> HIGHWAY_CONTROLLER = registerBlock("highway_controller", () -> new HighwayControllerBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f)), ModItemGroup.INDUSTRIZER_MACHINES);
-
     public static final RegistryObject<Block> TRANSPORT_TUBE = registerBlock("transport_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> FLUID_TUBE = registerBlock("fluid_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> GAS_TUBE = registerBlock("gas_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> POWER_TUBE = registerBlock("power_tube", () -> new TransportTubeBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+
+
+    public static final RegistryObject<Block> TUBE_BUNDLE = registerBlock("tube_bundle", () -> new TubeBundleBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> BELT = registerBlock("belt", () -> new BeltBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(5).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(10f).noOcclusion()), ModItemGroup.INDUSTRIZER_MACHINES);
 
 
 
@@ -74,7 +79,7 @@ public class ModBlocks {
 
 
     private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block, ItemGroup tab){
-        ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+        IndustrizerItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
 
 

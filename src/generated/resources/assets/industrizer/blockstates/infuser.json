@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "industrizer:block/infuser"
+    },
+    "facing=up": {
+      "model": "industrizer:block/infuser"
+    },
+    "facing=north": {
+      "model": "industrizer:block/infuser"
+    },
+    "facing=south": {
+      "model": "industrizer:block/infuser",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "industrizer:block/infuser",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "industrizer:block/infuser",
+      "y": 90
+    }
+  }
+}

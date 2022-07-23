@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "industrizer:block/input_side",
+    "up": "industrizer:block/condenser_top",
+    "north": "industrizer:block/input_side",
+    "south": "industrizer:block/input_side",
+    "east": "industrizer:block/input_side",
+    "west": "industrizer:block/input_side"
+  }
+}

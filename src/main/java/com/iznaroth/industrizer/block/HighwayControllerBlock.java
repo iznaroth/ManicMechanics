@@ -1,7 +1,5 @@
 package com.iznaroth.industrizer.block;
 
-import com.iznaroth.industrizer.item.ModItems;
-import com.iznaroth.industrizer.tile.GeneratorBlockTile;
 import com.iznaroth.industrizer.tile.HighwayControllerBlockTile;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -24,7 +22,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.*;
 
 public class HighwayControllerBlock extends Block{
 
@@ -57,7 +54,7 @@ public class HighwayControllerBlock extends Block{
 
         System.out.println("Clicked Highway Controller");
 
-        if(stack.equals(new ItemStack(ModBlocks.VACUUM_HIGHWAY_SEGMENT.get()))){
+        if(stack.equals(new ItemStack(IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get()))){
             player.sendMessage(msg, Util.NIL_UUID);
             return ActionResultType.SUCCESS;
         }

@@ -1,14 +1,14 @@
 package com.iznaroth.industrizer.setup;
 
 import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.container.ModContainers;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
+import com.iznaroth.industrizer.container.IndustrizerContainers;
 import com.iznaroth.industrizer.render.AnimationTickCounter;
-import com.iznaroth.industrizer.render.TileEntityRendererRT;
+import com.iznaroth.industrizer.render.TileRendererRT;
 import com.iznaroth.industrizer.screen.BureauBlockScreen;
 import com.iznaroth.industrizer.screen.CommunicatorBlockScreen;
 import com.iznaroth.industrizer.screen.GeneratorBlockScreen;
-import com.iznaroth.industrizer.tile.ModTileEntities;
+import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -29,11 +29,11 @@ public class ClientSetup {
 
 
     public static void init(final FMLClientSetupEvent event) {
-        ScreenManager.register(ModContainers.GENERATOR_CONTAINER.get(), GeneratorBlockScreen::new);
+        ScreenManager.register(IndustrizerContainers.GENERATOR_CONTAINER.get(), GeneratorBlockScreen::new);
 
-        ScreenManager.register(ModContainers.BUREAU_CONTAINER.get(), BureauBlockScreen::new);
+        ScreenManager.register(IndustrizerContainers.BUREAU_CONTAINER.get(), BureauBlockScreen::new);
 
-        ScreenManager.register(ModContainers.COMMUNICATOR_CONTAINER.get(), CommunicatorBlockScreen::new);
+        ScreenManager.register(IndustrizerContainers.COMMUNICATOR_CONTAINER.get(), CommunicatorBlockScreen::new);
     }
 
 
@@ -43,10 +43,10 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         // Tell the renderer that the base is rendered using CUTOUT_MIPPED (to match the Block Hopper)
-        RenderTypeLookup.setRenderLayer(ModBlocks.RENDER_TESTER.get(), RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(IndustrizerBlocks.RENDER_TESTER.get(), RenderType.cutoutMipped());
         // Register the custom renderer for our tile entity
         System.out.println("Binding renderer.");
-        ClientRegistry.bindTileEntityRenderer(ModTileEntities.RENDER_TESTER_TILE.get(), TileEntityRendererRT::new);
+        ClientRegistry.bindTileEntityRenderer(IndustrizerTileEntities.RENDER_TESTER_TILE.get(), TileRendererRT::new);
 
         MinecraftForge.EVENT_BUS.register(AnimationTickCounter.class);  // counts ticks, used for animation
     }

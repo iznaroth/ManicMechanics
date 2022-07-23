@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.datagen;
 
 import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
@@ -27,13 +27,16 @@ public class BlockStates extends BlockStateProvider {
         registerHEPBlock();
         registerBureauBlock();
         registerCommunicatorBlock();
+        registerAssembler();
+        registerCondenser();
+        registerInfuser();
     }
 
     private void registerHEPBlock() {
         ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep");
         BlockModelBuilder modelFirstblock = models().cube("hep", txt, txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep_front"), txt, txt, txt);
         BlockModelBuilder modelFirstblockPowered = models().cube("hep_powered", txt, txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep_powered"), txt, txt, txt);
-        orientedBlock(ModBlocks.HEP.get(), state -> {
+        orientedBlock(IndustrizerBlocks.HEP.get(), state -> {
             if (state.getValue(BlockStateProperties.POWERED)) {
                 return modelFirstblockPowered;
             } else {
@@ -45,7 +48,7 @@ public class BlockStates extends BlockStateProvider {
     private void registerBureauBlock() {
         ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/currency_bureau");
         BlockModelBuilder modelFirstblock = models().cube("currency_bureau", txt, txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/bureau_front"), txt, txt, txt);
-        orientedBlock(ModBlocks.CURRENCY_BUREAU.get(), state -> {
+        orientedBlock(IndustrizerBlocks.CURRENCY_BUREAU.get(), state -> {
                 return modelFirstblock;
         });
     }
@@ -53,7 +56,29 @@ public class BlockStates extends BlockStateProvider {
     private void registerCommunicatorBlock() {
         ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/communicator");
         BlockModelBuilder modelFirstblock = models().cube("communicator", txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/communicator_top"), new ResourceLocation(IndustrizerMod.MOD_ID, "block/communicator_front"), txt, txt, txt);
-        orientedBlock(ModBlocks.COMMUNICATOR.get(), state -> {
+        orientedBlock(IndustrizerBlocks.COMMUNICATOR.get(), state -> {
+            return modelFirstblock;
+        });
+    }
+
+    private void registerInfuser() {
+        ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/input_side");
+        BlockModelBuilder modelFirstblock = models().cube("infuser", txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/infuser_top"), new ResourceLocation(IndustrizerMod.MOD_ID, "block/infuser_front"), txt, txt, txt);
+        orientedBlock(IndustrizerBlocks.INFUSER.get(), state -> {
+            return modelFirstblock;
+        });
+    }
+    private void registerCondenser() {
+        ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/input_side");
+        BlockModelBuilder modelFirstblock = models().cube("condenser", txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/condenser_top"), txt, txt, txt, txt);
+        orientedBlock(IndustrizerBlocks.CONDENSER.get(), state -> {
+            return modelFirstblock;
+        });
+    }
+    private void registerAssembler() {
+        ResourceLocation txt = new ResourceLocation(IndustrizerMod.MOD_ID, "block/input_side");
+        BlockModelBuilder modelFirstblock = models().cube("assembler", txt, new ResourceLocation(IndustrizerMod.MOD_ID, "block/assembler_top"), txt, txt, txt, txt);
+        orientedBlock(IndustrizerBlocks.ASSEMBLER.get(), state -> {
             return modelFirstblock;
         });
     }

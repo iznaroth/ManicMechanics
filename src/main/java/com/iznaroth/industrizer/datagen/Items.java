@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.datagen;
 
 import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
@@ -34,9 +34,9 @@ public class Items extends ItemModelProvider {
 
          */
 
-        withExistingParent(ModBlocks.HEP.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep"));
-        withExistingParent(ModBlocks.CURRENCY_BUREAU.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/currency_bureau"));
-        withExistingParent(ModBlocks.COMMUNICATOR.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/communicator"));
+        withExistingParent(IndustrizerBlocks.HEP.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/hep"));
+        withExistingParent(IndustrizerBlocks.CURRENCY_BUREAU.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/currency_bureau"));
+        withExistingParent(IndustrizerBlocks.COMMUNICATOR.get().getRegistryName().getPath(), new ResourceLocation(IndustrizerMod.MOD_ID, "block/communicator"));
     }
 
     private ItemModelBuilder createTestModel(int suffix) {

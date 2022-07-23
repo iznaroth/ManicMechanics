@@ -1,12 +1,10 @@
 package com.iznaroth.industrizer.tile;
 
-import com.iznaroth.industrizer.block.ModBlocks;
-import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -36,7 +34,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     private int counter;
 
     public GeneratorBlockTile() {
-        super(ModTileEntities.GENERATOR_TILE.get());
+        super(IndustrizerTileEntities.GENERATOR_TILE.get());
     }
 
     @Override
@@ -62,7 +60,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
         if (counter <= 0) {
             ItemStack stack = itemHandler.getStackInSlot(0);
-            if (stack.getItem() == ModItems.DYSPERSIUM_DUST.get()) {
+            if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
                 itemHandler.extractItem(0, 1, false);
                 counter = Config.FIRSTBLOCK_TICKS.get();
                 setChanged();
@@ -134,13 +132,13 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == ModItems.DYSPERSIUM_DUST.get();
+                return stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get();
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != ModItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() != IndustrizerItems.DYSPERSIUM_DUST.get()) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

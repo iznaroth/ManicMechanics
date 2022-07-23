@@ -1,7 +1,6 @@
 package com.iznaroth.industrizer.render;
 
-import com.iznaroth.industrizer.tile.ModTileEntities;
-import net.minecraft.block.BlockRenderType;
+import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.IntNBT;
@@ -9,11 +8,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -22,7 +16,7 @@ import java.util.Random;
 
 public class TileRenderTester extends TileEntity {
 
-    public TileRenderTester() {super(ModTileEntities.RENDER_TESTER_TILE.get());}
+    public TileRenderTester() {super(IndustrizerTileEntities.RENDER_TESTER_TILE.get());}
 
     public static final Color INVALID_COLOR = null;
 

@@ -1,16 +1,12 @@
 package com.iznaroth.industrizer.block;
 
-import com.iznaroth.industrizer.block.ModBlocks;
 import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import net.minecraft.block.*;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -162,7 +158,7 @@ public class VacuumHighwaySegmentBlock extends Block implements INetworkNavigabl
             BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
             Block neighborBlock = neighborBlockState.getBlock();
 
-            if(neighborBlock == ModBlocks.VACUUM_HIGHWAY_SEGMENT.get() && neighborBlockState.getValue(INJECTED)){ //Injection is passed down pipelines.
+            if(neighborBlock == IndustrizerBlocks.VACUUM_HIGHWAY_SEGMENT.get() && neighborBlockState.getValue(INJECTED)){ //Injection is passed down pipelines.
                 return true;
             }
         }

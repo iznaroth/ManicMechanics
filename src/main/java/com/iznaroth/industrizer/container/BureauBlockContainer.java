@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.container;
 
 import com.iznaroth.industrizer.api.ICurrency;
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.iznaroth.industrizer.tools.BlockValueGenerator;
 import net.minecraft.client.Minecraft;
@@ -31,7 +31,7 @@ public class BureauBlockContainer extends Container {
     private static final Minecraft minecraft = Minecraft.getInstance();
 
     public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(ModContainers.BUREAU_CONTAINER.get(), windowId);
+        super(IndustrizerContainers.BUREAU_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -47,7 +47,7 @@ public class BureauBlockContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.CURRENCY_BUREAU.get());
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, IndustrizerBlocks.CURRENCY_BUREAU.get());
     }
 
     @Override

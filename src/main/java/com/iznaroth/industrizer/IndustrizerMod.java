@@ -1,15 +1,15 @@
 package com.iznaroth.industrizer;
 
-import com.iznaroth.industrizer.block.ModBlocks;
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.capability.CurrencyCapability;
 import com.iznaroth.industrizer.capability.SuspicionCapability;
-import com.iznaroth.industrizer.container.ModContainers;
+import com.iznaroth.industrizer.container.IndustrizerContainers;
 import com.iznaroth.industrizer.entity.ModEntityTypes;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
-import com.iznaroth.industrizer.item.ModItems;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
-import com.iznaroth.industrizer.tile.ModTileEntities;
+import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -30,7 +30,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import software.bernie.geckolib3.GeckoLib;
 
 import java.util.stream.Collectors;
 
@@ -48,16 +47,16 @@ public class IndustrizerMod
         // Register the setup method for modloading
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModItems.register(eventBus);
-        ModBlocks.register(eventBus);
+        IndustrizerItems.register(eventBus);
+        IndustrizerBlocks.register(eventBus);
 
         ModSoundEvents.register(eventBus);
 
         ModEntityTypes.register(eventBus);
 
-        ModTileEntities.register(eventBus);
+        IndustrizerTileEntities.register(eventBus);
 
-        ModContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
+        IndustrizerContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
@@ -75,8 +74,6 @@ public class IndustrizerMod
         eventBus.addListener(this::doClientStuff);
 
         registerCommonEvents(eventBus);
-
-        GeckoLib.initialize();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

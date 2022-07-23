@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.block;
 
 
 import com.iznaroth.industrizer.container.GeneratorBlockContainer;
+import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.GeneratorBlockTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,12 +27,15 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.gen.feature.structure.TaigaVillagePools;
+import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GeneratorBlock extends Block {
+public class GeneratorBlock extends Block implements INetworkNavigable {
     public GeneratorBlock(Properties properties) {
         super(properties);
     }
@@ -76,6 +80,7 @@ public class GeneratorBlock extends Block {
                 throw new IllegalStateException("Our named container provider is missing!");
             }
         }
+
         return ActionResultType.SUCCESS;
     }
 
@@ -89,4 +94,8 @@ public class GeneratorBlock extends Block {
     }
 
 
+    @Override
+    public boolean runFilterFor(ItemStack itemStack) {
+        return false;
+    }
 }
