@@ -4,7 +4,7 @@ import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.CommunicatorBlockTile;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
-import com.sun.xml.internal.ws.api.pipe.Tube;
+import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -50,16 +50,18 @@ public class TubeBundleBlock extends Block implements INetworkNavigable, ILogist
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world){
+        //This block is only created by eating a prior single-tube.  It should return a reference to that old tile as-bound, but this may cause some issues.
         return new TubeBundleTile();
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+   public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
 
-        ItemStack with = player.getItemInHand(hand);
+        Block with = Block.byItem(player.getItemInHand(hand).getItem());
 
-        if(with.getItem().equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())) {
-            //world.setBlock(pos, IndustrizerBlocks.TRANSPORT_TUBE_BUNDLE.get().defaultBlockState(), 0);
+        if(with instanceof ILogisticTube && !with.equals(state.getBlock())) { //IF you are using a DIFFERENT logistic tube, we want to add to the bundle.
+
+
             return ActionResultType.SUCCESS; //This should create the tile-entity as well?
         }
 

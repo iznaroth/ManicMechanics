@@ -3,11 +3,13 @@ package com.iznaroth.industrizer.block;
 import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
+import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -16,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -102,17 +105,19 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
         return thisBlockState;
     }
 
-    @Override
+    //@Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
 
-        ItemStack with = player.getItemInHand(hand);
+        //Can we raycast for contact points?
 
-        if(with.getItem().equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())) {
-            world.setBlock(pos, IndustrizerBlocks.TUBE_BUNDLE.get().defaultBlockState(), 0);
+        //we can borrow the lookingAt value to see what subshape we've hit.
 
-            TubeBundleTile new_tile = (TubeBundleTile) world.getBlockEntity(pos);
-            new_tile.addTubeToBlock(this.getTubeType());
-            new_tile.addTubeToBlock(getTubeType(with.getItem()));
+
+        Block with = Block.byItem(player.getItemInHand(hand).getItem());
+
+        if(with instanceof ILogisticTube && !with.equals(state.getBlock())) {
+
+            TubeBundleStateMapper.mapToNewBundle(world, pos, (TubeBundleTile) world.getBlockEntity(pos), getTubeType(with.asItem())); //WARNING - May be an unsafe cast
 
 
             return ActionResultType.SUCCESS; //This should create the tile-entity as well?
@@ -149,13 +154,13 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
         BlockPos neighborPos = blockPos.relative(direction);
         BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
         Block neighborBlock = neighborBlockState.getBlock();
-        TileEntity tile = createTileEntity(neighborBlockState, iBlockReader);
-
 
         if (neighborBlock == Blocks.BARRIER) return false;
         if (isExceptionForConnection(neighborBlock)) return false;
-        if (neighborBlock instanceof INetworkNavigable || neighborBlock instanceof ILogisticTube || neighborBlock instanceof ContainerBlock ||  (tile != null && tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) != null)) return true;
-
+        if (neighborBlock instanceof INetworkNavigable || neighborBlock instanceof ILogisticTube || neighborBlock instanceof ContainerBlock) {
+            //System.out.println("True for " + direction);
+            return true;
+        }
         return false;
     }
 
@@ -233,6 +238,17 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
         }
     }
 
+    @Override
+    public boolean hasTileEntity(BlockState state){ return true; }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world){
+        TubeBundleTile tile = new TubeBundleTile();
+        tile.addTube(0); //TILE 0 is LOGISTIC
+        return tile;
+    }
+
     private static HashMap<BlockState, VoxelShape> voxelShapeCache = new HashMap<>();
 
 
@@ -259,11 +275,11 @@ public class TransportTubeBlock extends Block implements INetworkNavigable, ILog
 
         if(from.equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())){
             return 0;
-        } else if (from.equals(IndustrizerBlocks.FLUID_TUBE.get().asItem())){
+        } else if (from.equals(IndustrizerBlocks.POWER_TUBE.get().asItem())){
             return 1;
-        } else if(from.equals(IndustrizerBlocks.GAS_TUBE.get().asItem())){
+        } else if(from.equals(IndustrizerBlocks.FLUID_TUBE.get().asItem())){
             return 2;
-        } else if(from.equals(IndustrizerBlocks.POWER_TUBE.get().asItem())){
+        } else if(from.equals(IndustrizerBlocks.GAS_TUBE.get().asItem())){
             return 3;
         }
 
