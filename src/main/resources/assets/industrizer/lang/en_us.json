@@ -6,12 +6,22 @@
   "item.industrizer.wallet": "Wallet",
   "item.industrizer.cop_car_spawn_egg": "Functional IDPD Radio Console",
 
+  "item.industrizer.eva_music_disc": "E.V.A. Music Disc",
+  "item.industrizer.eva_music_disc.desc": "Jean-Jacques Perrey - E.V.A.",
+
+  "item.industrizer.dyspersium_widget": "Dyspersium Widget",
+
 
 
   "block.industrizer.dyspersium_ore": "Dyspersium Ore",
   "block.industrizer.hep": "Hyperfield Extraction Polarizer",
   "block.industrizer.obamium_block": "Obamium Block",
   "block.industrizer.obamium_ore": "Obamium Ore",
+  "block.industrizer.transport_tube": "Logistical Transport Tube",
+  "block.industrizer.power_tube": "Insulated Power Tube",
+  "block.industrizer.fluid_tube": "Coated Fluid Tube",
+  "block.industrizer.gas_tube": "Pressurized Gas Tube",
+  "block.industrizer.tube_bundle": "Tube Bundle",
 
 
 

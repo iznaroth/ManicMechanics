@@ -1,7 +1,7 @@
 {
   "multipart": [
     {
-      "apply": { "model": "industrizer:block/power_core"}
+      "apply": { "model": "industrizer:block/fluid_core"}
     },
 
     {   "when": { "north": "true" },

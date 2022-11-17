@@ -3,5 +3,13 @@
     "category": "entity",
     "subtitle": "industrizer.cop_siren",
     "sounds": [ "industrizer:cop_siren" ]
+  },
+  "eva": {
+    "sounds": [
+      {
+        "name": "industrizer:eva",
+        "stream":  true
+      }
+    ]
   }
 }

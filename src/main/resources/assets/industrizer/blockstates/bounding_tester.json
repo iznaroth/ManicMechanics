@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "industrizer:block/obamium_block" }
+    "": { "model": "industrizer:block/bounding_tester" }
   }
 }

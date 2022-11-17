@@ -19,6 +19,8 @@ public class ModSoundEvents {
 
     public static final RegistryObject<SoundEvent> COP_SIREN = registerSoundEvent("cop_siren");
 
+    public static final RegistryObject<SoundEvent> EVA_MUSIC_DISC = registerSoundEvent("eva");
+
 
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){

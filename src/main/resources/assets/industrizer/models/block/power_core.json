@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "industrizer:block/tube_core",
-		"particle": "industrizer:block/tube_core"
+		"0": "industrizer:block/power_core",
+		"particle": "industrizer:block/power_core"
 	},
 	"elements": [
 		{

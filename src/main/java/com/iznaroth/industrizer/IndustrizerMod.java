@@ -11,6 +11,7 @@ import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import com.iznaroth.industrizer.util.ModSoundEvents;
+import com.iznaroth.industrizer.util.tick.JobTickHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -47,6 +48,8 @@ public class IndustrizerMod
         // Register the setup method for modloading
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+
         IndustrizerItems.register(eventBus);
         IndustrizerBlocks.register(eventBus);
 
@@ -75,8 +78,10 @@ public class IndustrizerMod
 
         registerCommonEvents(eventBus);
 
+        forgeEventBus.register(JobTickHelper.class);
+
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        forgeEventBus.register(this);
     }
 
     public void setup(final FMLCommonSetupEvent event)

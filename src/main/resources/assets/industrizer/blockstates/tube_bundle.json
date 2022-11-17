@@ -1,31 +1,31 @@
 {
   "multipart": [
     {
-      "apply": { "model": "industrizer:block/power_core"}
+      "apply": { "model": "industrizer:block/bundle_core"}
     },
 
     {   "when": { "north": "true" },
-      "apply": { "model": "industrizer:block/tube_north"}
+      "apply": { "model": "industrizer:block/bundle_north"}
     },
 
     {   "when": { "east": "true" },
-      "apply": { "model": "industrizer:block/tube_east" }
+      "apply": { "model": "industrizer:block/bundle_east" }
     },
 
     {   "when": { "south": "true" },
-      "apply": { "model": "industrizer:block/tube_south"}
+      "apply": { "model": "industrizer:block/bundle_south"}
     },
 
     {   "when": { "west": "true" },
-      "apply": { "model": "industrizer:block/tube_west"}
+      "apply": { "model": "industrizer:block/bundle_west"}
     },
 
     {   "when": { "up": "true" },
-      "apply": { "model": "industrizer:block/tube_up"}
+      "apply": { "model": "industrizer:block/bundle_up"}
     },
 
     {   "when": { "down": "true" },
-      "apply": { "model": "industrizer:block/tube_down"}
+      "apply": { "model": "industrizer:block/bundle_down"}
     }
   ]
 }

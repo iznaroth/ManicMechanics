@@ -44,6 +44,7 @@ public class ClientSetup {
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
         // Tell the renderer that the base is rendered using CUTOUT_MIPPED (to match the Block Hopper)
         RenderTypeLookup.setRenderLayer(IndustrizerBlocks.RENDER_TESTER.get(), RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(IndustrizerBlocks.BOUNDING_TESTER.get(), RenderType.cutoutMipped());
         // Register the custom renderer for our tile entity
         System.out.println("Binding renderer.");
         ClientRegistry.bindTileEntityRenderer(IndustrizerTileEntities.RENDER_TESTER_TILE.get(), TileRendererRT::new);

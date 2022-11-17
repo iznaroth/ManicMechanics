@@ -1,50 +1,81 @@
 package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
-import com.iznaroth.industrizer.block.TransportTubeBlock;
-import com.iznaroth.industrizer.logistics.ILogisticTube;
-import com.iznaroth.industrizer.logistics.ITransporter;
-import com.iznaroth.industrizer.render.TubeBundleTileRenderer;
-import net.minecraft.block.AbstractBlock;
+import com.iznaroth.industrizer.block.tube.TransportTubeBlock;
+import com.iznaroth.industrizer.block.tube.TubeBundleBlock;
+import com.iznaroth.industrizer.logistics.Connection;
+import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
+import com.iznaroth.industrizer.util.TubeBundleStateMapper;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-
-import java.util.ArrayList;
 
 public class TubeBundleTile extends TileEntity  {
 
-    private boolean[] tubesInBlock = new boolean[]{false, false, false, false};
-    private boolean[] activeConnections = new boolean[]{false, false, false, false, false, false};
+    private boolean[] tubesInBlock = new boolean[]{false, false, false, false}; //LOGISTIC / ENERGY / FLUID / GAS
+    private Connection[] connections = new Connection[]{null, null, null, null, null, null}; //IF NULL PRESUME NO CONTACT
+
+
+
+    private LogisticNetworkManager manager; //reference to current network for logical ops
 
     /**
-     * Let's talk about implementation. This (the Tile Entity) is responsible for serving the state that the block needs to update.
-     *  It will be linked to the Renderer, which will actually handle all the drawing based on what's in here.
-     *  Imagine it like this - the Block recieves the updates & transmits that information as necessary,
-     *  the Tile preserves that state and provides it to the renderer
-     *  the renderer uses all the Tile's information to draw the block.
+     * The TubeBundleTile has a misleading name - it represents the tile attached to any logistic network tube - power, items, liquid or gas.
+     * It primarily acts as a storage for references to "what is in the block itself" and "what, if anything, we are connected to".
+     * The actual work on-network is done through any stored Connection objects (which obviously must be deserialized into NBT on unload, so they aren't very heavy either)
+     * which reference their parent tile to see which kind of jobs they need to try and do.
      *
-     *  When any tube is placed, it actually creates a TubeBundle (enderIO has single-cable normals that are replaced by a Bundle, which could be more performant)
-     *  which initializes the tile with one type slot filled by the placed tube. Whenever use() is called on a TubeBundle block, it updates this tile's map of
-     *  stored types and their assigned locations. The default model for a bundle is a 2x2x2 cube that will not be visible in any configuration, for debugging's sake.
-     *  The rest of the model is loaded by the TubeBundleTile's render helpers & model builders. The render helpers also pass-down the final tube map so that the tile can build
-     *  and pass-down the VoxelShape to build for the actual block.
+     * This class is mostly to provide that information, keep a reference to its parent network, and update the block visuals.
      *
-     *  Basically, whenever the TubeBundleBlock's updateShape override is called / some kind of TileEntityUpdated function hits from an adjacent tile, it passes the request up
-     *  to the tile to update the built model. We should probably cache the model somehow (but test it without caching first, space-complexity of storing those models may be WAY worse)
-     *  The block basically just fires a signal, and the tile then updates whatever it needs to update. The renderer is constantly(?) asking how to draw the bundle, and so
-     *  the model-bakeries & helpers will now construct an updated model for all of the changed blocks.
-     *
+     * It may be unpacked if it proves too architecturally janky to use, instead utilizing individual TEs for each conduit type.
      */
 
 
     public TubeBundleTile() {
         super(IndustrizerTileEntities.TUBE_BUNDLE_TILE.get());
+    }
+
+
+    @Override
+    public void onLoad(){
+        TubeBundleTile old = TubeBundleStateMapper.checkAndPurge(this.getBlockPos());
+
+        if(old != null){
+            System.out.println("Mapping parameters!");
+            this.copyInto(old); //Horrible method for saving state when a tube is converted into a full bundle. Sorry!
+        }
 
         this.setupInitialConnections();
+
+        Block parent = this.getBlockState().getBlock();
+        if(parent instanceof TubeBundleBlock){ //TBB has unique comparison conditions on spawn that require a stall before the shape can be fully-constructed.
+            refreshModelConnections();
+        }
+    }
+
+    @Override
+    public CompoundNBT save(CompoundNBT tag){
+        CompoundNBT result = new CompoundNBT();
+        //Need a way to decompose & rebuild connections.
+        result.putBoolean("has_logistic", tubesInBlock[0]);
+        result.putBoolean("has_power", tubesInBlock[1]);
+        result.putBoolean("has_fluid", tubesInBlock[2]);
+        result.putBoolean("has_gas", tubesInBlock[3]);
+
+        return result;
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT tag){
+        tubesInBlock[0] = tag.getBoolean("has_logistic");
+        tubesInBlock[1] = tag.getBoolean("has_power");
+        tubesInBlock[2] = tag.getBoolean("has_fluid");
+        tubesInBlock[3] = tag.getBoolean("has_gas");
 
     }
 
@@ -52,23 +83,76 @@ public class TubeBundleTile extends TileEntity  {
         return this.level.getBlockEntity(thisPos.relative(where));
     }
 
-    public void addTubeToBlock(int which){
-
-        //Shrink if this tube isn't already in the block.
-
-        this.tubesInBlock[which] = true;
-    }
-
     public void setupInitialConnections(){
         int i = 0;
 
         for(Direction dir : Direction.values()){
-            BlockPos toCheck = this.worldPosition.relative(dir);
 
-            if(level.getBlockState(toCheck).getBlock() instanceof TransportTubeBlock || level.getBlockState(toCheck).getBlock().equals(IndustrizerBlocks.TUBE_BUNDLE.get())){
-                activeConnections[i] = true;
+
+            BlockPos toCheck = this.worldPosition.relative(dir);
+            //System.out.println(toCheck);
+
+            if(this.level.getBlockState(toCheck) != null) {
+
+                if (this.level.getBlockState(toCheck).getBlock() instanceof TransportTubeBlock || this.level.getBlockState(toCheck).getBlock().equals(IndustrizerBlocks.TUBE_BUNDLE.get())) {
+                    //activeConnections[i] = true;
+
+                    inheritUpdateLogisticNetwork((TubeBundleTile) this.level.getBlockEntity(toCheck)); //WARNING - This is probably an unsafe cast!
+                }
+            }
+
+            if(this.manager == null){
+                createLogisticNetwork(); //this tube has no connections, so we make a new manager.
             }
             i++;
+        }
+    }
+
+    public void inheritUpdateLogisticNetwork(TubeBundleTile from){
+        //This is called when a newly-placed tube is connected to an existing network. It inherits the network and marks it as dirty (flush route cache)
+
+        if(this.manager != null && !this.manager.equals(from.getNetworkManager())){
+            //This is a second, unique network manager - we are linking to multiple previously-separate networks and need to commit a merge first.
+
+            this.manager = mergeCopyNetwork(from.getNetworkManager()); //This is redundant - the Network Manager will call updateParentNetwork on every contained tube-bundle.
+
+            return;
+        }
+    }
+
+    public void createLogisticNetwork(){
+        LogisticNetworkManager nw_manager = new LogisticNetworkManager();
+        this.manager = nw_manager;
+    }
+
+    public LogisticNetworkManager mergeCopyNetwork(LogisticNetworkManager other){
+        //The "first-referred network" is the parent, and the newly-found is merged in.
+        return this.manager.mergeWithProvided(other);
+    }
+
+    public void addTube(int which) {
+        if(which > 3){
+            throw new IllegalArgumentException("Only 4 types of tubes!");
+        }
+
+        tubesInBlock[which] = true;
+    }
+
+    public void downgradeBlockToTube(int type){
+        //Whenever a bundle has only one tube type, we have to downgrade it back to its remaining block.
+    }
+
+    public void removeTube(int which) throws Exception {
+        if(which > 3){
+            throw new IllegalArgumentException("Only 4 types of tubes!");
+        }
+
+        tubesInBlock[which] = false;
+
+        if(getStuffedTubeCount() == 1){
+            downgradeBlockToTube(-1); //PLACEHOLDER!
+        } else if(getStuffedTubeCount() == 0){
+            throw new Exception("A TubeBundle's stuffed count has reached zero! This should never happen.");
         }
     }
 
@@ -82,81 +166,60 @@ public class TubeBundleTile extends TileEntity  {
         return total;
     }
 
-    public int getNumConnections(){
-        int total = 0;
-        for(boolean each : activeConnections){
-            if(each){
-                total++;
-            }
-        }
-        return total;
-    }
-
     public boolean[] getTubesInBlock(){
         return this.tubesInBlock;
     }
 
-    public boolean[] getActiveConnectionSides(){
-        return this.activeConnections;
+    public boolean hasTube(int which){
+        return tubesInBlock[which];
     }
 
-    public void decideCenterpieceToRender(){
-        int in_this = this.getStuffedTubeCount();
 
-        CenterpieceType result = CenterpieceType.SINGLE;
-        DirectionForCenterpiece dir = DirectionForCenterpiece.NS;
+    public LogisticNetworkManager getNetworkManager(){
+        return this.manager;
+    }
 
-        if(in_this > 1){
-            result = CenterpieceType.QUAD; // Force positionals or end up with a LOT of annoying decisions for type-pair attachments
+    public void setNetworkManager(LogisticNetworkManager manager){
+        this.manager = manager;
+    }
+
+    public Connection[] getConnections(){
+        return this.connections;
+    }
+
+    public void copyInto(TubeBundleTile other){
+        this.tubesInBlock = other.getTubesInBlock();
+        this.manager = other.getNetworkManager();
+        this.connections = other.getConnections(); //Should be everything relevant.
+    }
+
+    public boolean anyMatch(TubeBundleTile other){
+        boolean[] compare = other.getTubesInBlock();
+        for(int i = 0; i < 4; i++){
+            if(this.tubesInBlock[i] == compare[i]){
+                return true;
+            }
         }
 
-        int num_connections = this.getNumConnections();
-        boolean[] activeConnections = this.getActiveConnectionSides();
+        return false;
+    }
 
-        if(activeConnections[0] || activeConnections[1]){
-            dir = DirectionForCenterpiece.UD;
-        } else if(activeConnections[2] || activeConnections[3]){
-            dir = DirectionForCenterpiece.NS;
-        } else if(activeConnections[4] || activeConnections[5]){
-            dir = DirectionForCenterpiece.EW;
+    public void refreshModelConnections(){ //Called whenever something happens that would require a hard reevaluation of connections (namely addition and removal of conduits)
+        System.out.println("From inside this tile, my array looks like this: " + this.getTubesInBlock());
+
+        BlockState current = this.getBlockState();
+
+        for(Direction dir : Direction.values()){
+            //Safe recall of updateShape on every direction. Should not recieve a null tile this time.
+
+            current = current.getBlock().updateShape(current, dir, this.getLevel().getBlockState(this.worldPosition.relative(dir)), this.getLevel(), this.worldPosition, this.worldPosition.relative(dir));
         }
 
-        if(num_connections == 2 && (!(activeConnections[0] && activeConnections[1])
-                || !(activeConnections[2] && activeConnections[3])
-                || !(activeConnections[4] && activeConnections[5]))){ //This trips any time a 2-connection bundle ISN'T two cardinal directions
-            dir = DirectionForCenterpiece.NONE;
-            result = CenterpieceType.FULL;
-        }
+        this.getLevel().setBlockAndUpdate(this.getBlockPos(), current); //WARNING - I am unsure if setBlock will kill the TileEntity here.
 
-        if(num_connections > 2){ //Any extraneous connections necessitate a NONE/FULL.
-            dir = DirectionForCenterpiece.NONE;
-            result = CenterpieceType.FULL;
-        }
-
-        //At this point, the middle portion of the Tube Bundle would be decided, and the extensions can be handled independently.
-
+        System.out.println(this.getLevel());
 
     }
 
-    public void buildTubeQuadSets(){ //Based on the array of connections and each of their types
-
-        //For each common tube connection, check if it should be long or short and pass the correct parameters to the builder.
-
-
-    }
-
-    private enum CenterpieceType { //Todo - THIS ISN'T REALISTIC, WE'RE JUST THEORYCRAFTING DOWN HERE
-        SINGLE,
-        DOUBLE,
-        QUAD,
-        FULL
-    }
-
-    private enum DirectionForCenterpiece {
-        NS,
-        EW,
-        UD,
-        NONE
-    }
 
 }
