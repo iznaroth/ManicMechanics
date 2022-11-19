@@ -2,6 +2,8 @@ package com.iznaroth.industrizer.util;
 
 import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class LogisticJob {
@@ -22,6 +24,8 @@ public class LogisticJob {
         this.to_transfer = tr;
         this.from = from;
         this.to = to;
+
+        FluidStack
 
         this.parent = parent;
     }
