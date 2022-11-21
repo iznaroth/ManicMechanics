@@ -1,2 +1,4 @@
-package com.iznaroth.industrizer.logistics;public class IGasStorage {
+package com.iznaroth.industrizer.logistics;
+
+public class IGasStorage {
 }

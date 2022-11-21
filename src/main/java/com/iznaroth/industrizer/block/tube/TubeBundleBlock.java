@@ -80,7 +80,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
             //Tube Bundle connects to anything matching one of its known contents.
             return true;
         }
-        return false;
+        return canBuildConnection(iBlockReader, blockPos, direction);
     }
 
     @Nonnull
@@ -113,6 +113,34 @@ public class TubeBundleBlock extends AbstractTubeBlock {
         }
 
         return ActionResultType.PASS;
+    }
+
+    @Override
+    public boolean canBuildConnection(IBlockReader iBlockReader, BlockPos blockPos, Direction direction){
+        boolean[] tubesInBlock = ((TubeBundleTile) iBlockReader.getBlockEntity(blockPos)).getTubesInBlock();
+        //System.out.println(Arrays.toString(tubesInBlock));
+
+        if(tubesInBlock[0]){
+            if(((TransportTubeBlock) IndustrizerBlocks.TRANSPORT_TUBE.get()).canBuildConnection(iBlockReader, blockPos, direction))
+                return true;
+        }
+
+        if(tubesInBlock[1]){
+            if(((PowerTubeBlock) IndustrizerBlocks.POWER_TUBE.get()).canBuildConnection(iBlockReader, blockPos, direction))
+                return true;
+        }
+
+        if(tubesInBlock[2]){
+            if(((FluidTubeBlock) IndustrizerBlocks.FLUID_TUBE.get()).canBuildConnection(iBlockReader, blockPos, direction))
+                return true;
+        }
+
+        if(tubesInBlock[3]){
+             if(((GasTubeBlock) IndustrizerBlocks.GAS_TUBE.get()).canBuildConnection(iBlockReader, blockPos, direction))
+                return true;
+        }
+
+        return false;
     }
 
     //WARNING - this is an unsafe call! It only has assumed protection from null tile errors.

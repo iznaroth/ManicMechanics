@@ -30,8 +30,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -47,6 +49,23 @@ public class TransportTubeBlock extends AbstractTubeBlock {
     @Override
     public int getTubeType(){
         return 0; //THIS IS OVERRIDEN BY CHILDREN - 0 is Logistic, 1 is Fluid, 2 is Gas, 3 is Power
+    }
+
+    @Override
+    public boolean canBuildConnection(IBlockReader iBlockReader, BlockPos blockPos, Direction direction){
+        BlockPos neighborPos = blockPos.relative(direction);
+        BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
+        TubeBundleTile here = (TubeBundleTile) iBlockReader.getBlockEntity(blockPos); //We can presume this is not null, because this function is only called inside a function that verifies it.
+
+        System.out.println("Logistic Tube trying to connect to non-conduit face");
+
+
+        if(neighborBlockState.hasTileEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IItemHandler){
+            here.buildOrUpdateConnection(this.getTubeType(), direction); //dont worry it wont
+            return true;
+        }
+
+        return false;
     }
 
 }

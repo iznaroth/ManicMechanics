@@ -7,11 +7,11 @@ import com.iznaroth.industrizer.container.IndustrizerContainers;
 import com.iznaroth.industrizer.entity.ModEntityTypes;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.item.IndustrizerItems;
+import com.iznaroth.industrizer.logistics.ActiveConnectionQueue;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import com.iznaroth.industrizer.util.ModSoundEvents;
-import com.iznaroth.industrizer.util.tick.JobTickHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -78,7 +78,7 @@ public class IndustrizerMod
 
         registerCommonEvents(eventBus);
 
-        forgeEventBus.register(JobTickHelper.class);
+        forgeEventBus.register(ActiveConnectionQueue.class);
 
         // Register ourselves for server and other game events we are interested in
         forgeEventBus.register(this);

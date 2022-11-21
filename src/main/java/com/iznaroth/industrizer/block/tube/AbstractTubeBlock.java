@@ -76,7 +76,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
     public BlockState updateShape(BlockState thisBlockState, Direction directionFromThisToNeighbor, BlockState neighborState,
                                   IWorld world, BlockPos thisBlockPos, BlockPos neighborBlockPos) {
 
-        System.out.println("-------------------- UPDATESHAPE IS BEING CALLED BY " + this.getClass().getTypeName() + " ------------------------------- ");
+        //System.out.println("-------------------- UPDATESHAPE IS BEING CALLED BY " + this.getClass().getTypeName() + " ------------------------------- ");
 
         switch (directionFromThisToNeighbor) {  // Only update the specified direction.  Uses a switch for clarity but probably a map or similar is better for real code
             case UP:
@@ -123,7 +123,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
 
         Block with = Block.byItem(player.getItemInHand(hand).getItem());
 
-        if(with instanceof AbstractTubeBlock && !with.equals(state.getBlock())) {
+        if(!(with instanceof TubeBundleBlock) && with instanceof AbstractTubeBlock && !with.equals(state.getBlock())) { //TODO - Unwrap TBB as AbstractTubeBlock or find a better identifier.
             TubeBundleTile target = (TubeBundleTile) world.getBlockEntity(pos);
             assert target != null;
             target.addTube(((AbstractTubeBlock) with).getTubeType());
@@ -132,7 +132,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
 
             return ActionResultType.SUCCESS; //This should create the tile-entity as well?
         }
-        
+
 
         return ActionResultType.PASS;
     }
@@ -163,6 +163,12 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
         BlockPos neighborPos = blockPos.relative(direction);
         BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
         Block neighborBlock = neighborBlockState.getBlock();
+        TubeBundleTile here = (TubeBundleTile) iBlockReader.getBlockEntity(blockPos);
+
+        if(here == null){
+            System.out.println("Tile uninitialized. Waiting for shape update!");
+            return false; //We are in preinit and the TE is not ready yet. updateShape will be recalled for all directions once the TE wakes up. This is important to prevent synchro crashes
+        }                 //when we want to build and activate CONNECTIONS.
 
         if (neighborBlock == Blocks.BARRIER) return false;
         if (isExceptionForConnection(neighborBlock)) return false;
@@ -171,7 +177,13 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
             //System.out.println("True for " + direction);
             return true;
         }
-        return false;
+
+        return this.canBuildConnection(iBlockReader, blockPos, direction);
+    }
+
+    public boolean canBuildConnection(IBlockReader iBlockReader, BlockPos blockPos, Direction direction){
+        System.out.println("YOU SHOULD NEVER SEE THIS MESSAGE. cBC called from abstract.");
+        return false; //This is overriden by all children!  It returns "true" when the correct type of handler is attached.
     }
 
 
@@ -278,7 +290,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
     }
 
     public int getTubeType(){
-        return -1; //THIS IS OVERRIDEN BY CHILDREN - 0 is Logistic, 1 is Fluid, 2 is Gas, 3 is Power
+        return -1; //THIS IS OVERRIDEN BY CHILDREN - 0 is Logistic, 1 is Power, 2 is Fluid, 3 is Gas
     }
 
     public int getTubeType(Item from){

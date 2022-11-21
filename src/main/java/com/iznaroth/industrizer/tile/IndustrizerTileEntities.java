@@ -25,7 +25,7 @@ public class IndustrizerTileEntities {
 
     public static final RegistryObject<TileEntityType<TileRenderTester>> RENDER_TESTER_TILE = TILE_ENTITIES.register("render_tester_tile", () -> TileEntityType.Builder.of(TileRenderTester::new, IndustrizerBlocks.RENDER_TESTER.get()).build(null)); //FIGURE THIS SHIT OUT!
 
-    public static final RegistryObject<TileEntityType<TubeBundleTile>> TUBE_BUNDLE_TILE = TILE_ENTITIES.register("tube_bundle_tile", () -> TileEntityType.Builder.of(TubeBundleTile::new, IndustrizerBlocks.TUBE_BUNDLE.get()).build(null)); //FIGURE THIS SHIT OUT!
+    public static final RegistryObject<TileEntityType<TubeBundleTile>> TUBE_BUNDLE_TILE = TILE_ENTITIES.register("tube_bundle_tile", () -> TileEntityType.Builder.of(TubeBundleTile::new, IndustrizerBlocks.TRANSPORT_TUBE.get(), IndustrizerBlocks.POWER_TUBE.get(), IndustrizerBlocks.FLUID_TUBE.get(), IndustrizerBlocks.GAS_TUBE.get(), IndustrizerBlocks.TUBE_BUNDLE.get()).build(null)); //FIGURE THIS SHIT OUT!
 
     public static void register(IEventBus eventBus) {
         TILE_ENTITIES.register(eventBus);

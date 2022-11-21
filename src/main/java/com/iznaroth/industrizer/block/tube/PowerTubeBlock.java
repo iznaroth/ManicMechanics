@@ -26,6 +26,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -40,6 +42,18 @@ public class PowerTubeBlock extends AbstractTubeBlock {
     @Override
     public int getTubeType(){
         return 1;
+    }
+
+    @Override
+    public boolean canBuildConnection(IBlockReader iBlockReader, BlockPos blockPos, Direction direction){
+        BlockPos neighborPos = blockPos.relative(direction);
+        BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
+
+        if(neighborBlockState.hasTileEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IEnergyStorage){
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -1,2 +1,4 @@
-package com.iznaroth.industrizer.logistics;public class IFluidStorage {
+package com.iznaroth.industrizer.logistics;
+
+public class IFluidStorage {
 }
