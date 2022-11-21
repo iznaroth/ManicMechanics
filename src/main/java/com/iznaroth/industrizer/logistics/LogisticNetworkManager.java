@@ -5,21 +5,11 @@ import com.iznaroth.industrizer.logistics.job.GasJob;
 import com.iznaroth.industrizer.logistics.job.LogisticJob;
 import com.iznaroth.industrizer.logistics.job.PowerJob;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
-import com.sun.xml.internal.ws.api.pipe.Tube;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import org.jline.utils.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -41,19 +31,19 @@ public class LogisticNetworkManager {
 
     //Job traversal helper lists. Pulled from connections on wakeup.
             //Must be 2D due to bundles allowing a full network with many orphan subnetworks.
-    private ArrayList<ArrayList<Connection>> storage_subnetworks;
-    private ArrayList<ArrayList<Connection>> power_subnetworks;
-    private ArrayList<ArrayList<Connection>> fluid_subnetworks;
-    private ArrayList<ArrayList<Connection>> gas_subnetworks;
+    private ArrayList<ArrayList<Connection>> storage_subnetworks = new ArrayList<>();
+    private ArrayList<ArrayList<Connection>> power_subnetworks = new ArrayList<>();
+    private ArrayList<ArrayList<Connection>> fluid_subnetworks = new ArrayList<>();
+    private ArrayList<ArrayList<Connection>> gas_subnetworks = new ArrayList<>();
 
     /**
      * Job caches do not all work the same - particularly power. Each network only has one open power job which seeks to maximally saturate the network whenever any power is available.
      * For all others, the Cache is a list of lists of jobs, where each list is the set of legal jobs a given connection is allowed to perform so long as it is using the same operation.
      */
-    private ArrayList<ArrayList<LogisticJob>> item_cache;
-    private ArrayList<PowerJob> open_power_rq;
-    private ArrayList<ArrayList<FluidJob>> fluid_cache;
-    private ArrayList<ArrayList<GasJob>> gas_cache;
+    private ArrayList<ArrayList<LogisticJob>> item_cache = new ArrayList<>();
+    private ArrayList<PowerJob> open_power_rq = new ArrayList<>();
+    private ArrayList<ArrayList<FluidJob>> fluid_cache = new ArrayList<>();
+    private ArrayList<ArrayList<GasJob>> gas_cache = new ArrayList<>();
 
 
 
@@ -183,21 +173,56 @@ public class LogisticNetworkManager {
         ArrayList<LogisticJob> cxnCache = new ArrayList<LogisticJob>(); //what we're building
 
         for(Connection to : subnetwork){
-            int slot = to.getFirstLegalInsertSlot(toInsert);
-            if(slot != -1){ //Indicates that the item we tested is valid to insert somewhere in the connected inventory
-                LogisticJob newJob = new LogisticJob(toInsert, cxn, to, cxn.getSlotFrom(), slot); //A new job is cached!
-                cxnCache.add(newJob);
+
+            if(to == cxn){
+                System.out.println("Skip self in caching jobs");
+            } else {
+                int slot = to.getFirstLegalInsertSlot(toInsert);
+                if (slot != -1) { //Indicates that the item we tested is valid to insert somewhere in the connected inventory
+                    LogisticJob newJob = new LogisticJob(toInsert, cxn, to, cxn.getSlotFrom(), slot); //A new job is cached!
+                    cxnCache.add(newJob);
+                }
             }
         }
-        this.item_cache.add(cxnCache); //All legal jobs for the given circumstances are queued.
-        return this.item_cache.size() - 1; //This is the index the connection will check so long as it is trying for the same job.
+
+        if(cxn.item_cache != -1){
+            this.item_cache.set(cxn.item_cache, cxnCache);
+            return cxn.item_cache; //replace and reuse old slot!
+        } else {
+            this.item_cache.add(cxnCache); //All legal jobs for the given circumstances are queued.
+            return this.item_cache.size() - 1; //This is the index the connection will check so long as it is trying for the same job.
+        }
+
+    }
+
+    public int useOrFindMovedCacheEntry(Connection cxn, int old){ //This just does Logistic right now. Oops
+
+        if(old == -1){
+            return -1; //We never found a cache match. Assume failure and rebuild.
+        }
+
+        if(this.item_cache.get(old).get(0).from != cxn){ //This cache isn't the correct one? Search backwards from this index until we find it. Since caches only move on remove, they can only move down in index.
+            return useOrFindMovedCacheEntry(cxn, old - 1); //navigate downwards until we find a match, then return it up the hierarchy.
+        }
+
+        //This is only reached when OLD matches the cxn, for the recursion
+        return old;
     }
 
     //
-    public boolean executeCacheEntry(int idx, int type){ //NOTE - wrap job types as AbstractJob children, make caches public, let the cxns pass them to these functions to eliminate switchers
+    public boolean executeLogisticCacheEntry(int idx){
         //This function either passes each job to the executor, or returns false if the cache is empty.
         //NOTE - Another one! Cache numbering means INVALIDATION CANNOT BE DELETION! You need to leave the cache entry populated in a way identifiable as an invalidated entry so this can do cleanup.
 
+        ArrayList<LogisticJob> toExecute = this.item_cache.get(idx);
+
+        for(LogisticJob job : toExecute){
+            boolean flag = job.tryAndExecute();
+            if(flag)
+                return true; //do first legal job by distance.
+        }
+
+        //No jobs were executed legally? something went wrong.
         return false;
     }
 
@@ -210,7 +235,7 @@ public class LogisticNetworkManager {
             sortmap.put(distance, to);
         }
 
-        return (ArrayList<Connection>) sortmap.values(); //is this a weird cast? my degree is useless man
+        return new ArrayList<>(sortmap.values());
     }
 
     public boolean invalidateJobList(int idx){

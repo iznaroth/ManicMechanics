@@ -6,9 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.IItemHandler;
 
-import java.util.concurrent.ExecutionException;
 
 public class Connection {
     //An array of Connections is attached to every logistic tube. It is populated as connections to valid machines are made.
@@ -72,6 +71,8 @@ public class Connection {
         if (this.parent.hasTube(0) && item_counter <= 0 && connection_mode == 1) { //ITEMS
             System.out.println("Try to enqueue job for ITEM TRANSFER");
 
+            this.executeLogisticJob();
+
             item_counter = 10; //NOTE - These values are going to pull from server properties.
         }
 
@@ -100,20 +101,25 @@ public class Connection {
             return;
         }
 
-        if(compare != this.activeItem){
+        //Check our network for a cache hit.
+        if(item_cache == -1 || compare != this.activeItem){ //Either an uninitialized network or a changed job.
+            System.out.println("Building cache.");
+            this.item_cache = this.parent.getNetworkManager().buildLogisticJobCache(this, compare);
             this.activeItem = compare;
         }
 
-        //Check our network for a cache hit.
-        if(item_cache == -1){ //This is a fresh contact. Initialize cache.
-            this.parent.getNetworkManager().buildLogisticJobCache(this, this.activeItem);
+        //We need to check if the idx we have still corresponds to this connection (check if the job property still lists this as the FROM contact). If not, we need to find where it went.
+        item_cache = this.parent.getNetworkManager().useOrFindMovedCacheEntry(this, this.item_cache);
+
+        if(item_cache == -1){ //No cache hit!
+
         }
 
-        //boolean complete = this.parent.executeCacheEntry(this.item_cache); //Regardless of if this is newly-initialized, lookup and try to execute from our existing cache reference.
+        boolean complete = this.parent.getNetworkManager().executeLogisticCacheEntry(this.item_cache); //Regardless of if this is newly-initialized, lookup and try to execute from our existing cache reference.
     }
 
     public ItemStack getNewItemOutput(){
-        ItemStackHandler handler = (ItemStackHandler) this.attached.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler handler = this.attached.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 
         if(handler == null){
             throw new NullPointerException("Connection's handler did not return the expected capability.");
@@ -172,7 +178,7 @@ public class Connection {
     }
 
     public int getFirstLegalInsertSlot(ItemStack toInsert){
-        ItemStackHandler handler = (ItemStackHandler) this.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler handler = this.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         if(handler == null){
             throw new NullPointerException("Subnetwork contact does not have expected capability.");
         }
@@ -186,6 +192,28 @@ public class Connection {
         }
 
         return -1;
+    }
+
+    public void cycleMode(){
+        if(this.connection_mode == 0) { //From NONE to EXTRACT
+            this.connection_mode++;
+            System.out.println("Cycled connection mode to EXTRACT for " + this.contactPoint);
+
+            if(!ActiveConnectionQueue.queue.contains(this)){
+                ActiveConnectionQueue.enqueueActive(this); //Connection will now be ticked and try to perform jobs.
+            }
+
+        }else if(this.connection_mode == 1) { //From EXTRACT to INTAKE
+            this.connection_mode++;
+            System.out.println("Cycled connection mode to INTAKE for " + this.contactPoint);
+
+            if(ActiveConnectionQueue.queue.contains(this)){
+                ActiveConnectionQueue.dequeueInactive(this); //Connection is purged. This performs a dirty cache invalidation that will need to be corrected.
+            }
+        }else if(this.connection_mode == 2) { //From INTAKE to NONE
+            this.connection_mode = 0;
+            System.out.println("Cycled connection mode to NONE for " + this.contactPoint);
+        }
     }
 
 }

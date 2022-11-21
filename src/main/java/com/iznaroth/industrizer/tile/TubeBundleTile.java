@@ -1,12 +1,14 @@
 package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
+import com.iznaroth.industrizer.block.tube.AbstractTubeBlock;
 import com.iznaroth.industrizer.block.tube.TransportTubeBlock;
 import com.iznaroth.industrizer.block.tube.TubeBundleBlock;
 import com.iznaroth.industrizer.logistics.Connection;
 import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -57,10 +59,7 @@ public class TubeBundleTile extends TileEntity {
 
         this.setupInitialConnections();
 
-        Block parent = this.getBlockState().getBlock();
-        if(parent instanceof TubeBundleBlock){ //TBB has unique comparison conditions on spawn that require a stall before the shape can be fully-constructed.
-            refreshModelConnections();
-        }
+        refreshModelConnections(); //We usually need to access the tile to build the right initial shape, so we wait.
 
         this.setChanged();
     }
@@ -165,7 +164,7 @@ public class TubeBundleTile extends TileEntity {
 
             if(this.level.getBlockState(toCheck) != null) {
 
-                if (this.level.getBlockState(toCheck).getBlock() instanceof TransportTubeBlock || this.level.getBlockState(toCheck).getBlock().equals(IndustrizerBlocks.TUBE_BUNDLE.get())) {
+                if (this.level.getBlockState(toCheck).getBlock() instanceof AbstractTubeBlock || this.level.getBlockState(toCheck).getBlock().equals(IndustrizerBlocks.TUBE_BUNDLE.get())) {
                     //activeConnections[i] = true;
 
                     inheritUpdateLogisticNetwork((TubeBundleTile) this.level.getBlockEntity(toCheck)); //WARNING - This is probably an unsafe cast!
@@ -192,11 +191,15 @@ public class TubeBundleTile extends TileEntity {
             this.setChanged();
 
             return;
+        } else {
+            this.manager = from.getNetworkManager();
+            this.manager.addTileToGrid(this);
         }
     }
 
     public void createLogisticNetwork(){
         this.manager = new LogisticNetworkManager();
+        this.manager.addTileToGrid(this);
         this.setChanged();
     }
 

@@ -5,6 +5,8 @@ import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class LogisticJob {
@@ -36,21 +38,24 @@ public class LogisticJob {
     }
 
 
-    /**
-    public boolean execute(){
+
+    public boolean tryAndExecute(){
         int valid = testJobValidity();
 
+        IItemHandler fromHandler = from.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+        IItemHandler toHandler = to.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+
         if(valid > 0){
-            from.extractItem(from_slot, valid, false); //valid was assigned maximum possible send. If this returns a collision, throw an error.
-            ItemStack remainder = to.insertItem(to_slot, to_transfer, false);
+            fromHandler.extractItem(from_slot, 4, false); //Valid is supposed to be given a server_properties value for batch size - not yet tho! :)
+            ItemStack remainder = toHandler.insertItem(to_slot, to_transfer, false);
             if(remainder.getCount() > 0){
-                from.insertItem(from_slot, remainder, false);
+                fromHandler.insertItem(from_slot, remainder, false);
             }
             return true;
         } else {
             return false; //Job is illegal.
         }
     }
-     **/
+
 
 }

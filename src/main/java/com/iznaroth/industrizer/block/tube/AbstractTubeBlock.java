@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.block.tube;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.item.IndustrizerItems;
+import com.iznaroth.industrizer.logistics.Connection;
 import com.iznaroth.industrizer.logistics.ILogisticTube;
 import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
@@ -118,6 +119,13 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
             System.out.println("Used widget!");
             boolean[] contents = on.getTubesInBlock();
             System.out.println(Arrays.toString(contents));
+
+            for(Connection cxn : on.getConnections()){
+                if(cxn != null)
+                    cxn.cycleMode();
+            }
+
+            return ActionResultType.SUCCESS;
         }
 
 

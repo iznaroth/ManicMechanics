@@ -7,6 +7,7 @@ import com.iznaroth.industrizer.tile.TubeBundleTile;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -60,7 +62,7 @@ public class TransportTubeBlock extends AbstractTubeBlock {
         System.out.println("Logistic Tube trying to connect to non-conduit face");
 
 
-        if(neighborBlockState.hasTileEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IItemHandler){
+        if(neighborBlockState.hasTileEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IItemHandler || iBlockReader.getBlockEntity(neighborPos) instanceof IInventory){
             here.buildOrUpdateConnection(this.getTubeType(), direction); //dont worry it wont
             return true;
         }
