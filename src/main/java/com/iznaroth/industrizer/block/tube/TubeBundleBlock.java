@@ -78,6 +78,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
 
         if (((neighborBlock instanceof AbstractTubeBlock && !(neighborBlock instanceof TubeBundleBlock) && here.hasTube(((AbstractTubeBlock) neighborBlock).getTubeType())) || (neighborBlock == IndustrizerBlocks.TUBE_BUNDLE.get() && ((TubeBundleTile) iBlockReader.getBlockEntity(neighborPos)).anyMatch(here)))) {
             //Tube Bundle connects to anything matching one of its known contents.
+            here.addTileNeighbor((TubeBundleTile) iBlockReader.getBlockEntity(here.getBlockPos().relative(direction)), direction.ordinal());
             return true;
         }
         return canBuildConnection(iBlockReader, blockPos, direction);

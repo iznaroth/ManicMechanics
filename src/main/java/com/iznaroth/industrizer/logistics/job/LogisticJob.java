@@ -40,17 +40,29 @@ public class LogisticJob {
 
 
     public boolean tryAndExecute(){
-        int valid = testJobValidity();
+        int valid = 1;
 
         IItemHandler fromHandler = from.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         IItemHandler toHandler = to.getAttached().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 
         if(valid > 0){
             fromHandler.extractItem(from_slot, 4, false); //Valid is supposed to be given a server_properties value for batch size - not yet tho! :)
+
             ItemStack remainder = toHandler.insertItem(to_slot, to_transfer, false);
-            if(remainder.getCount() > 0){
+
+            for(int i = to_slot + 1; i < toHandler.getSlots(); i++) { //Attempt to overfill to any other valid inventories.
+                remainder = toHandler.insertItem(i, remainder, false);
+
+            }
+
+            if (remainder.getCount() > 0) {
                 fromHandler.insertItem(from_slot, remainder, false);
             }
+
+            if(remainder.getCount() == 4){
+                return false; //This job failed due to perceived insufficient space.
+            }
+
             return true;
         } else {
             return false; //Job is illegal.

@@ -120,10 +120,19 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
             boolean[] contents = on.getTubesInBlock();
             System.out.println(Arrays.toString(contents));
 
-            for(Connection cxn : on.getConnections()){
-                if(cxn != null)
+            for (Connection cxn : on.getConnections()) {
+                if (cxn != null)
                     cxn.cycleMode();
             }
+
+
+            return ActionResultType.SUCCESS;
+        }
+
+        if(player.getItemInHand(hand).getItem().equals(IndustrizerItems.WALLET.get())){ //NOTE - remove this
+            System.out.println("Used wallet!");
+            Connection[] contents = on.getConnections();
+            System.out.println(Arrays.toString(contents));
 
             return ActionResultType.SUCCESS;
         }
@@ -183,6 +192,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
 
         if (neighborBlock == this.getBlock() || (neighborBlock == IndustrizerBlocks.TUBE_BUNDLE.get() && ((TubeBundleTile)iBlockReader.getBlockEntity(neighborPos)).hasTube(this.getTubeType()))) { //DEFAULT BEHAVIOR FOR TUBES = only connect to identicals and bundles. Bundles override this to link to all others.
             //System.out.println("True for " + direction);
+            here.addTileNeighbor((TubeBundleTile) iBlockReader.getBlockEntity(here.getBlockPos().relative(direction)), direction.ordinal());
             return true;
         }
 

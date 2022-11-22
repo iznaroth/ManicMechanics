@@ -27,6 +27,8 @@ public class TubeBundleTile extends TileEntity {
     private boolean[] tubesInBlock = new boolean[]{false, false, false, false}; //LOGISTIC / ENERGY / FLUID / GAS
     private Connection[] connections = new Connection[]{null, null, null, null, null, null}; //IF NULL PRESUME NO CONTACT
 
+    private TubeBundleTile[] validNeighbors = {null, null, null, null, null, null};
+
     private LogisticNetworkManager manager; //reference to current network for logical ops. Is not serializable (networks are rebuilt on world load)
 
     private boolean traverse_dirty = false; //used by network manager during traversal to track what tiles have been visited before.
@@ -209,8 +211,18 @@ public class TubeBundleTile extends TileEntity {
     }
 
     public TubeBundleTile hasTubeNeighbor(Direction direction){
-        if(Objects.requireNonNull(this.getLevel()).getBlockState(this.worldPosition.relative(direction)).hasTileEntity() && this.getLevel().getBlockEntity(this.getBlockPos().relative(direction)) instanceof TubeBundleTile){
-            return (TubeBundleTile) this.getLevel().getBlockEntity(this.getBlockPos().relative(direction));
+
+       // System.out.println(this.getLevel().getBlockState(this.worldPosition.relative(direction)).getBlock());
+       // System.out.println(this.getLevel().getBlockEntity(this.worldPosition.relative(direction)));
+
+       // TileEntity neighbor = this.getLevel().getBlockEntity(this.worldPosition.relative(direction));
+
+       // if(neighbor instanceof TubeBundleTile){
+       //     return (TubeBundleTile) neighbor;
+       // }
+
+        if(validNeighbors[direction.ordinal()] != null){
+            return validNeighbors[direction.ordinal()];
         }
 
         return null;
@@ -280,7 +292,6 @@ public class TubeBundleTile extends TileEntity {
     }
 
     public void copyInto(TubeBundleTile other){
-        System.out.println("COPYINTO HIT - VOLATILE");
         this.tubesInBlock = other.getTubesInBlock();
         this.manager = other.getNetworkManager();
         this.connections = other.getConnections(); //Should be everything relevant.
@@ -298,7 +309,6 @@ public class TubeBundleTile extends TileEntity {
     }
 
     public void refreshModelConnections(){ //Called whenever something happens that would require a hard reevaluation of connections (namely addition and removal of conduits)
-        System.out.println("Does refresh happen after data is properly loaded?");
 
         BlockState current = this.getBlockState();
 
@@ -310,16 +320,14 @@ public class TubeBundleTile extends TileEntity {
 
         this.getLevel().setBlockAndUpdate(this.getBlockPos(), current); //WARNING - I am unsure if setBlock will kill the TileEntity here.
 
-        //System.out.println(this.getLevel());
 
     }
 
     public void buildOrUpdateConnection(int type, Direction face){
         if(connections[face.ordinal()] == null){
             connections[face.ordinal()] = new Connection(this, this.getLevel().getBlockEntity(this.worldPosition.relative(face)), face);
-        } else {
-           connections[face.ordinal()].addActiveType(type);
         }
+        connections[face.ordinal()].addActiveType(type);
     }
 
     public void setTraverseDirty(){
@@ -332,6 +340,11 @@ public class TubeBundleTile extends TileEntity {
 
     public boolean isTraverseDirty(){
         return this.traverse_dirty;
+    }
+
+    public void addTileNeighbor(TubeBundleTile tile, int ordinalDir){
+        validNeighbors[ordinalDir] = tile;
+
     }
 
 }

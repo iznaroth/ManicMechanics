@@ -10,6 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -57,9 +58,7 @@ public class LogisticNetworkManager {
 
         //we ignore cache because it is invalidated by the change anyways
 
-        LogisticNetworkManager combined = new LogisticNetworkManager();
-
-        return combined;
+        return new LogisticNetworkManager();
     }
 
     public int startSearchRecursion(Connection from, int type){
@@ -74,9 +73,17 @@ public class LogisticNetworkManager {
         Direction startingVector = from.getContactDirection();
 
         ArrayList<Connection> toStore = new ArrayList<Connection>();
+
+        toStore = checkAndAddValidCon(toStore, from.getParentTile().getConnections(), type); //The subnetwork contains this cxn's parent's connection inventory as well.
+        System.out.println("This should have AT LEAST ONE CONNECTION no matter what: " + toStore.toString());
+
+
+        System.out.println("Start search from: " + from.getParentTile().getBlockPos());
         toStore = searchAndStoreNetwork(startingPoint, type, toStore, startingVector);
 
         cleanupTileNodes(); //Unmark all dirty nodes post-traversal.
+
+        System.out.println("BUILT A NEW SUBNETWORK FOR " + type + "! -- CONTENTS: " + toStore.toString());
 
         switch(type){
             case 0:
@@ -133,14 +140,22 @@ public class LogisticNetworkManager {
         for(Direction direction : Direction.values()){
 
             if(direction == previous){
-                System.out.println("Pass."); //Prevent back-and-forth cycling
+                System.out.println("Pass for " + direction); //Prevent back-and-forth cycling
             } else {
                 TubeBundleTile next = from.hasTubeNeighbor(direction);
+                System.out.println("Direction: " + direction + " , Contents: " + next);
+
+                if(next != null){
+                    System.out.println("Is it dirty?: " + next.isTraverseDirty());
+                }
+
                 if (next != null && !next.isTraverseDirty() && next.hasTube(type)) {
+
+                    System.out.println("Tube neighbor found " + direction);
 
                     unfinished_network = checkAndAddValidCon(unfinished_network, next.getConnections(), type);
 
-                    searchAndStoreNetwork(next, type, unfinished_network, direction);
+                    searchAndStoreNetwork(next, type, unfinished_network, direction.getOpposite());
                 }
             }
         }
@@ -151,8 +166,14 @@ public class LogisticNetworkManager {
     }
 
     public ArrayList<Connection> checkAndAddValidCon(ArrayList<Connection> unfinished_network, Connection[] tile_connections, int type){
+
+        System.out.println("CHECKING TILE CONNECTION LIST FOR VALIDITY: " + Arrays.toString(tile_connections));
+
         for(Connection con : tile_connections){
-            if(con.isTypeActive(type)){
+            if(con != null){
+                System.out.println(Arrays.toString(con.getActiveConnections()));
+            }
+            if(con != null && con.isTypeActive(type)){
                 unfinished_network.add(con);
             }
         }
@@ -165,7 +186,10 @@ public class LogisticNetworkManager {
     public int buildLogisticJobCache(Connection cxn, ItemStack toInsert){
         int parent = findParentSubnetworkFor(cxn, 0);
 
+        System.out.println("Building a new job cache for ItemStack: " + toInsert.toString());
+
         if(parent == -1){ //This is a FULLY-ORPHANED connection - it has no subnetwork yet.
+            System.out.println("MAJOR PROBLEM ---------- Failed to find subnetwork!");
             parent = startSearchRecursion(cxn, 0);
         }
 
@@ -185,11 +209,15 @@ public class LogisticNetworkManager {
             }
         }
 
-        if(cxn.item_cache != -1){
+        if(cxn.item_cache != -1){  //This is not the first time this connection has built a cache.
             this.item_cache.set(cxn.item_cache, cxnCache);
             return cxn.item_cache; //replace and reuse old slot!
-        } else {
+        } else { //This is a first-time build. Set the connection to ACTIVE and assign it.
+            if(!ActiveConnectionQueue.queue.contains(cxn)){
+                ActiveConnectionQueue.enqueueActive(cxn); //Connection will now be ticked and try to perform jobs. NOTE - This may be moved to post initial-exec-success
+            }
             this.item_cache.add(cxnCache); //All legal jobs for the given circumstances are queued.
+            System.out.println("Setting new cache IDX to " + (this.item_cache.size() - 1));
             return this.item_cache.size() - 1; //This is the index the connection will check so long as it is trying for the same job.
         }
 
@@ -199,6 +227,11 @@ public class LogisticNetworkManager {
 
         if(old == -1){
             return -1; //We never found a cache match. Assume failure and rebuild.
+        }
+
+        if(item_cache.get(old).size() == 0){
+            System.out.println(" ----------- Empty JobCache Created. There is likely a pathfinding issue. -----------");
+            return old;
         }
 
         if(this.item_cache.get(old).get(0).from != cxn){ //This cache isn't the correct one? Search backwards from this index until we find it. Since caches only move on remove, they can only move down in index.

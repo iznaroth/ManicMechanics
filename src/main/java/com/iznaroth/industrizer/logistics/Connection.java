@@ -3,6 +3,7 @@ package com.iznaroth.industrizer.logistics;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -22,6 +23,7 @@ public class Connection {
         }
 
         this.attached = attached;
+        System.out.println("Attached to " + attached);
 
         this.contactPoint = from;
     }
@@ -60,6 +62,7 @@ public class Connection {
     //}
 
     public void addActiveType(int which){ //NO REMOVE - a machine is not likely to "change types", and changing the machine destroys and rebuilds the connection anyways.
+        System.out.println(this.getContactDirection() + " has set  type active  for " + which);
         active_connections[which] = true;
     }
 
@@ -94,6 +97,11 @@ public class Connection {
     }
 
     public void executeLogisticJob(){
+
+        if(this.getParentTile().getLevel().isClientSide()){
+            return;
+        }
+
         //Check if this is a novel job. If it is, build a new cache.
         ItemStack compare = this.getNewItemOutput();
 
@@ -101,19 +109,21 @@ public class Connection {
             return;
         }
 
+        System.out.println("Trying to triangulate an existing cache entry for IDX " + this.item_cache);
+        item_cache = this.parent.getNetworkManager().useOrFindMovedCacheEntry(this, this.item_cache);
+
+        System.out.println("Comparing recorded job to read inventory. Old: " + this.activeItem.toString() + " New: " + compare.toString() + " also, the ItemCache value is " + this.item_cache);
+
         //Check our network for a cache hit.
-        if(item_cache == -1 || compare != this.activeItem){ //Either an uninitialized network or a changed job.
+        if(this.item_cache == -1 || !compare.sameItem(this.activeItem)){ // Cache lookup failed to find a valid parent (bad invalidation) OR new job came through.
             System.out.println("Building cache.");
             this.item_cache = this.parent.getNetworkManager().buildLogisticJobCache(this, compare);
             this.activeItem = compare;
         }
 
         //We need to check if the idx we have still corresponds to this connection (check if the job property still lists this as the FROM contact). If not, we need to find where it went.
-        item_cache = this.parent.getNetworkManager().useOrFindMovedCacheEntry(this, this.item_cache);
 
-        if(item_cache == -1){ //No cache hit!
-
-        }
+        System.out.println("Cache processed. Attempting to perform cached jobs.");
 
         boolean complete = this.parent.getNetworkManager().executeLogisticCacheEntry(this.item_cache); //Regardless of if this is newly-initialized, lookup and try to execute from our existing cache reference.
     }
@@ -129,8 +139,11 @@ public class Connection {
         int targetSlot = -1;
         ItemStack what = ItemStack.EMPTY;
 
+        System.out.println("Searching adjacent inventory for " + this.getParentTile().getBlockPos() + " going " + contactPoint);
+
         for(int i = 0; i < allSlots; i++){
             what = handler.extractItem(i, 1, true);
+            System.out.println("check slot " + i + ", got " + what);
             if(what != ItemStack.EMPTY){
                 targetSlot = i;
                 break;
@@ -144,6 +157,9 @@ public class Connection {
         }
 
         this.slot_from = targetSlot; //meh
+
+        what.setCount(4);
+
         return what;
     }
 
@@ -159,6 +175,10 @@ public class Connection {
 
     public TubeBundleTile getParentTile(){
         return this.parent;
+    }
+
+    public boolean[] getActiveConnections(){
+        return active_connections;
     }
 
     public boolean isTypeActive(int which){
@@ -199,8 +219,16 @@ public class Connection {
             this.connection_mode++;
             System.out.println("Cycled connection mode to EXTRACT for " + this.contactPoint);
 
-            if(!ActiveConnectionQueue.queue.contains(this)){
-                ActiveConnectionQueue.enqueueActive(this); //Connection will now be ticked and try to perform jobs.
+            if(item_cache == -1){ //Initialize cache if this is a novel wakeup.
+                ItemStack firstJob = this.getNewItemOutput();
+
+                if(firstJob != ItemStack.EMPTY || firstJob.getItem() != Items.AIR) {
+                    System.out.println("----------------- INITIATE ITEM CACHE ------------------" );
+
+                    this.activeItem = firstJob;
+                    this.item_cache = this.parent.getNetworkManager().buildLogisticJobCache(this, firstJob); //NOTE - This is a hack for troubleshooting. The system should be perpetually-running, but we're having some sync issues.
+                    this.executeLogisticJob();
+                }
             }
 
         }else if(this.connection_mode == 1) { //From EXTRACT to INTAKE
