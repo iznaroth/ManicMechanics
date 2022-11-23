@@ -310,6 +310,10 @@ public class LogisticNetworkManager {
         //Check the 1D power cache for the hit, panic if necessary, and distribute power to connections.
         //Power is prone to race-conditions to some degree, so we kinda just refund and move on if the job is illegal in-practice.
         //TODO - notification for bad power job types so-as to sleep connection.
+
+        PowerJob toExecute = open_power_rq.get(cached);
+        toExecute.tryAndExecute(); //TODO - This is completely unsafe and crash-worthy. Correct it!
+
         return false;
     }
 
