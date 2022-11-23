@@ -133,6 +133,8 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
             System.out.println("Used wallet!");
             Connection[] contents = on.getConnections();
             System.out.println(Arrays.toString(contents));
+            System.out.println(on.getNetworkManager());
+
 
             return ActionResultType.SUCCESS;
         }

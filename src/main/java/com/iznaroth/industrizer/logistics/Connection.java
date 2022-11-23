@@ -102,6 +102,8 @@ public class Connection {
             return;
         }
 
+        int fromSlot; //This is a shit implementation to get and reuse gNIO's slot read and pass it down to the job.
+
         //Check if this is a novel job. If it is, build a new cache.
         ItemStack compare = this.getNewItemOutput();
 
@@ -229,7 +231,19 @@ public class Connection {
                     this.item_cache = this.parent.getNetworkManager().buildLogisticJobCache(this, firstJob); //NOTE - This is a hack for troubleshooting. The system should be perpetually-running, but we're having some sync issues.
                     this.executeLogisticJob();
                 }
+            } else {
+                //Do a job validation check, then add self back into active.
+                if(!ActiveConnectionQueue.queue.contains(this)){
+                    ActiveConnectionQueue.enqueueActive(this); //Connection will now be ticked and try to perform jobs. NOTE - This may be moved to post initial-exec-success
+                }
             }
+
+            //NOTE - Extract also needs to revoke itself as a valid input when this happens. How do we do this?
+            //  Searching the Job Cache for instances of yourself as a destination is not super performant, but workable. For this, network also needs to ignore Extractors when searching for valid jobs.
+            //      That becomes an issue because purging yourself from the job cache sorta violates access rules AND means that going OFF extract needs to do the same thing, but to re-add yourself to any valid caches. Not great.
+            //  Just bouncing job requests if you're extract might be best. Currently it is horribly non-performant (continuously fail a job until a world situation changes) but the addition
+            //    of sleep & skip should help - add a Skip flag to jobs that aren't working due to volatile state, allowing something else to resume it whenever.
+            //    Then, add events that instruct the network to search Skipped Jobs when a member connection changes status.
 
         }else if(this.connection_mode == 1) { //From EXTRACT to INTAKE
             this.connection_mode++;

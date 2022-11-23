@@ -2,25 +2,14 @@ package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.block.tube.AbstractTubeBlock;
-import com.iznaroth.industrizer.block.tube.TransportTubeBlock;
-import com.iznaroth.industrizer.block.tube.TubeBundleBlock;
 import com.iznaroth.industrizer.logistics.Connection;
 import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class TubeBundleTile extends TileEntity {
 
@@ -88,8 +77,8 @@ public class TubeBundleTile extends TileEntity {
 
         super.load(state, tag);
 
-        System.out.println("Loading state for tileentity at " + this.worldPosition);
-        System.out.println("Loading this: " + tag.toString());
+        //System.out.println("Loading state for tileentity at " + this.worldPosition);
+        //System.out.println("Loading this: " + tag.toString());
 
         tubesInBlock[0] = tag.getBoolean("has_logistic");
         tubesInBlock[1] = tag.getBoolean("has_power");
@@ -169,14 +158,18 @@ public class TubeBundleTile extends TileEntity {
                 if (this.level.getBlockState(toCheck).getBlock() instanceof AbstractTubeBlock || this.level.getBlockState(toCheck).getBlock().equals(IndustrizerBlocks.TUBE_BUNDLE.get())) {
                     //activeConnections[i] = true;
 
+                    System.out.println("Inheriting neighbor network! This tube's manager should always be null: " + this.manager);
+
                     inheritUpdateLogisticNetwork((TubeBundleTile) this.level.getBlockEntity(toCheck)); //WARNING - This is probably an unsafe cast!
                 }
             }
 
-            if(this.manager == null){
-                createLogisticNetwork(); //this tube has no connections, so we make a new manager.
-            }
+
             i++;
+        }
+
+        if(this.manager == null){
+            createLogisticNetwork(); //this tube has no connections, so we make a new manager.
         }
 
         this.setChanged();
@@ -188,6 +181,7 @@ public class TubeBundleTile extends TileEntity {
         if(this.manager != null && !this.manager.equals(from.getNetworkManager())){
             //This is a second, unique network manager - we are linking to multiple previously-separate networks and need to commit a merge first.
 
+            System.out.println("Merging two networks together.");
             this.manager = mergeCopyNetwork(from.getNetworkManager()); //This is redundant - the Network Manager will call updateParentNetwork on every contained tube-bundle.
 
             this.setChanged();
@@ -229,7 +223,7 @@ public class TubeBundleTile extends TileEntity {
     }
 
     public void addTube(int which) {
-        System.out.println("ADDTUBE HIT - VOLATILE");
+        //System.out.println("ADDTUBE HIT - VOLATILE");
 
         if(which > 3){
             throw new IllegalArgumentException("Only 4 types of tubes!");

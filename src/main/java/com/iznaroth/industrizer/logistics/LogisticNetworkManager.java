@@ -287,6 +287,7 @@ public class LogisticNetworkManager {
 
     public void addTileToGrid(TubeBundleTile tile){
         all_nodes.add(tile);
+        System.out.println("Grid updated. Contents: " + this.all_nodes.toString() + " size check " + this.all_nodes.size());
     }
 
     public void cleanupTileNodes(){

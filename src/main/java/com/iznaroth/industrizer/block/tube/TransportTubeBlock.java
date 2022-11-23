@@ -59,7 +59,7 @@ public class TransportTubeBlock extends AbstractTubeBlock {
         BlockState neighborBlockState = iBlockReader.getBlockState(neighborPos);
         TubeBundleTile here = (TubeBundleTile) iBlockReader.getBlockEntity(blockPos); //We can presume this is not null, because this function is only called inside a function that verifies it.
 
-        System.out.println("Logistic Tube trying to connect to non-conduit face");
+        //System.out.println("Logistic Tube trying to connect to non-conduit face");
 
 
         if(neighborBlockState.hasTileEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IItemHandler || iBlockReader.getBlockEntity(neighborPos) instanceof IInventory){
