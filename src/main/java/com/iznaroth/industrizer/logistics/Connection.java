@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -38,6 +39,8 @@ public class Connection {
     private ItemStack activeItem;
     private int slot_from; //Secondary invalidation condition - pulling from a different slot is potentially volatile, even if the items match.
 
+    private boolean isProvider;
+
     private Fluid prev_fluid;
     //private Gas prev_gas;
 
@@ -64,6 +67,12 @@ public class Connection {
     public void addActiveType(int which){ //NO REMOVE - a machine is not likely to "change types", and changing the machine destroys and rebuilds the connection anyways.
         System.out.println(this.getContactDirection() + " has set  type active  for " + which);
         active_connections[which] = true;
+
+        if(which == 1){ //We need to check if we're a provider first.
+            if(this.attached instanceof IEnergyStorage && ((IEnergyStorage) this.attached).canExtract()){
+                this.isProvider = true; //TODO - We will enqueue as active for ticking here once the rest of the system doesn't suck.
+            }
+        }
     }
 
     public void tick(){ //If this connection is in the queue, this will be called every tick for it.
@@ -79,8 +88,9 @@ public class Connection {
             item_counter = 10; //NOTE - These values are going to pull from server properties.
         }
 
-        if (this.parent.hasTube(1)) { //POWER - no cooldown as cables always transfer constantly. Also ignores MODE because cables just automatically maximize for saturation.
+        if (this.parent.hasTube(1) && this.isProvider) { //POWER - no cooldown as cables always transfer constantly. Also ignores MODE because cables just automatically maximize for saturation.
             System.out.println("Try to enqueue job for POWER TRANSFER");
+            this.executePowerJob();
         }
 
         if (this.parent.hasTube(2) && fluid_counter <= 0 && connection_mode == 1) { //FLUID
@@ -163,6 +173,26 @@ public class Connection {
         what.setCount(4);
 
         return what;
+    }
+
+    public void executePowerJob(){
+        //Same paradigm but simpler - build, traverse, etc if it does not exist - but this is only ever called if the tile realizes it is connected to an EXTRACTABLE power side.
+        if(this.getParentTile().getLevel().isClientSide()){
+            return;
+        }
+
+        if(this.power_cache == -1){ // Cache lookup failed to find a valid parent
+            System.out.println("Building power cache.");
+            this.power_cache = this.parent.getNetworkManager().buildPowerJobForProvider(this);
+        }
+
+        //We need to check if the idx we have still corresponds to this connection (check if the job property still lists this as the FROM contact). If not, we need to find where it went.
+
+        System.out.println("Cache processed. Performing power extraction tick");
+
+        boolean complete = this.parent.getNetworkManager().executePowerProviderJob(this.power_cache); //Regardless of if this is newly-initialized, lookup and try to execute from our existing cache reference.
+
+
     }
 
 

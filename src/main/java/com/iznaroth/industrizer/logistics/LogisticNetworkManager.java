@@ -8,6 +8,7 @@ import com.iznaroth.industrizer.tile.TubeBundleTile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,13 +92,13 @@ public class LogisticNetworkManager {
                 return storage_subnetworks.size() - 1;
             case 1:
                 this.power_subnetworks.add(toStore);
-                return storage_subnetworks.size() - 1;
+                return power_subnetworks.size() - 1;
             case 2:
                 this.fluid_subnetworks.add(toStore);
-                return storage_subnetworks.size() - 1;
+                return fluid_subnetworks.size() - 1;
             case 3:
                 this.gas_subnetworks.add(toStore);
-                return storage_subnetworks.size() - 1;
+                return gas_subnetworks.size() - 1;
         }
 
         return -1; //The compiler can't always be right ig
@@ -269,6 +270,47 @@ public class LogisticNetworkManager {
         }
 
         return new ArrayList<>(sortmap.values());
+    }
+
+    public int buildPowerJobForProvider(Connection cxn){
+        //It is implied that the passed connection is attached to a provider. We need to find or traverse our subnetwork first.
+
+        int parent = findParentSubnetworkFor(cxn, 1);
+
+        System.out.println("Building a new job cache for Power Provider " + cxn.getAttached());
+
+        if(parent == -1){ //This is a FULLY-ORPHANED connection - it has no subnetwork yet.
+            System.out.println("Building a new subnetwork for POWER. This should only happen once.");
+            parent = startSearchRecursion(cxn, 1);
+        }
+
+        ArrayList<Connection> subnetwork = power_subnetworks.get(parent); //No need to manhattan this - power transfer is universally instantaneous.
+        PowerJob jobCxns = new PowerJob((IEnergyStorage) cxn.getAttached()); //what we're building
+
+        //With that done, we can check those connections for any that can ACCEPT, adding them to our job list.
+
+        for(Connection to : subnetwork){
+
+            if(to == cxn){
+                System.out.println("Skip self in caching jobs");
+            } else {
+                if(to.getAttached() instanceof IEnergyStorage && ((IEnergyStorage) to.getAttached()).canReceive()){
+                    jobCxns.addReciever((IEnergyStorage) to);
+                }
+            }
+        }
+
+        //We cache it and return the int, so it will be continuously executed. That's all!
+
+        this.open_power_rq.add(jobCxns);
+        return this.open_power_rq.size() - 1;
+    }
+
+    public boolean executePowerProviderJob(int cached){
+        //Check the 1D power cache for the hit, panic if necessary, and distribute power to connections.
+        //Power is prone to race-conditions to some degree, so we kinda just refund and move on if the job is illegal in-practice.
+        //TODO - notification for bad power job types so-as to sleep connection.
+        return false;
     }
 
     public boolean invalidateJobList(int idx){
