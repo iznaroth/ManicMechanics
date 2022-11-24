@@ -8,6 +8,7 @@ import com.iznaroth.industrizer.tile.TubeBundleTile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.ArrayList;
@@ -294,8 +295,8 @@ public class LogisticNetworkManager {
             if(to == cxn){
                 System.out.println("Skip self in caching jobs");
             } else {
-                if(to.getAttached() instanceof IEnergyStorage && ((IEnergyStorage) to.getAttached()).canReceive()){
-                    jobCxns.addReciever((IEnergyStorage) to);
+                if(to.getAttached().getCapability(CapabilityEnergy.ENERGY).isPresent() && ((IEnergyStorage) to.getAttached().getCapability(CapabilityEnergy.ENERGY).orElse(null)).canReceive()){
+                    jobCxns.addReciever((IEnergyStorage) to.getAttached().getCapability(CapabilityEnergy.ENERGY).orElse(null));
                 }
             }
         }

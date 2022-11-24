@@ -8,6 +8,7 @@ import com.iznaroth.industrizer.render.TileRendererRT;
 import com.iznaroth.industrizer.screen.BureauBlockScreen;
 import com.iznaroth.industrizer.screen.CommunicatorBlockScreen;
 import com.iznaroth.industrizer.screen.GeneratorBlockScreen;
+import com.iznaroth.industrizer.screen.SealingChamberBlockScreen;
 import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -34,6 +35,8 @@ public class ClientSetup {
         ScreenManager.register(IndustrizerContainers.BUREAU_CONTAINER.get(), BureauBlockScreen::new);
 
         ScreenManager.register(IndustrizerContainers.COMMUNICATOR_CONTAINER.get(), CommunicatorBlockScreen::new);
+
+        ScreenManager.register(IndustrizerContainers.SEALER_CONTAINER.get(), SealingChamberBlockScreen::new);
     }
 
 

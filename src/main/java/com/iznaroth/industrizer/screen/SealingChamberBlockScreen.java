@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.screen;
 
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.container.BureauBlockContainer;
+import com.iznaroth.industrizer.container.SealingChamberBlockContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -9,13 +10,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class BureauBlockScreen extends ContainerScreen<BureauBlockContainer> {
+public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlockContainer> {
 
-    protected int imageWidth = 180;
-    protected int imageHeight = 256;
-    private ResourceLocation GUI = new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/bureau_gui.png");
+    private ResourceLocation GUI = new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/sealing_chamber.png");
 
-    public BureauBlockScreen(BureauBlockContainer container, PlayerInventory inv, ITextComponent name) {
+    public SealingChamberBlockScreen(SealingChamberBlockContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
     }
 
@@ -33,6 +32,13 @@ public class BureauBlockScreen extends ContainerScreen<BureauBlockContainer> {
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+
+        renderPowerBar(matrixStack, relX, relY);
+    }
+
+    private void renderPowerBar(MatrixStack matrixStack, int x, int y){
+        //NOTE - Power renderer will need to recieve this update thru a packet - client -> server communication.
+        blit(matrixStack, x + 12, y + 65, 181, 62, 12, -this.getMenu().getEnergy());
     }
 
     @Override

@@ -6,12 +6,14 @@ import com.iznaroth.industrizer.item.custom.ModSpawnEggItem;
 import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.MusicDiscItem;
+import net.minecraftforge.client.event.RenderNameplateEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class IndustrizerItems {
+
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IndustrizerMod.MOD_ID);
 
@@ -29,7 +31,7 @@ public class IndustrizerItems {
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
     public static final RegistryObject<Item> DYSPERSIUM_WIDGET = ITEMS.register("dyspersium_widget",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS).stacksTo(1)));
 
     public static final RegistryObject<Item> GRAVITY_HEART = ITEMS.register("gravity_heart",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));

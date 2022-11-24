@@ -41,6 +41,10 @@ public class TubeBundleTile extends TileEntity {
 
     @Override
     public void onLoad(){
+        if(this.getLevel().isClientSide()){
+            return;
+        }
+
         TubeBundleTile old = TubeBundleStateMapper.checkAndPurge(this.getBlockPos());
 
         if(old != null){

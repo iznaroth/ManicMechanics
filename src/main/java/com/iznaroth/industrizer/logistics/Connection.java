@@ -251,7 +251,11 @@ public class Connection {
             this.connection_mode++;
             System.out.println("Cycled connection mode to EXTRACT for " + this.contactPoint);
 
-            if(item_cache == -1){ //Initialize cache if this is a novel wakeup.
+            if(!ActiveConnectionQueue.queue.contains(this)){
+                ActiveConnectionQueue.enqueueActive(this); //Connection will now be ticked and try to perform jobs. NOTE - This may be moved to post initial-exec-success
+            }
+
+            if(this.isTypeActive(0) && item_cache == -1){ //Initialize cache if this is a novel wakeup.
                 ItemStack firstJob = this.getNewItemOutput();
 
                 if(firstJob != ItemStack.EMPTY || firstJob.getItem() != Items.AIR) {

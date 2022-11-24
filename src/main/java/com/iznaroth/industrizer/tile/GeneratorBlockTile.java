@@ -32,9 +32,11 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
     private int counter;
+    private int maxExtract;
 
     public GeneratorBlockTile() {
         super(IndustrizerTileEntities.GENERATOR_TILE.get());
+        this.maxExtract = 1000;
     }
 
     @Override
@@ -174,7 +176,13 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
     @Override
     public int extractEnergy(int maxExtract, boolean simulate) {
-        return 0;
+        if (!canExtract())
+            return 0;
+
+        int energyExtracted = Math.min(energyStorage.getEnergyStored(), Math.min(this.maxExtract, maxExtract));
+        if (!simulate)
+            energyStorage.consumeEnergy(energyExtracted);
+        return energyExtracted;
     }
 
     @Override
@@ -189,7 +197,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
     @Override
     public boolean canExtract() {
-        return false;
+        return true;
     }
 
     @Override

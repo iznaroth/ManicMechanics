@@ -127,6 +127,8 @@ repositories {
         url = "https://maven.tterrag.com/"
     }
 
+    maven { url = 'https://maven.blamejared.com' }
+
     maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
@@ -137,8 +139,6 @@ repositories {
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
-
-    maven { url = 'https://maven.blamejared.com' }
 }
 
 dependencies {

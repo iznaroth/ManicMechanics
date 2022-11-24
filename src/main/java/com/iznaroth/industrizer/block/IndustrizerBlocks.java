@@ -42,6 +42,7 @@ public class IndustrizerBlocks {
     //MACHINES (CORE - TIER I)
     public static final RegistryObject<Block> HEP = registerBlock("hep", () -> new GeneratorBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().lightLevel(state -> state.getValue(BlockStateProperties.POWERED) ? 14 : 0).harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
     public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new BureauBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
+    public static final RegistryObject<Block> SEALER = registerBlock("sealing_chamber", () -> new SealingChamberBlock(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
 
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new Block(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);
     public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new UpgradableMachine(AbstractBlock.Properties.of(Material.METAL).harvestLevel(2).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).strength(2.5f)), ModItemGroup.INDUSTRIZER_MACHINES);

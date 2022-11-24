@@ -21,6 +21,7 @@ public class ActiveConnectionQueue {
         //a tick happened
         //increment counter
         //System.out.println("On Tick");
+        //TODO - Need to HALT ACQ when attempting to dequeue with a boolean flag to avoid concurrency error.
         for (Connection con : queue ) {
             con.tick();
         }
