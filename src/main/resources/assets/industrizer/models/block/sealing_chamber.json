@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "industrizer:block/machine_placeholder",
+    "up": "industrizer:block/sealer_top",
+    "north": "industrizer:block/sealer_front",
+    "south": "industrizer:block/sealer_back",
+    "east": "industrizer:block/machine_placeholder",
+    "west": "industrizer:block/machine_placeholder"
+  }
+}

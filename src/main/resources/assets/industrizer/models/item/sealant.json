@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/obamium_ingot"
+    "layer0": "industrizer:item/sealant"
   }
 }

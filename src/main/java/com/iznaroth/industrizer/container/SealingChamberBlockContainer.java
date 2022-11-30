@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
@@ -20,6 +21,10 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SealingChamberBlockContainer extends Container {
 
@@ -35,7 +40,9 @@ public class SealingChamberBlockContainer extends Container {
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 64, 24));
+                addSlot(new SlotItemHandler(h, 0, 64, 17));
+                addSlot(new SlotItemHandler(h, 1, 64, 50));
+                addSlot(new SlotItemHandler(h, 2, 118, 32));
             });
         }
         layoutPlayerInventorySlots(10, 84);
@@ -68,15 +75,20 @@ public class SealingChamberBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
+                if (index == 1 && isValidHousing(stack.getItem())) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 28) {
-                    if (!this.moveItemStackTo(stack, 28, 37, false)) {
+                }else if(index == 2 && isValidInsertion(stack.getItem())){
+                    if (!this.moveItemStackTo(stack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 37 && !this.moveItemStackTo(stack, 1, 28, false)) {
+
+                } else if (index < 30) {
+                    if (!this.moveItemStackTo(stack, 30, 39, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index < 39 && !this.moveItemStackTo(stack, 3, 30, false)) {
                     return ItemStack.EMPTY;
                 }
             }
@@ -123,6 +135,17 @@ public class SealingChamberBlockContainer extends Container {
         // Hotbar
         topRow += 58;
         addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
+    }
+
+    private final List<Item> valid_for_housing = Arrays.asList(IndustrizerItems.TUBE_HOUSING.get());
+    private final List<Item> valid_for_insertion = Arrays.asList(IndustrizerItems.SEALANT.get());
+
+    public boolean isValidHousing(Item what){
+        return valid_for_housing.contains(what);
+    }
+
+    public boolean isValidInsertion(Item what){
+        return valid_for_insertion.contains(what);
     }
 
 }

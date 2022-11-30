@@ -27,6 +27,7 @@
 
   "message.industrizer.tooltip": "<Hold SHIFT for more details.>",
   "message.hep.tooltip": "Specialized extraction mainframe with internal polarization centrifuge. Utilizes the unique dimensionally-agnostic properties of Dyspersium to extract power from adjacent, terminal dimensionality.",
+  "message.sealer.tooltip": "This is a PRODUCTION machine for specialized sealing operations. There are three inputs - the housing, the insertion, and any special requirements. When you place your insertion item into the machine, it will show the mode and special requirements in the top left as an icon. Hover over it for details.",
 
 
 

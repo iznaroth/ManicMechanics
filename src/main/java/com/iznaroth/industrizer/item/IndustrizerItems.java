@@ -60,7 +60,10 @@ public class IndustrizerItems {
     public static final RegistryObject<Item> PINCH = ITEMS.register("pinch",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
-    public static final RegistryObject<Item> UNETCHED_CIRCUIT_WOOD = ITEMS.register("unetched_circuit_wood",
+    public static final RegistryObject<Item> TUBE_HOUSING = ITEMS.register("tube_housing",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
+    public static final RegistryObject<Item> SEALANT = ITEMS.register("sealant",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
 

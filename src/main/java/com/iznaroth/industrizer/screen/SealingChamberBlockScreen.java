@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.util.Optional;
@@ -45,12 +46,20 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         int y = (height - imageHeight) / 2;
 
         renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+        renderOperationModeTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
     private void renderEnergyAreaTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
         if(isMouseAboveArea(pMouseX, pMouseY, x, y, 12, 17, 12, 48)) {
             renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
                      pMouseX - x, pMouseY - y);
+        }
+    }
+
+    private void renderOperationModeTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 33, 17, 16, 16)) {
+            renderTooltip(pPoseStack, new StringTextComponent("OPERATION MODE: Unimplemented :)"),
+                    pMouseX - x, pMouseY - y);
         }
     }
 

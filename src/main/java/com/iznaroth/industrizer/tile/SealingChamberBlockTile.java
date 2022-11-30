@@ -1,6 +1,7 @@
 package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.capability.EnergyStorageWrapper;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
 import com.iznaroth.industrizer.networking.packet.EnergySyncS2CPacket;
 import net.minecraft.block.BlockState;
@@ -73,7 +74,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
 
     //TODO - Check if it is acceptable to deprecate this and just implement IItemHandler
     private ItemStackHandler createHandler() {
-        return new ItemStackHandler(1) {
+        return new ItemStackHandler(3) {
 
             @Override
             protected void onContentsChanged(int slot) {
@@ -90,6 +91,19 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+
+                if(slot == 0 && !stack.getItem().equals(IndustrizerItems.TUBE_HOUSING.get())){
+                    return stack;
+                }
+
+                if(slot == 1 && !stack.getItem().equals(IndustrizerItems.SEALANT.get())){
+                    return stack;
+                }
+
+                if(slot == 2){
+                    return stack;
+                }
+
                 return super.insertItem(slot, stack, simulate);
             }
         };
