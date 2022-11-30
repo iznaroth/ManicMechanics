@@ -68,8 +68,10 @@ public class Connection {
         System.out.println(this.getContactDirection() + " has set  type active  for " + which);
         active_connections[which] = true;
 
-        if(which == 1){ //We need to check if we're a provider first.
+        if(which == 1 && this.getParentTile().getLevel().isLoaded(this.attached.getBlockPos())){ //We need to check if we're a provider first.
+            System.out.println("Neighbor loaded TRUE");
             if(this.attached instanceof IEnergyStorage && ((IEnergyStorage) this.attached).canExtract()){
+                System.out.println("Instanceof check and extract PASSED");
                 this.isProvider = true; //TODO - We will enqueue as active for ticking here once the rest of the system doesn't suck.
             }
         }

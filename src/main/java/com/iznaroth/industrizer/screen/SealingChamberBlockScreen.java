@@ -3,19 +3,55 @@ package com.iznaroth.industrizer.screen;
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.container.BureauBlockContainer;
 import com.iznaroth.industrizer.container.SealingChamberBlockContainer;
+import com.iznaroth.industrizer.screen.renderer.EnergyInfoArea;
+import com.iznaroth.industrizer.util.MouseUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.energy.CapabilityEnergy;
+
+import java.util.Optional;
 
 public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlockContainer> {
 
     private ResourceLocation GUI = new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/sealing_chamber.png");
 
+    private EnergyInfoArea energyInfoArea;
+
     public SealingChamberBlockScreen(SealingChamberBlockContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        assignEnergyInfoArea();
+    }
+
+    private void assignEnergyInfoArea(){
+        int relX = (this.width - this.imageWidth) / 2;
+        int relY = (this.height - this.imageHeight) / 2;
+
+        energyInfoArea = new EnergyInfoArea(relX + 12, relY + 17, menu.getTileEntity().getCapability(CapabilityEnergy.ENERGY).orElse(null));
+    }
+
+    @Override
+    protected void renderLabels(MatrixStack pPoseStack, int pMouseX, int pMouseY) {
+        super.renderLabels(pPoseStack, pMouseX, pMouseX);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+
+        renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+    }
+
+    private void renderEnergyAreaTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 12, 17, 12, 48)) {
+            renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
+                     pMouseX - x, pMouseY - y);
+        }
     }
 
     @Override
@@ -33,13 +69,15 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
-        renderPowerBar(matrixStack, relX, relY);
+        energyInfoArea.draw(matrixStack);
     }
 
-    private void renderPowerBar(MatrixStack matrixStack, int x, int y){
-        //NOTE - Power renderer will need to recieve this update thru a packet - client -> server communication.
-        blit(matrixStack, x + 12, y + 65, 181, 62, 12, -this.getMenu().getEnergy());
-    }
+    //private void renderPowerBar(MatrixStack matrixStack, int x, int y){
+    //    //NOTE - Power renderer will need to recieve this update thru a packet - client -> server communication.
+    //    int heightFromCapacity = 25;
+    //    blit(matrixStack, x + 12, y + 65, 182, 52, 12, -heightFromCapacity);
+    //}
+
 
     @Override
     public boolean mouseClicked(double p_231044_1_, double p_231044_3_, int p_231044_5_) {
@@ -56,6 +94,10 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         }
 
         return super.mouseClicked(p_231044_1_, p_231044_3_, p_231044_5_);
+    }
+
+    private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {
+        return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, width, height);
     }
 
 }

@@ -21,17 +21,22 @@ public class PowerJob {
     public boolean tryAndExecute(){
         for(IEnergyStorage reciever : to){
 
-            int taken = from.extractEnergy(batchAmount, false);
+            if(!(reciever.getEnergyStored() == reciever.getMaxEnergyStored())) {
 
-            if(taken == 0){
-                return false; //Failed job due to empty buffer.
-            }
+                int taken = from.extractEnergy(batchAmount, false);
 
-            int sent = reciever.receiveEnergy(taken, false);
+                if (taken == 0) {
+                    return false; //Failed job due to empty buffer.
+                }
 
-            int refund = batchAmount - sent;
-            if(refund > 0){
-                from.receiveEnergy(refund, false); //Get back any wasted power in transfer.
+                int sent = reciever.receiveEnergy(taken, false);
+
+                System.out.print(sent);
+
+                int refund = batchAmount - sent;
+                if (refund > 0) {
+                    from.receiveEnergy(refund, false); //Get back any wasted power in transfer.
+                }
             }
         }
         return true; //NOT FINISHED - return value is for various expectation checks

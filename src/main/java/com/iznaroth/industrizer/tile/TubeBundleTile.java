@@ -6,12 +6,16 @@ import com.iznaroth.industrizer.logistics.Connection;
 import com.iznaroth.industrizer.logistics.LogisticNetworkManager;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
-public class TubeBundleTile extends TileEntity {
+import java.util.Arrays;
+
+public class TubeBundleTile extends TileEntity  {
 
     private boolean[] tubesInBlock = new boolean[]{false, false, false, false}; //LOGISTIC / ENERGY / FLUID / GAS
     private Connection[] connections = new Connection[]{null, null, null, null, null, null}; //IF NULL PRESUME NO CONTACT
@@ -40,24 +44,27 @@ public class TubeBundleTile extends TileEntity {
 
 
     @Override
-    public void onLoad(){
-        if(this.getLevel().isClientSide()){
+    public void onLoad() {
+        if (this.getLevel().isClientSide()) {
             return;
         }
 
         TubeBundleTile old = TubeBundleStateMapper.checkAndPurge(this.getBlockPos());
 
-        if(old != null){
-            System.out.println("Mapping parameters!");
+        if (old != null) {
+            System.out.println("Tile created from existing tube at pos: " + this.worldPosition + "Mapping parameters!");
             this.copyInto(old); //Horrible method for saving state when a tube is converted into a full bundle. Sorry!
+
+            this.setChanged();
         }
-
-        this.setupInitialConnections();
-
+    }
+/**
         refreshModelConnections(); //We usually need to access the tile to build the right initial shape, so we wait.
 
         this.setChanged();
+        System.out.println("IF YOU SEE THIS - THE TILE LOADED - FREEZE IS ATTRIBUTED TO SOMETHING ELSE.");
     }
+ **/
 
     @Override
     public CompoundNBT save(CompoundNBT tag){
@@ -141,14 +148,14 @@ public class TubeBundleTile extends TileEntity {
     public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound)
     {
         this.load(blockState, parentNBTTagCompound);
-        this.refreshModelConnections();
+        //this.refreshModelConnections();
     }
 
     public TileEntity getNeighborTile(BlockPos thisPos, Direction where){
         return this.level.getBlockEntity(thisPos.relative(where));
     }
 
-    public void setupInitialConnections(){
+    public void setupNetwork(){
         int i = 0;
 
         for(Direction dir : Direction.values()){
@@ -164,7 +171,11 @@ public class TubeBundleTile extends TileEntity {
 
                     System.out.println("Inheriting neighbor network! This tube's manager should always be null: " + this.manager);
 
-                    inheritUpdateLogisticNetwork((TubeBundleTile) this.level.getBlockEntity(toCheck)); //WARNING - This is probably an unsafe cast!
+                    TubeBundleTile tile = (TubeBundleTile) this.level.getBlockEntity(toCheck);
+
+                    if(tile != null) {
+                        inheritUpdateLogisticNetwork(tile); //WARNING - This is probably an unsafe cast!
+                    }
                 }
             }
 
@@ -181,8 +192,9 @@ public class TubeBundleTile extends TileEntity {
 
     public void inheritUpdateLogisticNetwork(TubeBundleTile from){
         //This is called when a newly-placed tube is connected to an existing network. It inherits the network and marks it as dirty (flush route cache)
+        System.out.println("Did we get into neighbor checker?");
 
-        if(this.manager != null && !this.manager.equals(from.getNetworkManager())){
+        if(this.manager != null && from.getNetworkManager() != null && !this.manager.equals(from.getNetworkManager())){
             //This is a second, unique network manager - we are linking to multiple previously-separate networks and need to commit a merge first.
 
             System.out.println("Merging two networks together.");
@@ -191,9 +203,13 @@ public class TubeBundleTile extends TileEntity {
             this.setChanged();
 
             return;
-        } else {
+        } else if(from.getNetworkManager() != null){
+            System.out.println("Copying neighbor.");
             this.manager = from.getNetworkManager();
             this.manager.addTileToGrid(this);
+            return;
+        } else {
+            return; //Pass, tube will create its own.
         }
     }
 
@@ -272,12 +288,25 @@ public class TubeBundleTile extends TileEntity {
         return this.tubesInBlock;
     }
 
-    public boolean hasTube(int which){
+    public boolean hasTube(int which){ //This doubles as a lazy self-evaluator. Once something needs to know what tubes are in this tile, we double-check if we have any orphaned state to recover.
+
+        //TubeBundleTile old = TubeBundleStateMapper.checkAndPurge(this.getBlockPos());
+
+        //if(old != null){
+        //    System.out.println("Mapping parameters!");
+        //    this.copyInto(old); //Horrible method for saving state when a tube is converted into a full bundle. Sorry!
+        //}
+
         return tubesInBlock[which];
     }
 
 
     public LogisticNetworkManager getNetworkManager(){
+
+        if(this.manager == null){
+            this.createLogisticNetwork();
+        }
+
         return this.manager;
     }
 
@@ -293,6 +322,8 @@ public class TubeBundleTile extends TileEntity {
         this.tubesInBlock = other.getTubesInBlock();
         this.manager = other.getNetworkManager();
         this.connections = other.getConnections(); //Should be everything relevant.
+
+        System.out.println(Arrays.toString(this.tubesInBlock));
     }
 
     public boolean anyMatch(TubeBundleTile other){
@@ -308,16 +339,19 @@ public class TubeBundleTile extends TileEntity {
 
     public void refreshModelConnections(){ //Called whenever something happens that would require a hard reevaluation of connections (namely addition and removal of conduits)
 
+        //System.out.println("Refreshing model con");
+
         BlockState current = this.getBlockState();
 
         for(Direction dir : Direction.values()){
             //Safe recall of updateShape on every direction. Should not recieve a null tile this time.
 
             current = current.getBlock().updateShape(current, dir, this.getLevel().getBlockState(this.worldPosition.relative(dir)), this.getLevel(), this.worldPosition, this.worldPosition.relative(dir));
+            //System.out.println("CHECK IF FAIL AT read and update shape");
         }
 
         this.getLevel().setBlockAndUpdate(this.getBlockPos(), current); //WARNING - I am unsure if setBlock will kill the TileEntity here.
-
+        //System.out.println("CHECK IF FAIL AT setBlock");
 
     }
 

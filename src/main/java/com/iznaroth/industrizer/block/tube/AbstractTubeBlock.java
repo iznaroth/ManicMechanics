@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public abstract class AbstractTubeBlock extends Block implements ILogisticTube, INetworkNavigable{
+public abstract class AbstractTubeBlock extends Block{
 
     public AbstractTubeBlock(AbstractBlock.Properties properties) {
         super(properties);
@@ -77,7 +77,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
     public BlockState updateShape(BlockState thisBlockState, Direction directionFromThisToNeighbor, BlockState neighborState,
                                   IWorld world, BlockPos thisBlockPos, BlockPos neighborBlockPos) {
 
-        //System.out.println("-------------------- UPDATESHAPE IS BEING CALLED BY " + this.getClass().getTypeName() + " ------------------------------- ");
+        System.out.println("-------------------- UPDATESHAPE IS BEING CALLED BY " + this.getClass().getTypeName() + " ------------------------------- ");
 
         switch (directionFromThisToNeighbor) {  // Only update the specified direction.  Uses a switch for clarity but probably a map or similar is better for real code
             case UP:
@@ -142,12 +142,11 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
 
         Block with = Block.byItem(player.getItemInHand(hand).getItem());
 
-        if(!(with instanceof TubeBundleBlock) && with instanceof AbstractTubeBlock && !with.equals(state.getBlock())) { //TODO - Unwrap TBB as AbstractTubeBlock or find a better identifier.
-            TubeBundleTile target = (TubeBundleTile) world.getBlockEntity(pos);
-            assert target != null;
-            target.addTube(((AbstractTubeBlock) with).getTubeType());
-            TubeBundleStateMapper.mapDestroyedTile(pos, (TubeBundleTile) world.getBlockEntity(pos));
-            world.setBlock(pos, IndustrizerBlocks.TUBE_BUNDLE.get().defaultBlockState(), 0);
+        if(!(with instanceof TubeBundleBlock) && with instanceof AbstractTubeBlock && !with.equals(state.getBlock())) {
+            assert on != null;
+            on.addTube(((AbstractTubeBlock) with).getTubeType());
+            TubeBundleStateMapper.mapDestroyedTile(pos, on);
+            world.setBlock(pos, ((TubeBundleBlock) IndustrizerBlocks.TUBE_BUNDLE.get()).setConnections(world, pos, IndustrizerBlocks.TUBE_BUNDLE.get().defaultBlockState()), 0); //NOTE - this is ugly and could be done better
 
             return ActionResultType.SUCCESS; //This should create the tile-entity as well?
         }
@@ -164,8 +163,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
     // The mbe03b_block_3dweb_registry_name.json contains logic to check each of these properties by name, and draw the corresponding model components
     //   for each property which is true.
 
-
-    private BlockState setConnections(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState) {
+    public BlockState setConnections(IBlockReader iBlockReader, BlockPos blockPos, BlockState blockState) {
 
 
         return blockState
@@ -185,7 +183,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
         TubeBundleTile here = (TubeBundleTile) iBlockReader.getBlockEntity(blockPos);
 
         if(here == null){
-            System.out.println("Tile uninitialized. Waiting for shape update!");
+            System.out.println("FALSE for " + direction + " from " + blockPos + " due to uninitialized TE");
             return false; //We are in preinit and the TE is not ready yet. updateShape will be recalled for all directions once the TE wakes up. This is important to prevent synchro crashes
         }                 //when we want to build and activate CONNECTIONS.
 
@@ -194,6 +192,7 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
 
         if (neighborBlock == this.getBlock() || (neighborBlock == IndustrizerBlocks.TUBE_BUNDLE.get() && ((TubeBundleTile)iBlockReader.getBlockEntity(neighborPos)).hasTube(this.getTubeType()))) { //DEFAULT BEHAVIOR FOR TUBES = only connect to identicals and bundles. Bundles override this to link to all others.
             //System.out.println("True for " + direction);
+            System.out.println("TRUE for " + direction + " from " + blockPos);
             here.addTileNeighbor((TubeBundleTile) iBlockReader.getBlockEntity(here.getBlockPos().relative(direction)), direction.ordinal());
             return true;
         }
@@ -292,22 +291,6 @@ public abstract class AbstractTubeBlock extends Block implements ILogisticTube, 
     }
 
     private static HashMap<BlockState, VoxelShape> voxelShapeCache = new HashMap<>();
-
-
-    @Override
-    public boolean onItemPassesPoint() {
-        return INetworkNavigable.super.onItemPassesPoint();
-    }
-
-    @Override
-    public boolean shouldFilter() {
-        return INetworkNavigable.super.shouldFilter();
-    }
-
-    @Override
-    public boolean runFilterFor(ItemStack itemStack) {
-        return false;
-    }
 
     public int getTubeType(){
         return -1; //THIS IS OVERRIDEN BY CHILDREN - 0 is Logistic, 1 is Power, 2 is Fluid, 3 is Gas

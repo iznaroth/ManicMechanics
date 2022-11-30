@@ -7,10 +7,7 @@ import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.CommunicatorBlockTile;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -31,6 +28,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -58,6 +57,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
         return new TubeBundleTile();
     }
 
+
     @Override
     public boolean canTubeLink(IBlockReader iBlockReader, BlockPos blockPos, Direction direction) {
 
@@ -67,7 +67,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
         TubeBundleTile here = (TubeBundleTile) iBlockReader.getBlockEntity(blockPos);
 
         if(here == null){
-            System.out.println("Tile uninitialized. Waiting for shape update!");
+            System.out.println("FALSE for " + direction + " from " + blockPos + " due to uninitialized TE");
             return false; //We are in preinit and the TE is not ready yet. updateShape will be recalled for all directions once the TE wakes up.
         }
 
@@ -87,6 +87,10 @@ public class TubeBundleBlock extends AbstractTubeBlock {
     @Nonnull
     @Override
    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+
+        if(world.isClientSide()){
+            return ActionResultType.PASS;
+        }
 
         Block with = Block.byItem(player.getItemInHand(hand).getItem());
         TubeBundleTile on = (TubeBundleTile) world.getBlockEntity(pos);
@@ -143,6 +147,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
 
         return false;
     }
+
 
     //WARNING - this is an unsafe call! It only has assumed protection from null tile errors.
 

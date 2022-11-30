@@ -8,6 +8,7 @@ import com.iznaroth.industrizer.entity.ModEntityTypes;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.logistics.ActiveConnectionQueue;
+import com.iznaroth.industrizer.networking.IndustrizerMessages;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
@@ -80,6 +81,8 @@ public class IndustrizerMod
 
         forgeEventBus.register(ActiveConnectionQueue.class);
 
+        eventBus.addListener(this::commonSetup);
+
         // Register ourselves for server and other game events we are interested in
         forgeEventBus.register(this);
     }
@@ -98,6 +101,12 @@ public class IndustrizerMod
         // do something that can only be done on the client
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            IndustrizerMessages.register();
+        });
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

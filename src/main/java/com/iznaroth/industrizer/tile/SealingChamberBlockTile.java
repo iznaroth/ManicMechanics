@@ -1,5 +1,8 @@
 package com.iznaroth.industrizer.tile;
 
+import com.iznaroth.industrizer.capability.EnergyStorageWrapper;
+import com.iznaroth.industrizer.networking.IndustrizerMessages;
+import com.iznaroth.industrizer.networking.packet.EnergySyncS2CPacket;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -30,7 +33,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
 
-    private EnergyStorage energyStorage = createStorage();
+    private EnergyStorageWrapper energyStorage = createStorage(0);
 
     private LazyOptional<IEnergyStorage> storage = LazyOptional.of(() -> energyStorage);
 
@@ -92,19 +95,19 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
         };
     }
 
-    private EnergyStorage createStorage(){
-        return new EnergyStorage(40000, 1000, 0){
+    private EnergyStorageWrapper createStorage(int startingCharge){
+        return new EnergyStorageWrapper(40000, 1000, 0, startingCharge){
             @Override
-            public int receiveEnergy(int maxReceive, boolean simulate)
-            {
+            public int receiveEnergy(int maxReceive, boolean simulate) {
                 if (!canReceive())
                     return 0;
 
                 int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
-                if (!simulate)
+                if (!simulate){
                     energy += energyReceived;
-                System.out.println(energyReceived);
-                System.out.println(this.energy);
+                    onEnergyChanged();
+                }
+
                 return energyReceived;
             }
 
@@ -115,8 +118,11 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
                     return 0;
 
                 int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-                if (!simulate)
+                if (!simulate) {
                     energy -= energyExtracted;
+                    onEnergyChanged();
+                }
+
                 return energyExtracted;
             }
 
@@ -140,6 +146,12 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
             public boolean canReceive()
             {
                 return this.maxReceive > 0;
+            }
+
+            public void onEnergyChanged(){
+                setChanged();
+                System.out.println("CREATE PACKET ---------- ENERGY CHANGED ----------- UPDATE SCREEN");
+                IndustrizerMessages.sendToClients(new EnergySyncS2CPacket(this.getEnergyStored(), getBlockPos()));
             }
         };
     }
@@ -192,6 +204,10 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return false;
+    }
+
+    public void setEnergy(int to){
+        this.energyStorage.setEnergy(to);
     }
 
 
