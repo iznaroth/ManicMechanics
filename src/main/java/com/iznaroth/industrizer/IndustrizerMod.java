@@ -1,11 +1,13 @@
 package com.iznaroth.industrizer;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
-import com.iznaroth.industrizer.capability.CurrencyCapability;
-import com.iznaroth.industrizer.capability.SuspicionCapability;
+import com.iznaroth.industrizer.client.capability.CurrencyCapability;
+import com.iznaroth.industrizer.client.capability.SuspicionCapability;
 import com.iznaroth.industrizer.container.IndustrizerContainers;
 import com.iznaroth.industrizer.entity.ModEntityTypes;
+import com.iznaroth.industrizer.entity.custom.PinchEntity;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
+import com.iznaroth.industrizer.entity.render.PinchRenderer;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.logistics.ActiveConnectionQueue;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
@@ -16,6 +18,8 @@ import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
 import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -96,12 +100,14 @@ public class IndustrizerMod
 
         CurrencyCapability.register();
         SuspicionCapability.register();
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.PINCH.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PinchEntity::checkSpawnRules);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
 
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PINCH.get(), PinchRenderer::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

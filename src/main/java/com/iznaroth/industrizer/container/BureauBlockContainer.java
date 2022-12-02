@@ -2,7 +2,7 @@ package com.iznaroth.industrizer.container;
 
 import com.iznaroth.industrizer.api.ICurrency;
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
-import com.iznaroth.industrizer.capability.CurrencyCapability;
+import com.iznaroth.industrizer.client.capability.CurrencyCapability;
 import com.iznaroth.industrizer.tools.BlockValueGenerator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;

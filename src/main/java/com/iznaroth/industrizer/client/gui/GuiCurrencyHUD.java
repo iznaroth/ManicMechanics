@@ -3,20 +3,13 @@ package com.iznaroth.industrizer.client.gui;
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.api.ICurrency;
 import com.iznaroth.industrizer.api.client.IDisplayCurrency;
-import com.iznaroth.industrizer.capability.Currency;
-import com.iznaroth.industrizer.client.ClientInfo;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gui.AbstractGui;
-import com.iznaroth.industrizer.capability.CurrencyCapability;
+import com.iznaroth.industrizer.client.capability.CurrencyCapability;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 
 public class GuiCurrencyHUD extends AbstractGui {
     private static final Minecraft minecraft = Minecraft.getInstance();

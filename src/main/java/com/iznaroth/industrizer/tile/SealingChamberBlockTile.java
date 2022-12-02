@@ -1,7 +1,7 @@
 package com.iznaroth.industrizer.tile;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
-import com.iznaroth.industrizer.capability.EnergyStorageWrapper;
+import com.iznaroth.industrizer.client.capability.EnergyStorageWrapper;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
 import com.iznaroth.industrizer.networking.packet.EnergySyncS2CPacket;
@@ -18,7 +18,6 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;

@@ -3,6 +3,7 @@ package com.iznaroth.industrizer.entity;
 
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.entity.custom.CopCarEntity;
+import com.iznaroth.industrizer.entity.custom.PinchEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -20,6 +21,12 @@ public class ModEntityTypes {
                     () -> EntityType.Builder.of(CopCarEntity::new,
                                     EntityClassification.MONSTER).sized(1f, 3f)
                             .build(new ResourceLocation(IndustrizerMod.MOD_ID, "cop_car").toString()));
+
+    public static final RegistryObject<EntityType<PinchEntity>> PINCH =
+            ENTITY_TYPES.register("pinch",
+                    () -> EntityType.Builder.of(PinchEntity::new,
+                                    EntityClassification.MISC).sized(1f, 3f)
+                            .build(new ResourceLocation(IndustrizerMod.MOD_ID, "pinch").toString()));
 
 
     public static void register(IEventBus eventBus) {

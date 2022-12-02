@@ -4,6 +4,11 @@
     "subtitle": "industrizer.cop_siren",
     "sounds": [ "industrizer:cop_siren" ]
   },
+  "pinch_1": {
+    "category": "entity",
+    "subtitle": "industrizer.pinch_1",
+    "sounds": [ "industrizer:pinch_1" ]
+  },
   "eva": {
     "sounds": [
       {

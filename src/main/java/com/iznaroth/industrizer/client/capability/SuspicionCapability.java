@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability;
+package com.iznaroth.industrizer.client.capability;
 
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.api.ICurrency;

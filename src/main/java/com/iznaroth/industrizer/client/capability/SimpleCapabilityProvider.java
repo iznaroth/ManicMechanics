@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability;
+package com.iznaroth.industrizer.client.capability;
 
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;

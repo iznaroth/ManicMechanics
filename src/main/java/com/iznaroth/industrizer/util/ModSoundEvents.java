@@ -18,6 +18,7 @@ public class ModSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, IndustrizerMod.MOD_ID);
 
     public static final RegistryObject<SoundEvent> COP_SIREN = registerSoundEvent("cop_siren");
+    public static final RegistryObject<SoundEvent> PINCH_1 = registerSoundEvent("pinch_1");
 
     public static final RegistryObject<SoundEvent> EVA_MUSIC_DISC = registerSoundEvent("eva");
 

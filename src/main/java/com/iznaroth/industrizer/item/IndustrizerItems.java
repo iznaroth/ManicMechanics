@@ -181,6 +181,9 @@ public class IndustrizerItems {
     public static final RegistryObject<Item> COP_CAR_SPAWN_EGG = ITEMS.register("cop_car_spawn_egg",
             () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
 
+    public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
+            () -> new ModSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
 
     //SPECIAL
     public static final RegistryObject<Item> DYSPERSIUM_BATTERY = ITEMS.register("dyspersium_battery",
