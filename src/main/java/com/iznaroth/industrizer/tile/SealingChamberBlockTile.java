@@ -1,12 +1,18 @@
 package com.iznaroth.industrizer.tile;
 
+import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.capability.EnergyStorageWrapper;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
 import com.iznaroth.industrizer.networking.packet.EnergySyncS2CPacket;
+import com.iznaroth.industrizer.networking.packet.ProgressSyncS2CPacket;
+import com.iznaroth.industrizer.recipe.IndustrizerRecipeTypes;
+import com.iznaroth.industrizer.recipe.SealingChamberRecipe;
 import net.minecraft.block.BlockState;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,13 +26,16 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
-public class SealingChamberBlockTile extends TileEntity implements IItemHandler {
+public class SealingChamberBlockTile extends TileEntity implements IItemHandler, ITickableTileEntity {
 
     protected int energy;
     protected int capacity;
     protected int maxReceive;
     protected int maxExtract;
+
+    int progress = 0;
 
     private ItemStackHandler itemHandler = createHandler();
 
@@ -100,7 +109,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
                     return stack;
                 }
 
-                if(slot == 2){
+                if(slot == 2 && !stack.getItem().equals(IndustrizerBlocks.TRANSPORT_TUBE.get().asItem())){ //TODO - This slot should be a part of a separate ItemHandler that does not respond to player input.
                     return stack;
                 }
 
@@ -160,6 +169,12 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
             public boolean canReceive()
             {
                 return this.maxReceive > 0;
+            }
+
+            @Override
+            public void energyOperation(int tickAmount){
+                super.energyOperation(tickAmount);
+                onEnergyChanged();
             }
 
             public void onEnergyChanged(){
@@ -225,4 +240,61 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler 
     }
 
 
+    public void craft(){
+        Inventory inv = new Inventory(itemHandler.getSlots());
+        for(int i = 0; i < itemHandler.getSlots(); i++){
+            inv.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Optional<SealingChamberRecipe> recipe = level.getRecipeManager()
+                .getRecipeFor(IndustrizerRecipeTypes.SEALING_CHAMBER_RECIPE, inv, level);
+
+        recipe.ifPresent(iRecipe -> {
+
+            if(itemHandler.getStackInSlot(2).getCount() >= itemHandler.getSlotLimit(2)){
+                return; //Can't perform the craft, slot is full.
+            }
+
+            if(progress < 80){ //Only increment progress if we can take energy.
+                if(energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
+                    progress++;
+                    IndustrizerMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
+                    energyStorage.energyOperation(4);
+                }
+            } else {
+                System.out.println("Progress hit " + progress + ", crafting.");
+
+                ItemStack output = iRecipe.getResultItem();
+
+                craftTheItem(output);
+
+                setChanged();
+
+                progress = 0;
+                IndustrizerMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
+            }
+        });
+    }
+
+    private void craftTheItem(ItemStack output){
+        itemHandler.extractItem(0, 1, false);
+        itemHandler.extractItem(1, 1, false);
+        itemHandler.insertItem(2, output, false);
+    }
+
+    public int getCraftProgress(){
+        return this.progress;
+    }
+
+    public void setProgress(int progress){ //For clientside tile update.
+        this.progress = progress;
+    }
+
+    @Override
+    public void tick() {
+        if(level.isClientSide)
+                return;
+
+        craft();
+    }
 }

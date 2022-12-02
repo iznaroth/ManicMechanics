@@ -9,6 +9,7 @@ import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.logistics.ActiveConnectionQueue;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
+import com.iznaroth.industrizer.recipe.IndustrizerRecipeTypes;
 import com.iznaroth.industrizer.setup.ClientSetup;
 import com.iznaroth.industrizer.setup.Config;
 import com.iznaroth.industrizer.tile.IndustrizerTileEntities;
@@ -55,12 +56,12 @@ public class IndustrizerMod
         IndustrizerBlocks.register(eventBus);
 
         ModSoundEvents.register(eventBus);
-
         ModEntityTypes.register(eventBus);
 
         IndustrizerTileEntities.register(eventBus);
-
         IndustrizerContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
+
+        IndustrizerRecipeTypes.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);

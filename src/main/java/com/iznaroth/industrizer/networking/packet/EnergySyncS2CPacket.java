@@ -39,7 +39,6 @@ public class EnergySyncS2CPacket {
 
                 if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockContainer &&
                         ((SealingChamberBlockContainer) Minecraft.getInstance().player.containerMenu).getTileEntity().getBlockPos().equals(pos)) {
-                    System.out.println("---------> Updating energy due to OPEN CONTAINER");
                     ((SealingChamberBlockTile) tileEntity).setEnergy(energy);
                 }
             }

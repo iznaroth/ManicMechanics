@@ -79,6 +79,11 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
         energyInfoArea.draw(matrixStack);
+        renderProgressArrow(matrixStack, relX, relY);
+    }
+
+    private void renderProgressArrow(MatrixStack stack, int x, int y){
+        blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
     }
 
     //private void renderPowerBar(MatrixStack matrixStack, int x, int y){

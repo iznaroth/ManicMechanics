@@ -6,6 +6,8 @@ import com.iznaroth.industrizer.logistics.INetworkNavigable;
 import com.iznaroth.industrizer.tile.TubeBundleTile;
 import com.iznaroth.industrizer.util.TubeBundleStateMapper;
 import net.minecraft.block.*;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.BlockItemUseContext;
@@ -28,6 +30,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -38,6 +43,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 //Big thanks to TheGreyGhost's MinecraftByExample repo. Go check it out! --> https://github.com/TheGreyGhost/MinecraftByExample
 
@@ -68,6 +74,15 @@ public class TransportTubeBlock extends AbstractTubeBlock {
         }
 
         return false;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
+        if(Screen.hasShiftDown()){
+            list.add(new TranslationTextComponent("message.transporttube.tooltip").withStyle(TextFormatting.AQUA));
+        } else {
+            list.add(new TranslationTextComponent("message.industrizer.tooltip").withStyle(TextFormatting.GRAY));
+        }
     }
 
 }

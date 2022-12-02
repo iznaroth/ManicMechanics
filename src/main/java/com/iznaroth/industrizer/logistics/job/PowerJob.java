@@ -8,7 +8,7 @@ public class PowerJob {
 
     IEnergyStorage from;
     ArrayList<IEnergyStorage> to = new ArrayList<>();
-    int batchAmount = 4; //RF per Tick, set in config by tube tier.
+    int batchAmount = 500; //RF per Tick, set in config by tube tier.
 
     public PowerJob(IEnergyStorage from){
         this.from = from;

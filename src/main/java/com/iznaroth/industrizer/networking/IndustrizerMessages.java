@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.networking;
 
 import com.iznaroth.industrizer.IndustrizerMod;
 import com.iznaroth.industrizer.networking.packet.EnergySyncS2CPacket;
+import com.iznaroth.industrizer.networking.packet.ProgressSyncS2CPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -31,6 +32,12 @@ public class IndustrizerMessages {
                 .decoder(EnergySyncS2CPacket::new)
                 .encoder(EnergySyncS2CPacket::toBytes)
                 .consumer(EnergySyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(ProgressSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(ProgressSyncS2CPacket::new)
+                .encoder(ProgressSyncS2CPacket::toBytes)
+                .consumer(ProgressSyncS2CPacket::handle)
                 .add();
 
 

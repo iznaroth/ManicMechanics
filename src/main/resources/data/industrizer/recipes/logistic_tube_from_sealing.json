@@ -1,0 +1,15 @@
+{
+  "type": "industrizer:sealer",
+  "ingredients": [
+    {
+      "item": "industrizer:tube_housing"
+    },
+    {
+      "item": "industrizer:sealant"
+    }
+  ],
+  "output": {
+    "item": "industrizer:transport_tube",
+    "count": 8
+  }
+}

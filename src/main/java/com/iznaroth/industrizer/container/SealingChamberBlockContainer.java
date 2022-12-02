@@ -2,6 +2,7 @@ package com.iznaroth.industrizer.container;
 
 import com.iznaroth.industrizer.block.IndustrizerBlocks;
 import com.iznaroth.industrizer.item.IndustrizerItems;
+import com.iznaroth.industrizer.tile.SealingChamberBlockTile;
 import com.iznaroth.industrizer.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,13 +29,13 @@ import java.util.List;
 
 public class SealingChamberBlockContainer extends Container {
 
-    private TileEntity tileEntity;
+    private SealingChamberBlockTile tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
     public SealingChamberBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(IndustrizerContainers.SEALER_CONTAINER.get(), windowId);
-        tileEntity = world.getBlockEntity(pos);
+        tileEntity = (SealingChamberBlockTile) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
@@ -53,7 +54,7 @@ public class SealingChamberBlockContainer extends Container {
         return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public TileEntity getTileEntity(){
+    public SealingChamberBlockTile getTileEntity(){
         return this.tileEntity;
     }
 
@@ -146,6 +147,15 @@ public class SealingChamberBlockContainer extends Container {
 
     public boolean isValidInsertion(Item what){
         return valid_for_insertion.contains(what);
+    }
+
+    public int getScaledProgress(){
+
+        int progress = this.getTileEntity().getCraftProgress();
+        int maxProgress = 80;
+        int progressArrowSize = 33;
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
 }

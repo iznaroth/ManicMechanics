@@ -22,4 +22,9 @@ public class EnergyStorageWrapper extends EnergyStorage {
     public void setEnergy(int to){
         this.energy = to;
     }
+
+    public void energyOperation(int tickAmount){
+        //Non-checked removal of power.
+        energy = energy - tickAmount;
+    }
 }
