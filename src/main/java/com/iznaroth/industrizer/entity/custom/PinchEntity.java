@@ -1,8 +1,10 @@
 package com.iznaroth.industrizer.entity.custom;
 
 import com.iznaroth.industrizer.IndustrizerMod;
+import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.util.ModSoundEvents;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -49,8 +51,20 @@ public class PinchEntity extends CreatureEntity {
     }
 
     @Override
-    protected ResourceLocation getDefaultLootTable() {
-        return new ResourceLocation(IndustrizerMod.MOD_ID, "loot_tables/entities/pinch");
+    public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
+        if(p_70097_1_.getEntity() instanceof PlayerEntity && (((PlayerEntity) p_70097_1_.getEntity()).getMainHandItem().getItem().equals(IndustrizerItems.REINFORCED_ARM.get()) || (((PlayerEntity) p_70097_1_.getEntity()).getOffhandItem().getItem().equals(IndustrizerItems.REINFORCED_ARM.get())))) {
+            return super.hurt(p_70097_1_, p_70097_2_); //If it's a player with proper equipment, do damage as normal.
+        } else if(p_70097_1_.getEntity() instanceof LivingEntity) {
+            if (this.level.isClientSide) {
+                return false;
+            }
+
+            DamageSource PINCH = new DamageSource(IndustrizerMod.MOD_ID + "_pinched");
+            ((LivingEntity) p_70097_1_.getEntity()).hurt(PINCH, Float.MAX_VALUE); //Pinch instantly kills any unequipped damage source.
+            return false;
+        }
+
+        return false;
     }
 
     @Override

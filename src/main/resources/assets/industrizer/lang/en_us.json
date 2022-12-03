@@ -11,6 +11,8 @@
 
   "item.industrizer.dyspersium_widget": "Dyspersium Widget",
 
+  "item.industrizer.illegible_tome": "Illegible Tome",
+
 
 
   "block.industrizer.dyspersium_ore": "Dyspersium Ore",
@@ -43,5 +45,11 @@
   "screen.industrizer.sealer": "Sealing Chamber",
 
   "subject.industrizer.anon01": "[ANON1] Hello and welcome!",
-  "email.industrizer.anon01": "Hello there! I'm glad you got my last message - sorry for the unconventional delivery. Not every Dyspersium-rich world has the necessary infrastructure to establish communication, y'know? Anyways, I don't wanna get too consumed by the basics, so let's cut to the chase - I'm here to provide you blueprints. Don't get too bothered about why or how - just keep doing what you're doing, and I'll send 'em over when I can. We'll start with something simple: an HEP. Classic powergen, as I'm sure you know."
+  "email.industrizer.anon01": "Hello there! I'm glad you got my last message - sorry for the unconventional delivery. Not every Dyspersium-rich world has the necessary infrastructure to establish communication, y'know? Anyways, I don't wanna get too consumed by the basics, so let's cut to the chase - I'm here to provide you blueprints. Don't get too bothered about why or how - just keep doing what you're doing, and I'll send 'em over when I can. We'll start with something simple: an HEP. Classic powergen, as I'm sure you know.",
+
+
+  "advancements.contact.root.title":  "Contact",
+  "advancements.contact.root.description": "Acquire a strange, whispering dust from the depths of the earth.",
+
+  "death.attack.industrizer_pinched": "%1$s was spaghettified!"
 }

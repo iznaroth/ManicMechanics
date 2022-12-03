@@ -8,6 +8,7 @@ import com.iznaroth.industrizer.entity.ModEntityTypes;
 import com.iznaroth.industrizer.entity.custom.PinchEntity;
 import com.iznaroth.industrizer.entity.render.CopCarRenderer;
 import com.iznaroth.industrizer.entity.render.PinchRenderer;
+import com.iznaroth.industrizer.events.ModEvents;
 import com.iznaroth.industrizer.item.IndustrizerItems;
 import com.iznaroth.industrizer.logistics.ActiveConnectionQueue;
 import com.iznaroth.industrizer.networking.IndustrizerMessages;
@@ -85,6 +86,7 @@ public class IndustrizerMod
         registerCommonEvents(eventBus);
 
         forgeEventBus.register(ActiveConnectionQueue.class);
+        forgeEventBus.register(new ModEvents());
 
         eventBus.addListener(this::commonSetup);
 

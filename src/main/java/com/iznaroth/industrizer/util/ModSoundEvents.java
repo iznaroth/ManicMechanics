@@ -22,6 +22,10 @@ public class ModSoundEvents {
 
     public static final RegistryObject<SoundEvent> EVA_MUSIC_DISC = registerSoundEvent("eva");
 
+    //DYSPERSIUM BITES
+    public static final RegistryObject<SoundEvent> DYSPERSIUM_0 = registerSoundEvent("dyspersium_0");
+    public static final RegistryObject<SoundEvent> DYSPERSIUM_1 = registerSoundEvent("dyspersium_1");
+
 
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name){

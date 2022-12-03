@@ -9,6 +9,16 @@
     "subtitle": "industrizer.pinch_1",
     "sounds": [ "industrizer:pinch_1" ]
   },
+  "dyspersium_0": {
+    "category": "ambient",
+    "subtitle": "industrizer.dyspersium_0",
+    "sounds": [ "industrizer:dyspersium_0" ]
+  },
+  "dyspersium_1": {
+    "category": "ambient",
+    "subtitle": "industrizer.dyspersium_1",
+    "sounds": [ "industrizer:dyspersium_1" ]
+  },
   "eva": {
     "sounds": [
       {

@@ -17,6 +17,13 @@ public class IndustrizerItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, IndustrizerMod.MOD_ID);
 
+    public static final RegistryObject<Item> ILLEGIBLE_TOME = ITEMS.register("illegible_tome",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
+    public static final RegistryObject<Item> DEVELOPMENT_ARCHIVE = ITEMS.register("development_archive",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));
+
+
     //Tools
     public static final RegistryObject<Item> WIRE_CUTTER = ITEMS.register("wire_cutter",
             () -> new Item(new Item.Properties().tab(ModItemGroup.INDUSTRIZER_ITEMS)));

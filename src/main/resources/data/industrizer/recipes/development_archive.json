@@ -5,11 +5,13 @@
       "item": "industrizer:dyspersium_dust"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "industrizer:illegible_tome"
     }
   ],
   "result": {
-    "item": "industrizer:dusted_ingot",
+    "type": "forge:nbt",
+    "item": "patchouli:guide_book",
+    "nbt": "{'patchouli:book':'industrizer:industrizer_blueprint_journal'}",
     "count": 1
   }
 }

@@ -1,5 +1,10 @@
 {
-  "name": "Scorched Blueprint Journal",
-  "landing_text": "STQ ARCHIVE BACKUP - PRIORITY ONE ZERO ZERO FIVE. This is ugly for now. Sorry!",
-  "version": 1
+  "name": "I.I.E. Development Archive",
+  "landing_text": "DATA for 'Territory ROQ-2275': Recovery process incomplete. Please seek assistance from a qualified extradimensional support technician at your earliest convenience.",
+  "version": 0,
+  "creative_tab": "industrizerItemTab",
+  "model": "industrizer:blueprint_book",
+  "subtitle": "DCC Unverified. Are you connected to an exteriation pylon?",
+  "show_progress": false
+
 }
