@@ -1,49 +1,49 @@
 {
   "variants": {
     "facing=down,powered=false": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "x": 90
     },
     "facing=up,powered=false": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "x": -90
     },
     "facing=north,powered=false": {
-      "model": "industrizer:block/sealing_chamber"
+      "model": "manicmechanics:block/sealing_chamber"
     },
     "facing=south,powered=false": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 180
     },
     "facing=west,powered=false": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 270
     },
     "facing=east,powered=false": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 90
     },
     "facing=down,powered=true": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "x": 90
     },
     "facing=up,powered=true": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "x": -90
     },
     "facing=north,powered=true": {
-      "model": "industrizer:block/sealing_chamber"
+      "model": "manicmechanics:block/sealing_chamber"
     },
     "facing=south,powered=true": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 180
     },
     "facing=west,powered=true": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 270
     },
     "facing=east,powered=true": {
-      "model": "industrizer:block/sealing_chamber",
+      "model": "manicmechanics:block/sealing_chamber",
       "y": 90
     }
   }

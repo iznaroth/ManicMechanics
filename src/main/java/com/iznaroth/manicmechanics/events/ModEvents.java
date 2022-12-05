@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.events;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -22,11 +22,11 @@ public class ModEvents {
     }
 
 
-    private static final String NBT_KEY = "industrizer.firstjoin";
+    private static final String NBT_KEY = "manicmechanics.firstjoin";
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        //if (IndustrizerMod.config.isStartingBookDisabled()) {
+        //if (ManicMechanics.config.isStartingBookDisabled()) {
         //    return;
         //}N
 
@@ -44,7 +44,7 @@ public class ModEvents {
         if (!persistent.hasUUID(NBT_KEY)) {
             persistent.putBoolean(NBT_KEY, true);
             System.out.println("Player gets book.");
-            event.getPlayer().inventory.add(new ItemStack(IndustrizerItems.ILLEGIBLE_TOME.get()));
+            event.getPlayer().inventory.add(new ItemStack(MMItems.ILLEGIBLE_TOME.get()));
 
         }
     }

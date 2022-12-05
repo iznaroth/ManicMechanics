@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:block/cube",
   "textures": {
-    "down": "industrizer:block/machine_placeholder",
-    "up": "industrizer:block/sealer_top",
-    "north": "industrizer:block/sealer_front",
-    "south": "industrizer:block/sealer_back",
-    "east": "industrizer:block/machine_placeholder",
-    "west": "industrizer:block/machine_placeholder"
+    "down": "manicmechanics:block/machine_placeholder",
+    "up": "manicmechanics:block/sealer_top",
+    "north": "manicmechanics:block/sealer_front",
+    "south": "manicmechanics:block/sealer_back",
+    "east": "manicmechanics:block/machine_placeholder",
+    "west": "manicmechanics:block/machine_placeholder"
   }
 }

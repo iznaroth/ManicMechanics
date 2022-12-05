@@ -24,7 +24,7 @@ public class CommunicatorBlockTile extends TileEntity {
     private int counter;
 
     public CommunicatorBlockTile() {
-        super(IndustrizerTileEntities.COMMUNICATOR_TILE.get());
+        super(MMTileEntities.COMMUNICATOR_TILE.get());
     }
 
     @Override

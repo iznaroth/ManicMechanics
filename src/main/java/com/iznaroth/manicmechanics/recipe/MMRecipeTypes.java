@@ -10,7 +10,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class IndustrizerRecipeTypes extends RecipeManager {
+public class MMRecipeTypes extends RecipeManager {
 
     public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZER =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ManicMechanics.MOD_ID);

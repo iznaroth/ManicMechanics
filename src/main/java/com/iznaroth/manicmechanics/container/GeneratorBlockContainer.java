@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.container;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,7 +26,7 @@ public class GeneratorBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(IndustrizerContainers.GENERATOR_CONTAINER.get(), windowId);
+        super(MMContainers.GENERATOR_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -96,7 +96,7 @@ public class GeneratorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() == MMItems.DYSPERSIUM_DUST.get()) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

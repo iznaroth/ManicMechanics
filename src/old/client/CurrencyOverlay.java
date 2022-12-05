@@ -1,10 +1,10 @@
-package com.iznaroth.industrizer.capability.client;
+package com.iznaroth.manicmechanics.capability.client;
 
-import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.capability.CurrencyConfig;
-import com.iznaroth.industrizer.capability.data.Currency;
-import com.iznaroth.industrizer.item.ModItems;
-import com.iznaroth.industrizer.item.WalletItem;
+import com.iznaroth.manicmechanics.IndustrizerMod;
+import com.iznaroth.manicmechanics.capability.CurrencyConfig;
+import com.iznaroth.manicmechanics.capability.data.Currency;
+import com.iznaroth.manicmechanics.item.ModItems;
+import com.iznaroth.manicmechanics.item.WalletItem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

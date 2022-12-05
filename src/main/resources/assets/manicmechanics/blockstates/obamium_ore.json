@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "industrizer:block/obamium_ore" }
+    "": { "model": "manicmechanics:block/obamium_ore" }
   }
 }

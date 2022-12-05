@@ -1,3 +1,6 @@
 {
-  "parent": "manicmechanics:block/power_core"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "manicmechanics:item/security_brick"
+  }
 }

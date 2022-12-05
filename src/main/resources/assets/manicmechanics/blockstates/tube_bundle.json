@@ -1,31 +1,31 @@
 {
   "multipart": [
     {
-      "apply": { "model": "industrizer:block/bundle_core"}
+      "apply": { "model": "manicmechanics:block/bundle_core"}
     },
 
     {   "when": { "north": "true" },
-      "apply": { "model": "industrizer:block/bundle_north"}
+      "apply": { "model": "manicmechanics:block/bundle_north"}
     },
 
     {   "when": { "east": "true" },
-      "apply": { "model": "industrizer:block/bundle_east" }
+      "apply": { "model": "manicmechanics:block/bundle_east" }
     },
 
     {   "when": { "south": "true" },
-      "apply": { "model": "industrizer:block/bundle_south"}
+      "apply": { "model": "manicmechanics:block/bundle_south"}
     },
 
     {   "when": { "west": "true" },
-      "apply": { "model": "industrizer:block/bundle_west"}
+      "apply": { "model": "manicmechanics:block/bundle_west"}
     },
 
     {   "when": { "up": "true" },
-      "apply": { "model": "industrizer:block/bundle_up"}
+      "apply": { "model": "manicmechanics:block/bundle_up"}
     },
 
     {   "when": { "down": "true" },
-      "apply": { "model": "industrizer:block/bundle_down"}
+      "apply": { "model": "manicmechanics:block/bundle_down"}
     }
   ]
 }

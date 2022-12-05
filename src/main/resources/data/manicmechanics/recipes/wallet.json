@@ -10,11 +10,11 @@
       "item": "minecraft:leather"
     },
     "W": {
-      "item": "industrizer:dyspersium_dust"
+      "item": "manicmechanics:dyspersium_dust"
     }
   },
   "result": {
-    "item": "industrizer:wallet",
+    "item": "manicmechanics:wallet",
     "count": 1
   }
 }

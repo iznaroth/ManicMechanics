@@ -86,7 +86,7 @@ public class GeneratorBlock extends Block implements INetworkNavigable {
         if(Screen.hasShiftDown()){
             list.add(new TranslationTextComponent("message.hep.tooltip").withStyle(TextFormatting.AQUA));
         } else {
-            list.add(new TranslationTextComponent("message.industrizer.tooltip").withStyle(TextFormatting.GRAY));
+            list.add(new TranslationTextComponent("message.manicmechanics.tooltip").withStyle(TextFormatting.GRAY));
         }
     }
 

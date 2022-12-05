@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
-public class IndustrizerMessages {
+public class MMMessages {
     private static SimpleChannel INSTANCE;
 
     private static int packetId = 0;

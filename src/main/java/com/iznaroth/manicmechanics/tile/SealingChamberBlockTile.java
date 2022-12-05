@@ -2,11 +2,11 @@ package com.iznaroth.manicmechanics.tile;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
-import com.iznaroth.manicmechanics.networking.IndustrizerMessages;
+import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
-import com.iznaroth.manicmechanics.recipe.IndustrizerRecipeTypes;
+import com.iznaroth.manicmechanics.recipe.MMRecipeTypes;
 import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.Inventory;
@@ -49,7 +49,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
     private int counter;
 
     public SealingChamberBlockTile() {
-        super(IndustrizerTileEntities.SEALER_TILE.get());
+        super(MMTileEntities.SEALER_TILE.get());
         this.capacity = 40000;
         this.energy = 0;
         //No throttling at this stage of development - will be related to machine casing later.
@@ -100,11 +100,11 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
 
-                if(slot == 0 && !stack.getItem().equals(IndustrizerItems.TUBE_HOUSING.get())){
+                if(slot == 0 && !stack.getItem().equals(MMItems.TUBE_HOUSING.get())){
                     return stack;
                 }
 
-                if(slot == 1 && !stack.getItem().equals(IndustrizerItems.SEALANT.get())){
+                if(slot == 1 && !stack.getItem().equals(MMItems.SEALANT.get())){
                     return stack;
                 }
 
@@ -179,7 +179,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
             public void onEnergyChanged(){
                 setChanged();
                 System.out.println("CREATE PACKET ---------- ENERGY CHANGED ----------- UPDATE SCREEN");
-                IndustrizerMessages.sendToClients(new EnergySyncS2CPacket(this.getEnergyStored(), getBlockPos()));
+                MMMessages.sendToClients(new EnergySyncS2CPacket(this.getEnergyStored(), getBlockPos()));
             }
         };
     }
@@ -246,7 +246,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
         }
 
         Optional<SealingChamberRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(IndustrizerRecipeTypes.SEALING_CHAMBER_RECIPE, inv, level);
+                .getRecipeFor(MMRecipeTypes.SEALING_CHAMBER_RECIPE, inv, level);
 
         recipe.ifPresent(iRecipe -> {
 
@@ -257,7 +257,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
             if(progress < 80){ //Only increment progress if we can take energy.
                 if(energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
                     progress++;
-                    IndustrizerMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
+                    MMMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
                     energyStorage.energyOperation(4);
                 }
             } else {
@@ -270,7 +270,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
                 setChanged();
 
                 progress = 0;
-                IndustrizerMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
+                MMMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
             }
         });
     }

@@ -3,19 +3,19 @@ package com.iznaroth.manicmechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
 import com.iznaroth.manicmechanics.client.capability.SuspicionCapability;
-import com.iznaroth.manicmechanics.container.IndustrizerContainers;
+import com.iznaroth.manicmechanics.container.MMContainers;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.entity.custom.PinchEntity;
 import com.iznaroth.manicmechanics.entity.render.CopCarRenderer;
 import com.iznaroth.manicmechanics.entity.render.PinchRenderer;
 import com.iznaroth.manicmechanics.events.ModEvents;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.logistics.ActiveConnectionQueue;
-import com.iznaroth.manicmechanics.networking.IndustrizerMessages;
-import com.iznaroth.manicmechanics.recipe.IndustrizerRecipeTypes;
+import com.iznaroth.manicmechanics.networking.MMMessages;
+import com.iznaroth.manicmechanics.recipe.MMRecipeTypes;
 import com.iznaroth.manicmechanics.setup.ClientSetup;
 import com.iznaroth.manicmechanics.setup.Config;
-import com.iznaroth.manicmechanics.tile.IndustrizerTileEntities;
+import com.iznaroth.manicmechanics.tile.MMTileEntities;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 
 public class ManicMechanics
 {
-    public static final String MOD_ID = "industrizer";
+    public static final String MOD_ID = "manicmechanics";
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
@@ -57,16 +57,16 @@ public class ManicMechanics
 
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-        IndustrizerItems.register(eventBus);
+        MMItems.register(eventBus);
         MMBlocks.register(eventBus);
 
         ModSoundEvents.register(eventBus);
         ModEntityTypes.register(eventBus);
 
-        IndustrizerTileEntities.register(eventBus);
-        IndustrizerContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
+        MMTileEntities.register(eventBus);
+        MMContainers.register(eventBus); //NOTE - May need to rearrange for order compliance?
 
-        IndustrizerRecipeTypes.register(eventBus);
+        MMRecipeTypes.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
@@ -114,7 +114,7 @@ public class ManicMechanics
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            IndustrizerMessages.register();
+            MMMessages.register();
         });
     }
 

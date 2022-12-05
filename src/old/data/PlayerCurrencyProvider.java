@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability.data;
+package com.iznaroth.manicmechanics.capability.data;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;

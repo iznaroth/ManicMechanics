@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "industrizer:dyspersium_dust"
+      "item": "manicmechanics:dyspersium_dust"
     },
     {
-      "item": "industrizer:illegible_tome"
+      "item": "manicmechanics:illegible_tome"
     }
   ],
   "result": {
     "type": "forge:nbt",
     "item": "patchouli:guide_book",
-    "nbt": "{'patchouli:book':'industrizer:industrizer_blueprint_journal'}",
+    "nbt": "{'patchouli:book':'manicmechanics:mm_dev_archive'}",
     "count": 1
   }
 }

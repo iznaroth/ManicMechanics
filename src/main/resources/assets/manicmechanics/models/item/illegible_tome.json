@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/illegible_tome"
+    "layer0": "manicmechanics:item/illegible_tome"
   }
 }

@@ -1,39 +1,40 @@
 {
-  "item.industrizer.dyspersium_dust": "Dyspersium Dust",
-  "item.industrizer.dusted_ingot": "Dyspersium-Dusted Ingot",
-  "item.industrizer.dyspersium_alloy": "Dyspersium Alloy",
-  "item.industrizer.obamium_ingot": "Obamium Ingot",
-  "item.industrizer.wallet": "Wallet",
-  "item.industrizer.cop_car_spawn_egg": "Functional IDPD Radio Console",
-
-  "item.industrizer.eva_music_disc": "E.V.A. Music Disc",
-  "item.industrizer.eva_music_disc.desc": "Jean-Jacques Perrey - E.V.A.",
-
-  "item.industrizer.dyspersium_widget": "Dyspersium Widget",
-
-  "item.industrizer.illegible_tome": "Illegible Tome",
+  "item.manicmechanics.dyspersium_dust": "Dyspersium Dust",
+  "item.manicmechanics.dusted_ingot": "Dyspersium-Dusted Ingot",
+  "item.manicmechanics.dyspersium_alloy": "Dyspersium Alloy",
+  "item.manicmechanics.obamium_ingot": "Obamium Ingot",
+  "item.manicmechanics.wallet": "Wallet",
+  "item.manicmechanics.cop_car_spawn_egg": "Functional IDPD Radio Console",
+  "item.manicmechanics.eva_music_disc": "E.V.A. Music Disc",
+  "item.manicmechanics.eva_music_disc.desc": "Jean-Jacques Perrey - E.V.A.",
+  "item.manicmechanics.dyspersium_widget": "Dyspersium Widget",
+  "item.manicmechanics.illegible_tome": "Illegible Tome",
+  "item.manicmechanics.security_brick": "Verified Security Brick",
 
 
 
-  "block.industrizer.dyspersium_ore": "Dyspersium Ore",
-  "block.industrizer.hep": "Hyperfield Extraction Polarizer",
-  "block.industrizer.obamium_block": "Obamium Block",
-  "block.industrizer.obamium_ore": "Obamium Ore",
-  "block.industrizer.transport_tube": "Logistical Transport Tube",
-  "block.industrizer.power_tube": "Insulated Power Tube",
-  "block.industrizer.fluid_tube": "Coated Fluid Tube",
-  "block.industrizer.gas_tube": "Pressurized Gas Tube",
-  "block.industrizer.tube_bundle": "Tube Bundle",
+  "block.manicmechanics.dyspersium_ore": "Dyspersium Ore",
+  "block.manicmechanics.hep": "Hyperfield Extraction Polarizer",
+  "block.manicmechanics.obamium_block": "Obamium Block",
+  "block.manicmechanics.obamium_ore": "Obamium Ore",
+  "block.manicmechanics.transport_tube": "Logistical Transport Tube",
+  "block.manicmechanics.power_tube": "Insulated Power Tube",
+  "block.manicmechanics.fluid_tube": "Coated Fluid Tube",
+  "block.manicmechanics.gas_tube": "Pressurized Gas Tube",
+  "block.manicmechanics.tube_bundle": "Tube Bundle",
+  "block.manicmechanics.ecp": "Electrostatic Communication Pylon",
 
 
 
-  "message.industrizer.tooltip": "<Hold SHIFT for more details.>",
+  "message.manicmechanics.tooltip": "<Hold SHIFT for more details.>",
   "message.hep.tooltip": "Specialized extraction mainframe with internal polarization centrifuge. Utilizes the unique dimensionally-agnostic properties of Dyspersium to extract power from adjacent, terminal dimensionality.",
   "message.sealer.tooltip": "This is a PRODUCTION machine for specialized sealing operations. There are three inputs - the housing, the insertion, and any special requirements. When you place your insertion item into the machine, it will show the mode and special requirements in the top left as an icon. Hover over it for details.",
   "message.powertube.tooltip": "Insulated, HV Dyspersium-oriented multidimensional power transport with low risk-factor. Can move 500 RF/Tick and base level. THIS BLOCK IS PRONE TO UNPREDICTABLE BEHAVIOR OR ERRORS.",
   "message.transporttube.tooltip": "Pressurized thallite-plastic tube capable of miniaturizing and transporting nearly anything at a fixed rate. Requires controlled air-supply to function. Transfers at a rate of 8 items / second. THIS BLOCK IS PRONE TO UNPREDICTABLE BEHAVIOR OR ERRORS.",
 
-  "itemGroup.industrizerItemTab": "Industrizer Items",
+  "itemGroup.mmItemTab": "Manic Mechanics - Items",
+  "itemGroup.mmResourceTab": "Manic Mechanics - Resources",
+  "itemGroup.mmMachineTab": "Manic Mechanics - Machines",
 
 
 
@@ -42,14 +43,17 @@
   "commGroup.employment": "Employment",
   "commGroup.contracts": "Contracts",
 
-  "screen.industrizer.sealer": "Sealing Chamber",
+  "screen.manicmechanics.sealer": "Sealing Chamber",
+  "screen.manicmechanics.simple_communicator": "CONTACT BEACON NULL-NULL-NULL",
 
-  "subject.industrizer.anon01": "[ANON1] Hello and welcome!",
-  "email.industrizer.anon01": "Hello there! I'm glad you got my last message - sorry for the unconventional delivery. Not every Dyspersium-rich world has the necessary infrastructure to establish communication, y'know? Anyways, I don't wanna get too consumed by the basics, so let's cut to the chase - I'm here to provide you blueprints. Don't get too bothered about why or how - just keep doing what you're doing, and I'll send 'em over when I can. We'll start with something simple: an HEP. Classic powergen, as I'm sure you know.",
+  "subject.manicmechanics.anon01": "[ANON1] Hello and welcome!",
+  "email.manicmechanics.anon01": "Hello there! I'm glad you got my last message - sorry for the unconventional delivery. Not every Dyspersium-rich world has the necessary infrastructure to establish communication, y'know? Anyways, I don't wanna get too consumed by the basics, so let's cut to the chase - I'm here to provide you blueprints. Don't get too bothered about why or how - just keep doing what you're doing, and I'll send 'em over when I can. We'll start with something simple: an HEP. Classic powergen, as I'm sure you know.",
 
 
   "advancements.contact.root.title":  "Contact",
   "advancements.contact.root.description": "Acquire a strange, whispering dust from the depths of the earth.",
+  "advancements.contact.brick.title":  "Verified?",
+  "advancements.contact.brick.description": "Recieve a token of your authorization from a local governance.",
 
-  "death.attack.industrizer_pinched": "%1$s was spaghettified!"
+  "death.attack.manicmechanics_pinched": "%1$s was spaghettified!"
 }

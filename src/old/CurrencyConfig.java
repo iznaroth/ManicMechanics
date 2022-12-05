@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability;
+package com.iznaroth.manicmechanics.capability;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.container;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.tile.SealingChamberBlockTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,7 +29,7 @@ public class SealingChamberBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public SealingChamberBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(IndustrizerContainers.SEALER_CONTAINER.get(), windowId);
+        super(MMContainers.SEALER_CONTAINER.get(), windowId);
         tileEntity = (SealingChamberBlockTile) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -133,8 +133,8 @@ public class SealingChamberBlockContainer extends Container {
         addSlotRange(playerInventory, 0, leftCol, topRow, 9, 18);
     }
 
-    private final List<Item> valid_for_housing = Arrays.asList(IndustrizerItems.TUBE_HOUSING.get());
-    private final List<Item> valid_for_insertion = Arrays.asList(IndustrizerItems.SEALANT.get());
+    private final List<Item> valid_for_housing = Arrays.asList(MMItems.TUBE_HOUSING.get());
+    private final List<Item> valid_for_insertion = Arrays.asList(MMItems.SEALANT.get());
 
     public boolean isValidHousing(Item what){
         return valid_for_housing.contains(what);

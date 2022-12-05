@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "industrizer:dyspersium_dust"
+      "item": "manicmechanics:dyspersium_dust"
     },
     "title": {
       "translate": "advancements.contact.root.title"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "industrizer:dyspersium_dust"
+            "item": "manicmechanics:dyspersium_dust"
           }
         ]
       }
@@ -34,6 +34,6 @@
   ],
 
   "rewards": {
-    "function": "industrizer:dust_whisper"
+    "function": "manicmechanics:dust_whisper"
   }
 }

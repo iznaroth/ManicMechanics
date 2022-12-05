@@ -1,15 +1,15 @@
 {
-  "type": "industrizer:sealer",
+  "type": "manicmechanics:sealer",
   "ingredients": [
     {
-      "item": "industrizer:tube_housing"
+      "item": "manicmechanics:tube_housing"
     },
     {
-      "item": "industrizer:sealant"
+      "item": "manicmechanics:sealant"
     }
   ],
   "output": {
-    "item": "industrizer:transport_tube",
+    "item": "manicmechanics:transport_tube",
     "count": 8
   }
 }

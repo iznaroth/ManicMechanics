@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability.client;
+package com.iznaroth.manicmechanics.capability.client;
 
 public class ClientCurrencyData {
     private static int playerMDD;

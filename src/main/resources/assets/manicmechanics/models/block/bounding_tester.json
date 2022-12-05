@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "industrizer:block/bounding_tester"
+    "all": "manicmechanics:block/bounding_tester"
   }
 }

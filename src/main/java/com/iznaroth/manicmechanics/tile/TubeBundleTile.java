@@ -37,7 +37,7 @@ public class TubeBundleTile extends TileEntity  {
 
 
     public TubeBundleTile() {
-        super(IndustrizerTileEntities.TUBE_BUNDLE_TILE.get());
+        super(MMTileEntities.TUBE_BUNDLE_TILE.get());
     }
 
 

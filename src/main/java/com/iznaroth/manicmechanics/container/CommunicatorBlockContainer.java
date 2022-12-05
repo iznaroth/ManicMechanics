@@ -24,7 +24,7 @@ public class CommunicatorBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public CommunicatorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(IndustrizerContainers.COMMUNICATOR_CONTAINER.get(), windowId);
+        super(MMContainers.COMMUNICATOR_CONTAINER.get(), windowId);
         PlayerInventory playerinventory = player.inventory;
 
         tileEntity = world.getBlockEntity(pos);

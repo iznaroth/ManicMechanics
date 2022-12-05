@@ -1,7 +1,7 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.industrizer.setup.Config;
-import com.iznaroth.industrizer.tools.CustomEnergyStorage;
+import com.iznaroth.manicmechanics.setup.Config;
+import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

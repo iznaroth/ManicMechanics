@@ -2,6 +2,7 @@ package com.iznaroth.manicmechanics.screen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.container.SealingChamberBlockContainer;
+import com.iznaroth.manicmechanics.container.SimpleCommunicatorBlockContainer;
 import com.iznaroth.manicmechanics.screen.renderer.EnergyInfoArea;
 import com.iznaroth.manicmechanics.util.MouseUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,27 +14,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlockContainer> {
+public class SimpleCommunicatorBlockScreen extends ContainerScreen<SimpleCommunicatorBlockContainer> {
 
-    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/sealing_chamber.png");
+    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/rudimentary_communicator.png");
 
-    private EnergyInfoArea energyInfoArea;
 
-    public SealingChamberBlockScreen(SealingChamberBlockContainer container, PlayerInventory inv, ITextComponent name) {
+    public SimpleCommunicatorBlockScreen(SimpleCommunicatorBlockContainer container, PlayerInventory inv, ITextComponent name) {
         super(container, inv, name);
     }
 
     @Override
     protected void init() {
         super.init();
-        assignEnergyInfoArea();
-    }
-
-    private void assignEnergyInfoArea(){
-        int relX = (this.width - this.imageWidth) / 2;
-        int relY = (this.height - this.imageHeight) / 2;
-
-        energyInfoArea = new EnergyInfoArea(relX + 12, relY + 17, menu.getTileEntity().getCapability(CapabilityEnergy.ENERGY).orElse(null));
     }
 
     @Override
@@ -42,23 +34,8 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
-        renderOperationModeTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
-    private void renderEnergyAreaTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 12, 17, 12, 48)) {
-            renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
-                     pMouseX - x, pMouseY - y);
-        }
-    }
-
-    private void renderOperationModeTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 33, 17, 16, 16)) {
-            renderTooltip(pPoseStack, new StringTextComponent("OPERATION MODE: Unimplemented :)"),
-                    pMouseX - x, pMouseY - y);
-        }
-    }
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
@@ -74,14 +51,8 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
-
-        energyInfoArea.draw(matrixStack);
-        renderProgressArrow(matrixStack, relX, relY);
     }
 
-    private void renderProgressArrow(MatrixStack stack, int x, int y){
-        blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
-    }
 
     //private void renderPowerBar(MatrixStack matrixStack, int x, int y){
     //    //NOTE - Power renderer will need to recieve this update thru a packet - client -> server communication.

@@ -160,6 +160,6 @@ public class RenderModelHourglass  {
     private final float FULL_CYCLE_DURATION_TICKS = FULL_CYCLE_DURATION_SECONDS * TICKS_PER_SECOND;
   }
   public static final ResourceLocation HOURGLASS_MODEL_TEXTURE
-          = new ResourceLocation("industrizer:textures/model/mbe21_hourglass_model.png");
+          = new ResourceLocation("manicmechanics:textures/model/mbe21_hourglass_model.png");
 
 }

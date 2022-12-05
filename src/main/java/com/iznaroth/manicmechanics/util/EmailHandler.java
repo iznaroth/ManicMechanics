@@ -13,7 +13,7 @@ public abstract class EmailHandler {
         return active_entries[idx] == null;
     }
 
-    public static final Email ANON_01 = new Email(new TranslationTextComponent("subject.industrizer.anon01"), new TranslationTextComponent("email.industrizer.anon01"), 0);
+    public static final Email ANON_01 = new Email(new TranslationTextComponent("subject.manicmechanics.anon01"), new TranslationTextComponent("email.manicmechanics.anon01"), 0);
 
     public static class Email{
         public TranslationTextComponent subject;

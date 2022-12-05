@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.render;
 
-import com.iznaroth.manicmechanics.tile.IndustrizerTileEntities;
+import com.iznaroth.manicmechanics.tile.MMTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.IntNBT;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class TileRenderTester extends TileEntity {
 
-    public TileRenderTester() {super(IndustrizerTileEntities.RENDER_TESTER_TILE.get());}
+    public TileRenderTester() {super(MMTileEntities.RENDER_TESTER_TILE.get());}
 
     public static final Color INVALID_COLOR = null;
 

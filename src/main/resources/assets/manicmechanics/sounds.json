@@ -1,28 +1,28 @@
 {
   "cop_siren": {
     "category": "entity",
-    "subtitle": "industrizer.cop_siren",
-    "sounds": [ "industrizer:cop_siren" ]
+    "subtitle": "manicmechanics.cop_siren",
+    "sounds": [ "manicmechanics:cop_siren" ]
   },
   "pinch_1": {
     "category": "entity",
-    "subtitle": "industrizer.pinch_1",
-    "sounds": [ "industrizer:pinch_1" ]
+    "subtitle": "manicmechanics.pinch_1",
+    "sounds": [ "manicmechanics:pinch_1" ]
   },
   "dyspersium_0": {
     "category": "ambient",
-    "subtitle": "industrizer.dyspersium_0",
-    "sounds": [ "industrizer:dyspersium_0" ]
+    "subtitle": "manicmechanics.dyspersium_0",
+    "sounds": [ "manicmechanics:dyspersium_0" ]
   },
   "dyspersium_1": {
     "category": "ambient",
-    "subtitle": "industrizer.dyspersium_1",
-    "sounds": [ "industrizer:dyspersium_1" ]
+    "subtitle": "manicmechanics.dyspersium_1",
+    "sounds": [ "manicmechanics:dyspersium_1" ]
   },
   "eva": {
     "sounds": [
       {
-        "name": "industrizer:eva",
+        "name": "manicmechanics:eva",
         "stream":  true
       }
     ]

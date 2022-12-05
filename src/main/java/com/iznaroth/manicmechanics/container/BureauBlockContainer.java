@@ -31,7 +31,7 @@ public class BureauBlockContainer extends Container {
     private static final Minecraft minecraft = Minecraft.getInstance();
 
     public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(IndustrizerContainers.BUREAU_CONTAINER.get(), windowId);
+        super(MMContainers.BUREAU_CONTAINER.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);

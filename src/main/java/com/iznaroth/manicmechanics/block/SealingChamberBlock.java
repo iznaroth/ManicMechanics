@@ -64,7 +64,7 @@ public class SealingChamberBlock extends Block {
                 INamedContainerProvider containerProvider = new INamedContainerProvider() {
                     @Override
                     public ITextComponent getDisplayName() {
-                        return new TranslationTextComponent("screen.industrizer.sealer");
+                        return new TranslationTextComponent("screen.manicmechanics.sealer");
                     }
 
                     @Override
@@ -85,7 +85,7 @@ public class SealingChamberBlock extends Block {
         if(Screen.hasShiftDown()){
             list.add(new TranslationTextComponent("message.sealer.tooltip").withStyle(TextFormatting.LIGHT_PURPLE));
         } else {
-            list.add(new TranslationTextComponent("message.industrizer.tooltip").withStyle(TextFormatting.GRAY));
+            list.add(new TranslationTextComponent("message.manicmechanics.tooltip").withStyle(TextFormatting.GRAY));
         }
     }
 }

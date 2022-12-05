@@ -1,31 +1,55 @@
 package com.iznaroth.manicmechanics.tile;
 
+import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.block.ECPBlock;
+import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.item.MMItems;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CommunicatorBlockTile extends TileEntity {
+public class SimpleCommunicatorBlockTile extends TileEntity implements ITickableTileEntity {
 
     private ItemStackHandler itemHandler = createHandler();
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-    private int counter;
+    private static TranslationTextComponent[] messages = {
+            new TranslationTextComponent("simplemsg.manicmechanics.001")
+    };
 
-    public CommunicatorBlockTile() {
-        super(MMTileEntities.COMMUNICATOR_TILE.get());
+    private static Item[] reqToMsgMap = {
+            PatchouliAPI.get().getBookStack(new ResourceLocation(ManicMechanics.MOD_ID, "mm_dev_archive")).getItem()
+    };
+
+    int counter = 5;
+    int latest_message = 0;
+
+
+    public SimpleCommunicatorBlockTile() {
+        super(MMTileEntities.SIMPLE_COMMUNICATOR_TILE.get());
     }
+
 
     @Override
     public void setRemoved() {
@@ -82,5 +106,45 @@ public class CommunicatorBlockTile extends TileEntity {
         }
         return super.getCapability(cap, side);
     }
+
+    @Override
+    public void tick() {
+        readInput();
+    }
+
+    private void readInput(){
+        if(level.isClientSide()){
+            return;
+        }
+
+        Item in = itemHandler.getStackInSlot(0).getItem();
+        if(in.equals(Items.AIR))
+            return;
+
+
+        BlockPos above = this.getBlockPos().relative(Direction.UP);
+        if(level.getBlockState(above).getBlock().equals(MMBlocks.ELECTROSTATIC_COMMUNICATION_PYLON.get())) {
+
+            if (in.equals(Items.BRICK)) {
+                boolean success = ((ECPBlock) level.getBlockState(above).getBlock()).strikeAndAffirm(above, (ServerWorld) level);
+                if(success)
+                    itemHandler.setStackInSlot(0, MMItems.AUTHORIZED_SECURITY_BRICK.get().getDefaultInstance());
+            }
+            else
+                updateHelpMsg(); //not empty and has a legal progression item?
+
+        }
+
+
+    }
+
+    public TranslationTextComponent getTextForDisplay(){
+        return messages[latest_message];
+    }
+
+    private void updateHelpMsg(){
+
+    }
+
 
 }

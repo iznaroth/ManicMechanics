@@ -63,7 +63,7 @@ public class CommunicatorBlock extends Block {
                 INamedContainerProvider containerProvider = new INamedContainerProvider() {
                     @Override
                     public ITextComponent getDisplayName() {
-                        return new TranslationTextComponent("screen.industrizer.communicator");
+                        return new TranslationTextComponent("screen.manicmechanics.communicator");
                     }
 
                     @Override
@@ -84,7 +84,7 @@ public class CommunicatorBlock extends Block {
         if(Screen.hasShiftDown()){
             list.add(new TranslationTextComponent("message.communicator.tooltip").withStyle(TextFormatting.AQUA));
         } else {
-            list.add(new TranslationTextComponent("message.industrizer.tooltip").withStyle(TextFormatting.GRAY));
+            list.add(new TranslationTextComponent("message.manicmechanics.tooltip").withStyle(TextFormatting.GRAY));
         }
     }
 

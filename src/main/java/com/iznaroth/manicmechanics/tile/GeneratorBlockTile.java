@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.tile;
 
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -35,7 +35,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     private int maxExtract;
 
     public GeneratorBlockTile() {
-        super(IndustrizerTileEntities.GENERATOR_TILE.get());
+        super(MMTileEntities.GENERATOR_TILE.get());
         this.maxExtract = 1000;
     }
 
@@ -62,7 +62,7 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
         if (counter <= 0) {
             ItemStack stack = itemHandler.getStackInSlot(0);
-            if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
+            if (stack.getItem() == MMItems.DYSPERSIUM_DUST.get()) {
                 itemHandler.extractItem(0, 1, false);
                 counter = Config.FIRSTBLOCK_TICKS.get();
                 setChanged();
@@ -134,13 +134,13 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get();
+                return stack.getItem() == MMItems.DYSPERSIUM_DUST.get();
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != IndustrizerItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() != MMItems.DYSPERSIUM_DUST.get()) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

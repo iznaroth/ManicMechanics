@@ -1,7 +1,7 @@
-package com.iznaroth.industrizer.capability;
+package com.iznaroth.manicmechanics.capability;
 
-import com.iznaroth.industrizer.api.ICurrency;
-import com.iznaroth.industrizer.api.ISuspicion;
+import com.iznaroth.manicmechanics.api.ICurrency;
+import com.iznaroth.manicmechanics.api.ISuspicion;
 import net.minecraft.entity.LivingEntity;
 
 import javax.annotation.Nullable;

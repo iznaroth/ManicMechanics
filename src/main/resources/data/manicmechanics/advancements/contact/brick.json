@@ -1,27 +1,27 @@
 {
+  "parent": "manicmechanics:contact/root",
   "display": {
     "icon": {
-      "item": "manicmechanics:dyspersium_dust"
+      "item": "manicmechanics:security_brick"
     },
     "title": {
-      "translate": "advancements.contact.root.title"
+      "translate": "advancements.contact.brick.title"
     },
     "description": {
-      "translate": "advancements.contact.root.description"
+      "translate": "advancements.contact.brick.description"
     },
     "frame": "task",
     "show_toast": false,
     "announce_to_chat": true,
-    "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    "hidden": false
   },
   "criteria": {
-    "has_dust": {
+    "has_secure_brick": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "manicmechanics:dyspersium_dust"
+            "item": "manicmechanics:security_brick"
           }
         ]
       }
@@ -29,11 +29,7 @@
   },
   "requirements": [
     [
-      "has_dust"
+      "has_secure_brick"
     ]
-  ],
-
-  "rewards": {
-    "function": "manicmechanics:dust_whisper"
-  }
+  ]
 }

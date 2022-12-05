@@ -45,10 +45,10 @@ public class GuiCurrencyHUD extends AbstractGui {
         int j1 = j - 9;
         this.minecraft.font.drawShadow(ms, tc, (float)22, (float)8, 16777215);
 
-        //Minecraft.getInstance().textureManager.bind(new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/manabar_gui_mana.png"));
+        //Minecraft.getInstance().textureManager.bind(new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/manabar_gui_mana.png"));
         //blit(ms,offsetLeft + 9, height - 9, 0, manaOffset, manaLength,6, 256, 256);
 
-        //Minecraft.getInstance().textureManager.bind(new ResourceLocation(IndustrizerMod.MOD_ID, "textures/gui/manabar_gui_border.png"));
+        //Minecraft.getInstance().textureManager.bind(new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/manabar_gui_border.png"));
         //blit(ms,offsetLeft, height - 17, 0, 18, 108, 20, 256, 256);
     }
 }

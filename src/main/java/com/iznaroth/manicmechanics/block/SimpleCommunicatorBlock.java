@@ -1,7 +1,10 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.container.CommunicatorBlockContainer;
+import com.iznaroth.manicmechanics.container.SimpleCommunicatorBlockContainer;
+import com.iznaroth.manicmechanics.screen.SimpleCommunicatorBlockScreen;
 import com.iznaroth.manicmechanics.tile.CommunicatorBlockTile;
+import com.iznaroth.manicmechanics.tile.SimpleCommunicatorBlockTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
@@ -30,9 +33,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CommunicatorBlock extends Block {
+public class SimpleCommunicatorBlock extends Block {
 
-    public CommunicatorBlock(Properties properties) {
+    public SimpleCommunicatorBlock(Properties properties) {
         super(properties);
     }
 
@@ -41,7 +44,7 @@ public class CommunicatorBlock extends Block {
 
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){ return new CommunicatorBlockTile(); }
+    public TileEntity createTileEntity(BlockState state, IBlockReader world){ return new SimpleCommunicatorBlockTile(); }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
@@ -59,16 +62,16 @@ public class CommunicatorBlock extends Block {
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace) {
         if (!world.isClientSide) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof CommunicatorBlockTile) {
+            if (tileEntity instanceof SimpleCommunicatorBlockTile) {
                 INamedContainerProvider containerProvider = new INamedContainerProvider() {
                     @Override
                     public ITextComponent getDisplayName() {
-                        return new TranslationTextComponent("screen.manicmechanics.communicator");
+                        return new TranslationTextComponent("screen.manicmechanics.simple_communicator");
                     }
 
                     @Override
                     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                        return new CommunicatorBlockContainer(i, world, pos, playerInventory, playerEntity);
+                        return new SimpleCommunicatorBlockContainer(i, world, pos, playerInventory, playerEntity);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider, tileEntity.getBlockPos());
@@ -82,7 +85,7 @@ public class CommunicatorBlock extends Block {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> list, ITooltipFlag flags) {
         if(Screen.hasShiftDown()){
-            list.add(new TranslationTextComponent("message.communicator.tooltip").withStyle(TextFormatting.AQUA));
+            list.add(new TranslationTextComponent("message.simplecommunicator.tooltip").withStyle(TextFormatting.AQUA));
         } else {
             list.add(new TranslationTextComponent("message.manicmechanics.tooltip").withStyle(TextFormatting.GRAY));
         }

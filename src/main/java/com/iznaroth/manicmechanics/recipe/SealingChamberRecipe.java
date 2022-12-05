@@ -60,7 +60,7 @@ public class SealingChamberRecipe implements ISealingChamberRecipe{
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return IndustrizerRecipeTypes.SEALING_CHAMBER_SERIALIZER.get();
+        return MMRecipeTypes.SEALING_CHAMBER_SERIALIZER.get();
     }
 
     public static class SealingChamberRecipeType implements IRecipeType<SealingChamberRecipe> {

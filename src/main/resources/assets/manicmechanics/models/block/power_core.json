@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "industrizer:block/power_core",
-		"particle": "industrizer:block/power_core"
+		"0": "manicmechanics:block/power_core",
+		"particle": "manicmechanics:block/power_core"
 	},
 	"elements": [
 		{

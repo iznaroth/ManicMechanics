@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "industrizer:block/etcher"
+      "model": "manicmechanics:block/etcher"
     },
     "facing=up": {
-      "model": "industrizer:block/etcher"
+      "model": "manicmechanics:block/etcher"
     },
     "facing=north": {
-      "model": "industrizer:block/etcher"
+      "model": "manicmechanics:block/etcher"
     },
     "facing=south": {
-      "model": "industrizer:block/etcher",
+      "model": "manicmechanics:block/etcher",
       "y": 180
     },
     "facing=west": {
-      "model": "industrizer:block/etcher",
+      "model": "manicmechanics:block/etcher",
       "y": 270
     },
     "facing=east": {
-      "model": "industrizer:block/etcher",
+      "model": "manicmechanics:block/etcher",
       "y": 90
     }
   }

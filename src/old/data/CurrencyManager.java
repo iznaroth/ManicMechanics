@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability.data;
+package com.iznaroth.manicmechanics.capability.data;
 
 import com.sun.istack.internal.NotNull;
 import net.minecraft.util.math.ChunkPos;

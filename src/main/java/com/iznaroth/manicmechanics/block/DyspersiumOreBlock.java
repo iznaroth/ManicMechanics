@@ -30,7 +30,7 @@ public class DyspersiumOreBlock extends Block {
         SoundEvent e = getAppropriateSE(r.nextInt(1));
 
         if (e != null) {
-            System.out.println("Got random tick. Playing: " + e);
+            //System.out.println("Got random tick. Playing: " + e);
             level.playSound((PlayerEntity) null, pos.getX(), pos.getY(), pos.getZ(), e, SoundCategory.AMBIENT, 1.0F, 1.0F); //LAST TWO PROPERTIES ARE VOL AND PITCH
         }
 

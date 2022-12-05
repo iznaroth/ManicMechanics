@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.capability.data;
+package com.iznaroth.manicmechanics.capability.data;
 
 public class Currency {
     private int mdd;

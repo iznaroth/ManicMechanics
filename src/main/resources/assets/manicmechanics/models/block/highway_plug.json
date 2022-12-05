@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "industrizer:block/vacuum_plug",
-		"particle": "industrizer:block/vacuum_plug"
+		"1": "manicmechanics:block/vacuum_plug",
+		"particle": "manicmechanics:block/vacuum_plug"
 	},
 	"elements": [
 		{

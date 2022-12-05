@@ -1,6 +1,6 @@
-package com.iznaroth.industrizer.capability.data;
+package com.iznaroth.manicmechanics.capability.data;
 
-import com.iznaroth.industrizer.IndustrizerMod;
+import com.iznaroth.manicmechanics.IndustrizerMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;

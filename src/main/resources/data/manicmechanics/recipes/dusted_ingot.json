@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "industrizer:dyspersium_dust"
+      "item": "manicmechanics:dyspersium_dust"
     },
     {
       "item": "minecraft:iron_ingot"
     }
   ],
   "result": {
-    "item": "industrizer:dusted_ingot",
+    "item": "manicmechanics:dusted_ingot",
     "count": 1
   }
 }

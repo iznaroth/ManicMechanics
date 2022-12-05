@@ -10,7 +10,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class IndustrizerContainers {
+public class MMContainers {
 
     public static DeferredRegister<ContainerType<?>> CONTAINERS
             = DeferredRegister.create(ForgeRegistries.CONTAINERS, ManicMechanics.MOD_ID);
@@ -37,6 +37,12 @@ public class IndustrizerContainers {
         BlockPos pos = data.readBlockPos();
         World world = inv.player.getCommandSenderWorld();
         return new SealingChamberBlockContainer(windowId, world, pos, inv, inv.player);
+    }));
+
+    public static final RegistryObject<ContainerType<SimpleCommunicatorBlockContainer>> SIMPLE_COMMUNICATOR_CONTAINER = CONTAINERS.register("simple_communicator", () -> IForgeContainerType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        World world = inv.player.getCommandSenderWorld();
+        return new SimpleCommunicatorBlockContainer(windowId, world, pos, inv, inv.player);
     }));
 
     public static void register(IEventBus eventBus) {

@@ -3,52 +3,52 @@
 
 
     {   "when": { "facing": "north" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model"}
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model"}
     },
 
     {   "when": { "facing": "south" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model", "y": 180 }
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model", "y": 180 }
     },
 
     {   "when": { "facing": "east" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model", "y": 90}
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model", "y": 90}
     },
 
     {   "when": { "facing": "west" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model", "y": 270}
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model", "y": 270}
     },
     {   "when": { "facing": "up" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model", "x": 90}
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model", "x": 90}
     },
 
     {   "when": { "facing": "down" },
-      "apply": { "model": "industrizer:block/vacuum_highway_core_model", "x": -90}
+      "apply": { "model": "manicmechanics:block/vacuum_highway_core_model", "x": -90}
     },
 
 
 
     {   "when": { "north": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_north"}
+      "apply": { "model": "manicmechanics:block/highway_plug_north"}
     },
 
     {   "when": { "east": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_east" }
+      "apply": { "model": "manicmechanics:block/highway_plug_east" }
     },
 
     {   "when": { "south": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_south"}
+      "apply": { "model": "manicmechanics:block/highway_plug_south"}
     },
 
     {   "when": { "west": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_west"}
+      "apply": { "model": "manicmechanics:block/highway_plug_west"}
     },
 
     {   "when": { "up": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_up"}
+      "apply": { "model": "manicmechanics:block/highway_plug_up"}
     },
 
     {   "when": { "down": "true" },
-      "apply": { "model": "industrizer:block/highway_plug_down"}
+      "apply": { "model": "manicmechanics:block/highway_plug_down"}
     }
   ]
 }

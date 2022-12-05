@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/tube_housing"
+    "layer0": "manicmechanics:item/tube_housing"
   }
 }

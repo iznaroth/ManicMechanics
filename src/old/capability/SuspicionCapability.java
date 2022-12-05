@@ -1,8 +1,8 @@
-package com.iznaroth.industrizer.capability;
+package com.iznaroth.manicmechanics.capability;
 
-import com.iznaroth.industrizer.IndustrizerMod;
-import com.iznaroth.industrizer.api.ICurrency;
-import com.iznaroth.industrizer.api.ISuspicion;
+import com.iznaroth.manicmechanics.IndustrizerMod;
+import com.iznaroth.manicmechanics.api.ICurrency;
+import com.iznaroth.manicmechanics.api.ISuspicion;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

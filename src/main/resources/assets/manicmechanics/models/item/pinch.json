@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/pinch"
+    "layer0": "manicmechanics:item/pinch"
   }
 }

@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"7": "industrizer:block/vacuum_highway"
+		"7": "manicmechanics:block/vacuum_highway"
 	},
 	"elements": [
 		{

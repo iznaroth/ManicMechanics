@@ -2,14 +2,11 @@ package com.iznaroth.manicmechanics.setup;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.container.IndustrizerContainers;
+import com.iznaroth.manicmechanics.container.MMContainers;
 import com.iznaroth.manicmechanics.render.AnimationTickCounter;
 import com.iznaroth.manicmechanics.render.TileRendererRT;
-import com.iznaroth.manicmechanics.screen.BureauBlockScreen;
-import com.iznaroth.manicmechanics.screen.CommunicatorBlockScreen;
-import com.iznaroth.manicmechanics.screen.GeneratorBlockScreen;
-import com.iznaroth.manicmechanics.screen.SealingChamberBlockScreen;
-import com.iznaroth.manicmechanics.tile.IndustrizerTileEntities;
+import com.iznaroth.manicmechanics.screen.*;
+import com.iznaroth.manicmechanics.tile.MMTileEntities;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -30,13 +27,15 @@ public class ClientSetup {
 
 
     public static void init(final FMLClientSetupEvent event) {
-        ScreenManager.register(IndustrizerContainers.GENERATOR_CONTAINER.get(), GeneratorBlockScreen::new);
+        ScreenManager.register(MMContainers.GENERATOR_CONTAINER.get(), GeneratorBlockScreen::new);
 
-        ScreenManager.register(IndustrizerContainers.BUREAU_CONTAINER.get(), BureauBlockScreen::new);
+        ScreenManager.register(MMContainers.BUREAU_CONTAINER.get(), BureauBlockScreen::new);
 
-        ScreenManager.register(IndustrizerContainers.COMMUNICATOR_CONTAINER.get(), CommunicatorBlockScreen::new);
+        ScreenManager.register(MMContainers.COMMUNICATOR_CONTAINER.get(), CommunicatorBlockScreen::new);
 
-        ScreenManager.register(IndustrizerContainers.SEALER_CONTAINER.get(), SealingChamberBlockScreen::new);
+        ScreenManager.register(MMContainers.SEALER_CONTAINER.get(), SealingChamberBlockScreen::new);
+
+        ScreenManager.register(MMContainers.SIMPLE_COMMUNICATOR_CONTAINER.get(), SimpleCommunicatorBlockScreen::new);
     }
 
 
@@ -50,7 +49,7 @@ public class ClientSetup {
         RenderTypeLookup.setRenderLayer(MMBlocks.BOUNDING_TESTER.get(), RenderType.cutoutMipped());
         // Register the custom renderer for our tile entity
         System.out.println("Binding renderer.");
-        ClientRegistry.bindTileEntityRenderer(IndustrizerTileEntities.RENDER_TESTER_TILE.get(), TileRendererRT::new);
+        ClientRegistry.bindTileEntityRenderer(MMTileEntities.RENDER_TESTER_TILE.get(), TileRendererRT::new);
 
         MinecraftForge.EVENT_BUS.register(AnimationTickCounter.class);  // counts ticks, used for animation
     }

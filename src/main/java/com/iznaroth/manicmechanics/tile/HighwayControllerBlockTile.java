@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.tile;
 
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
 import net.minecraft.block.BlockState;
@@ -34,7 +34,7 @@ public class HighwayControllerBlockTile extends TileEntity implements ITickableT
     private int counter;
 
     public HighwayControllerBlockTile() {
-        super(IndustrizerTileEntities.HIGHWAY_CONTROLLER_TILE.get());
+        super(MMTileEntities.HIGHWAY_CONTROLLER_TILE.get());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class HighwayControllerBlockTile extends TileEntity implements ITickableT
 
         if (counter <= 0) {
             ItemStack stack = itemHandler.getStackInSlot(0);
-            if (stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get()) {
+            if (stack.getItem() == MMItems.DYSPERSIUM_DUST.get()) {
                 itemHandler.extractItem(0, 1, false);
                 counter = Config.FIRSTBLOCK_TICKS.get();
                 setChanged();
@@ -132,13 +132,13 @@ public class HighwayControllerBlockTile extends TileEntity implements ITickableT
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return stack.getItem() == IndustrizerItems.DYSPERSIUM_DUST.get();
+                return stack.getItem() == MMItems.DYSPERSIUM_DUST.get();
             }
 
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                if (stack.getItem() != IndustrizerItems.DYSPERSIUM_DUST.get()) {
+                if (stack.getItem() != MMItems.DYSPERSIUM_DUST.get()) {
                     return stack;
                 }
                 return super.insertItem(slot, stack, simulate);

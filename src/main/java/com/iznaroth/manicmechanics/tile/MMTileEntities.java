@@ -9,7 +9,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class IndustrizerTileEntities {
+public class MMTileEntities {
 
     public static DeferredRegister<TileEntityType<?>> TILE_ENTITIES =
             DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ManicMechanics.MOD_ID);
@@ -20,6 +20,10 @@ public class IndustrizerTileEntities {
 
 
     public static final RegistryObject<TileEntityType<CommunicatorBlockTile>> COMMUNICATOR_TILE = TILE_ENTITIES.register("communicator", () -> TileEntityType.Builder.of(CommunicatorBlockTile::new, MMBlocks.COMMUNICATOR.get()).build(null)); //FIGURE THIS SHIT OUT!
+
+    public static final RegistryObject<TileEntityType<SimpleCommunicatorBlockTile>> SIMPLE_COMMUNICATOR_TILE = TILE_ENTITIES.register("simple_communicator", () -> TileEntityType.Builder.of(SimpleCommunicatorBlockTile::new, MMBlocks.SIMPLE_COMMUNICATOR.get()).build(null)); //FIGURE THIS SHIT OUT!
+
+
 
     public static final RegistryObject<TileEntityType<HighwayControllerBlockTile>> HIGHWAY_CONTROLLER_TILE = TILE_ENTITIES.register("highway_controller", () -> TileEntityType.Builder.of(HighwayControllerBlockTile::new, MMBlocks.HIGHWAY_CONTROLLER.get()).build(null)); //FIGURE THIS SHIT OUT!
 

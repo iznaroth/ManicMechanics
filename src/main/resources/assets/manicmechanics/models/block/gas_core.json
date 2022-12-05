@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "industrizer:block/gas_core",
-		"particle": "industrizer:block/gas_core"
+		"0": "manicmechanics:block/gas_core",
+		"particle": "manicmechanics:block/gas_core"
 	},
 	"elements": [
 		{

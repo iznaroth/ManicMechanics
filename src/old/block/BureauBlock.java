@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.manicmechanics.block;
 
 
 import net.minecraft.block.Block;

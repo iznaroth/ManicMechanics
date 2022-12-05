@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/blueprint_book"
+    "layer0": "manicmechanics:item/blueprint_book"
   }
 }

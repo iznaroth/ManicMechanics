@@ -1,4 +1,4 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.manicmechanics.block;
 
 public class BureauBlockScreen {
 }

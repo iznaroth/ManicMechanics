@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "industrizer:block/bounding_tester" }
+    "": { "model": "manicmechanics:block/bounding_tester" }
   }
 }

@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.entity.custom;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -44,7 +44,7 @@ public class PinchEntity extends CreatureEntity {
 
     @Override
     public boolean hurt(DamageSource p_70097_1_, float p_70097_2_) {
-        if(p_70097_1_.getEntity() instanceof PlayerEntity && (((PlayerEntity) p_70097_1_.getEntity()).getMainHandItem().getItem().equals(IndustrizerItems.REINFORCED_ARM.get()) || (((PlayerEntity) p_70097_1_.getEntity()).getOffhandItem().getItem().equals(IndustrizerItems.REINFORCED_ARM.get())))) {
+        if(p_70097_1_.getEntity() instanceof PlayerEntity && (((PlayerEntity) p_70097_1_.getEntity()).getMainHandItem().getItem().equals(MMItems.REINFORCED_ARM.get()) || (((PlayerEntity) p_70097_1_.getEntity()).getOffhandItem().getItem().equals(MMItems.REINFORCED_ARM.get())))) {
             return super.hurt(p_70097_1_, p_70097_2_); //If it's a player with proper equipment, do damage as normal.
         } else if(p_70097_1_.getEntity() instanceof LivingEntity) {
             if (this.level.isClientSide) {

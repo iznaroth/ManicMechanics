@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "industrizer:block/dyspersium_ore"
+    "all": "manicmechanics:block/dyspersium_ore"
   }
 }

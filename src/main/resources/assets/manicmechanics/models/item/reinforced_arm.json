@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "industrizer:item/reinforced_arm"
+    "layer0": "manicmechanics:item/reinforced_arm"
   }
 }

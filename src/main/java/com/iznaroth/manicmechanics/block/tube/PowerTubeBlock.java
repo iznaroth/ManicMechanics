@@ -46,7 +46,7 @@ public class PowerTubeBlock extends AbstractTubeBlock {
         if(Screen.hasShiftDown()){
             list.add(new TranslationTextComponent("message.powertube.tooltip").withStyle(TextFormatting.AQUA));
         } else {
-            list.add(new TranslationTextComponent("message.industrizer.tooltip").withStyle(TextFormatting.GRAY));
+            list.add(new TranslationTextComponent("message.manicmechanics.tooltip").withStyle(TextFormatting.GRAY));
         }
     }
 

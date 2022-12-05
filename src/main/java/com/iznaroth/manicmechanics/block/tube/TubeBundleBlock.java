@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.block.tube;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.tile.TubeBundleTile;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,7 +78,7 @@ public class TubeBundleBlock extends AbstractTubeBlock {
 
         if(on == null) throw new IllegalArgumentException("Got a null TileEntity on use!");
 
-        if(player.getItemInHand(hand).getItem().equals(IndustrizerItems.DYSPERSIUM_WIDGET.get())){
+        if(player.getItemInHand(hand).getItem().equals(MMItems.DYSPERSIUM_WIDGET.get())){
             System.out.println("Used widget!");
             boolean[] contents = on.getTubesInBlock();
             System.out.println(Arrays.toString(contents));

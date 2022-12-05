@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "industrizer:block/obamium_block"
+    "all": "manicmechanics:block/obamium_block"
   }
 }

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "industrizer:block/etcher",
-		"particle": "industrizer:block/etcher"
+		"0": "manicmechanics:block/etcher",
+		"particle": "manicmechanics:block/etcher"
 	},
 	"elements": [
 		{

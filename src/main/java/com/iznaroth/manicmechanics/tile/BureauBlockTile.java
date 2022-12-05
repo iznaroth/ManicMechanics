@@ -23,7 +23,7 @@ public class BureauBlockTile extends TileEntity implements IItemHandler {
     private int counter;
 
     public BureauBlockTile() {
-        super(IndustrizerTileEntities.BUREAU_TILE.get());
+        super(MMTileEntities.BUREAU_TILE.get());
     }
 
     @Override

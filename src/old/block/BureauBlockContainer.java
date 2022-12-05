@@ -1,7 +1,7 @@
-package com.iznaroth.industrizer.block;
+package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.industrizer.setup.Registration;
-import com.iznaroth.industrizer.tools.CustomEnergyStorage;
+import com.iznaroth.manicmechanics.setup.Registration;
+import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;

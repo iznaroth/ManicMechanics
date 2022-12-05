@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.block.tube;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.item.IndustrizerItems;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.logistics.Connection;
 import com.iznaroth.manicmechanics.tile.TubeBundleTile;
 import com.iznaroth.manicmechanics.util.TubeBundleStateMapper;
@@ -112,7 +112,7 @@ public abstract class AbstractTubeBlock extends Block{
 
         if(on == null) throw new IllegalArgumentException("Got a null TileEntity on use!");
 
-        if(player.getItemInHand(hand).getItem().equals(IndustrizerItems.DYSPERSIUM_WIDGET.get())){
+        if(player.getItemInHand(hand).getItem().equals(MMItems.DYSPERSIUM_WIDGET.get())){
             System.out.println("Used widget!");
             boolean[] contents = on.getTubesInBlock();
             System.out.println(Arrays.toString(contents));
@@ -126,7 +126,7 @@ public abstract class AbstractTubeBlock extends Block{
             return ActionResultType.SUCCESS;
         }
 
-        if(player.getItemInHand(hand).getItem().equals(IndustrizerItems.WALLET.get())){ //NOTE - remove this
+        if(player.getItemInHand(hand).getItem().equals(MMItems.WALLET.get())){ //NOTE - remove this
             System.out.println("Used wallet!");
             Connection[] contents = on.getConnections();
             System.out.println(Arrays.toString(contents));
