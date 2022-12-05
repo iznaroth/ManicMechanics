@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "manicmechanics:block/hep",
+    "up": "manicmechanics:block/hep",
+    "north": "manicmechanics:block/hep_powered",
+    "south": "manicmechanics:block/hep",
+    "east": "manicmechanics:block/hep",
+    "west": "manicmechanics:block/hep"
+  }
+}

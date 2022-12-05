@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "manicmechanics:block/input_side",
+    "up": "manicmechanics:block/condenser_top",
+    "north": "manicmechanics:block/input_side",
+    "south": "manicmechanics:block/input_side",
+    "east": "manicmechanics:block/input_side",
+    "west": "manicmechanics:block/input_side"
+  }
+}

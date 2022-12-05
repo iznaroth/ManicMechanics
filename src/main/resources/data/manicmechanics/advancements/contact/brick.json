@@ -1,0 +1,39 @@
+{
+  "display": {
+    "icon": {
+      "item": "manicmechanics:dyspersium_dust"
+    },
+    "title": {
+      "translate": "advancements.contact.root.title"
+    },
+    "description": {
+      "translate": "advancements.contact.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "has_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "manicmechanics:dyspersium_dust"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dust"
+    ]
+  ],
+
+  "rewards": {
+    "function": "manicmechanics:dust_whisper"
+  }
+}
