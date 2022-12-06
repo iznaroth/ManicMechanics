@@ -4,8 +4,7 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.MusicDiscItem;
+import net.minecraft.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,7 +24,7 @@ public class MMItems {
 
     //Tools
     public static final RegistryObject<Item> WIRE_CUTTER = ITEMS.register("wire_cutter",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+            () -> new InventoryToolItem(new Item.Properties().tab(ModItemGroup.MM_ITEMS).durability(400)));
 
     public static final RegistryObject<Item> WALLET = ITEMS.register("wallet",
             () -> new WalletItem(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
@@ -70,6 +69,9 @@ public class MMItems {
     public static final RegistryObject<Item> PINCH = ITEMS.register("pinch",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
+    public static final RegistryObject<Item> THALLITE_PLASTIC = ITEMS.register("thallite_plastic",
+            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+
     public static final RegistryObject<Item> TUBE_HOUSING = ITEMS.register("tube_housing",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
@@ -96,9 +98,6 @@ public class MMItems {
     public static final RegistryObject<Item> STICKY_THALLITE = ITEMS.register("sticky_thallite",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> SOFT_THALLITE_CONGEALMENT = ITEMS.register("soft_thallite_congealment",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
-
     public static final RegistryObject<Item> THALLITE_INGOT = ITEMS.register("thallite_ingot",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
@@ -108,10 +107,10 @@ public class MMItems {
     public static final RegistryObject<Item> NEUTRALIZED_PHOSPHOTHALLITE_MIXTURE = ITEMS.register("neutralized_phosphothallite_mixture",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> VOLATILE_NITROL_CHUNK = ITEMS.register("volatile_nitrol_chunk",
+    public static final RegistryObject<Item> UNSTABLE_NITROL_CHUNK = ITEMS.register("volatile_nitrol_chunk",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> VOLATILE_NITROL_INGOT = ITEMS.register("volatile_nitrol_ingot",
+    public static final RegistryObject<Item> UNSTABLE_NITROL_INGOT = ITEMS.register("volatile_nitrol_ingot",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
 
@@ -131,9 +130,6 @@ public class MMItems {
 
 
     //WIRING
-    public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
-
     public static final RegistryObject<Item> GOLD_WIRE = ITEMS.register("gold_wire",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
@@ -148,8 +144,6 @@ public class MMItems {
     public static final RegistryObject<Item> IRON_PART = ITEMS.register("iron_part",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> COPPER_PART = ITEMS.register("copper_part",
-            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> GOLD_PART = ITEMS.register("gold_part",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));

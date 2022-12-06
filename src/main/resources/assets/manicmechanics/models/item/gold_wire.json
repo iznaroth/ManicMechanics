@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "manicmechanics:item/dyspersium_part"
+    "layer0": "manicmechanics:item/gold_wire"
   }
 }

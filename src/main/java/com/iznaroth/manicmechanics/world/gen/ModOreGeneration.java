@@ -14,6 +14,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 public class ModOreGeneration {
     public static void generateOres(final BiomeLoadingEvent event) {
         for (OreType ore : OreType.values()) {
+            System.out.println("Register ore " + ore + "for generation");
             OreFeatureConfig oreFeatureConfig = new OreFeatureConfig(
                     OreFeatureConfig.FillerBlockType.NATURAL_STONE,
                     ore.getBlock().get().defaultBlockState(), ore.getMaxVeinSize());

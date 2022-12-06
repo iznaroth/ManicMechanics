@@ -5,11 +5,11 @@
       "item": "manicmechanics:wire_cutter"
     },
     {
-      "item": "minecraft:gold_ingot"
+      "item": "manicmechanics:phosphorite_ingot"
     }
   ],
   "result": {
-    "item": "manicmechanics:gold_wire",
+    "item": "manicmechanics:phosphorite_filament",
     "count": 8
   }
 }

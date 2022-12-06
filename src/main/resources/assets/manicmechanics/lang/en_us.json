@@ -10,10 +10,19 @@
   "item.manicmechanics.dyspersium_widget": "Dyspersium Widget",
   "item.manicmechanics.illegible_tome": "Illegible Tome",
   "item.manicmechanics.security_brick": "Verified Security Brick",
+  "item.manicmechanics.sticky_thallite": "Sticky Thallite",
+  "item.manicmechanics.thallite_ingot": "Stabilized Thallite Ingot",
+  "item.manicmechanics.phosphorite_ingot": "Phosphorite Ingot",
+  "item.manicmechanics.luminous_phosphothallite_mixture": "Luminous Phosphothallite Mixture",
+  "item.manicmechanics.neutralized_phosphothallite_mixture": "Neutralized Phosphothallite Mixture",
+  "item.manicmechanics.volatile_nitrol_chunk": "Volatile Nitrol Chunk",
 
 
 
   "block.manicmechanics.dyspersium_ore": "Dyspersium Ore",
+  "block.manicmechanics.thallite_ore": "Thallite Ore",
+  "block.manicmechanics.phosphorite_ore": "Phosphorite Ore",
+  "block.manicmechanics.nitrol_ore": "Nitrol Ore",
   "block.manicmechanics.hep": "Hyperfield Extraction Polarizer",
   "block.manicmechanics.obamium_block": "Obamium Block",
   "block.manicmechanics.obamium_ore": "Obamium Ore",
@@ -55,5 +64,6 @@
   "advancements.contact.brick.title":  "Verified?",
   "advancements.contact.brick.description": "Recieve a token of your authorization from a local governance.",
 
-  "death.attack.manicmechanics_pinched": "%1$s was spaghettified!"
+  "death.attack.manicmechanics_pinched": "%1$s was spaghettified!",
+  "death.attack.manicmechanics_nitrol_busted": "%1$s mishandled Nitrol!"
 }

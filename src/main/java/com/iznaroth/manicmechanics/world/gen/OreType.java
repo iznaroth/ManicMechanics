@@ -6,7 +6,10 @@ import net.minecraftforge.common.util.Lazy;
 
 public enum OreType {
 
-    DYSPERSIUM(Lazy.of(MMBlocks.DYSPERSIUM_ORE), 5, 4, 25); //material type - initializer for block - constructor
+    DYSPERSIUM(Lazy.of(MMBlocks.DYSPERSIUM_ORE), 5, 4, 25), //material type - initializer for block - constructor
+    THALLITE(Lazy.of(MMBlocks.THALLITE_ORE), 8, 45, 75),
+    PHOSPHORITE(Lazy.of(MMBlocks.PHOSPHORITE_ORE), 4, 15, 31),
+    NITROL(Lazy.of(MMBlocks.NITROL_ORE), 5, 2, 24);
 
     private final Lazy<Block> block;
     private final int maxVeinSize;

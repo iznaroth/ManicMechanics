@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "manicmechanics:dusted_ingot"
+    "item": "manicmechanics:phosphorite_ore"
   },
-  "result": "manicmechanics:dyspersium_alloy",
+  "result": "manicmechanics:phosphorite_ingot",
   "experience": 0.9,
   "cookingtime": 200
 }

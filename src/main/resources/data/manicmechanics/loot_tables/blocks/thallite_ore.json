@@ -4,12 +4,12 @@
     {
       "rolls": {
         "min": 2,
-        "max": 5
+        "max": 3
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "manicmechanics:dyspersium_dust"
+          "name": "manicmechanics:sticky_thallite"
         }
       ]
     }

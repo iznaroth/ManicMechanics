@@ -1,2 +1,5 @@
-package com.iznaroth.manicmechanics.fluid;public class MMFluids {
+package com.iznaroth.manicmechanics.fluid;
+
+public class MMFluids {
+
 }

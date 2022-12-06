@@ -28,7 +28,11 @@ public class MMBlocks {
 
     //WORLDGEN
     public static final RegistryObject<Block> DYSPERSIUM_ORE = registerBlock("dyspersium_ore", () -> new DyspersiumOreBlock(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> COPPER_ORE = registerBlock("copper_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> THALLITE_ORE = registerBlock("thallite_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> PHOSPHORITE_ORE = registerBlock("phosphorite_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> NITROL_ORE = registerBlock("nitrol_ore", () -> new NitrolOreBlock(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+
+
 
     public static final RegistryObject<Block> OBAMIUM_ORE = registerBlock("obamium_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> OBAMIUM_BLOCK = registerBlock("obamium_block", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
