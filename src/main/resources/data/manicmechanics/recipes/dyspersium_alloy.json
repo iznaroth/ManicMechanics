@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "manicmechanics:dusted_ingot"
+  },
+  "result": "manicmechanics:dyspersium_alloy",
+  "experience": 0.9,
+  "cookingtime": 200
+}

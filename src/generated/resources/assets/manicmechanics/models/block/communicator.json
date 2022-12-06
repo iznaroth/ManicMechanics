@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "manicmechanics:block/communicator",
+    "up": "manicmechanics:block/communicator_top",
+    "north": "manicmechanics:block/communicator_front",
+    "south": "manicmechanics:block/communicator",
+    "east": "manicmechanics:block/communicator",
+    "west": "manicmechanics:block/communicator"
+  }
+}

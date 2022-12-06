@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#W#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:leather"
+    },
+    "W": {
+      "item": "manicmechanics:dyspersium_dust"
+    }
+  },
+  "result": {
+    "item": "manicmechanics:wallet",
+    "count": 1
+  }
+}

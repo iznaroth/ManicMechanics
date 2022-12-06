@@ -1,0 +1,10 @@
+{
+  "name": "I.I.E. Dev Archive",
+  "landing_text": "DATA for 'Territory ROQ-2275': Recovery process incomplete. Please seek assistance from a qualified extradimensional support technician at your earliest convenience.",
+  "version": 0,
+  "creative_tab": "mmItemTab",
+  "model": "manicmechanics:blueprint_book",
+  "subtitle": "DCC Unverified. Are you connected to an exteriation pylon?",
+  "show_progress": false
+
+}

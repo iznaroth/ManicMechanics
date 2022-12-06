@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/etcher"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/etcher"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/etcher"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/etcher",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/etcher",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/etcher",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cop_siren": {
+    "category": "entity",
+    "subtitle": "manicmechanics.cop_siren",
+    "sounds": [ "manicmechanics:cop_siren" ]
+  },
+  "pinch_1": {
+    "category": "entity",
+    "subtitle": "manicmechanics.pinch_1",
+    "sounds": [ "manicmechanics:pinch_1" ]
+  },
+  "dyspersium_0": {
+    "category": "ambient",
+    "subtitle": "manicmechanics.dyspersium_0",
+    "sounds": [ "manicmechanics:dyspersium_0" ]
+  },
+  "dyspersium_1": {
+    "category": "ambient",
+    "subtitle": "manicmechanics.dyspersium_1",
+    "sounds": [ "manicmechanics:dyspersium_1" ]
+  },
+  "eva": {
+    "sounds": [
+      {
+        "name": "manicmechanics:eva",
+        "stream":  true
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "manicmechanics:block/input_side",
+    "up": "manicmechanics:block/infuser_top",
+    "north": "manicmechanics:block/infuser_front",
+    "south": "manicmechanics:block/input_side",
+    "east": "manicmechanics:block/input_side",
+    "west": "manicmechanics:block/input_side"
+  }
+}

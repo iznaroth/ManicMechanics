@@ -1,0 +1,1 @@
+tellraw @s {"text":"§3...put it on the book."}

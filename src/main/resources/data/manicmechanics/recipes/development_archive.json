@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "manicmechanics:dyspersium_dust"
+    },
+    {
+      "item": "manicmechanics:illegible_tome"
+    }
+  ],
+  "result": {
+    "type": "forge:nbt",
+    "item": "patchouli:guide_book",
+    "nbt": "{'patchouli:book':'manicmechanics:mm_dev_archive'}",
+    "count": 1
+  }
+}

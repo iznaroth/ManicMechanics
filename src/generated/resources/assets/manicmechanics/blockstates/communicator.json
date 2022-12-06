@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/communicator",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/communicator",
+      "x": -90
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/communicator"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/communicator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/communicator",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/communicator",
+      "y": 90
+    }
+  }
+}

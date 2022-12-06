@@ -1,0 +1,12 @@
+{
+  "name": "Bodily Reinforcement",
+  "icon": "manicmechanics:reinforced_arm",
+  "category": "manicmechanics:basics",
+  "advancement": "manicmechanics:contact/brick",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Some of the stuff you'll find in this planar recess is prone to instability! This is a hazardous side-effect of these fringe realities drifting too-far from the Inner Cycle's stabilizer arrays, and it is most often manifested as small pockets of hypercondensed reality - we call them 'Pinches'. "
+    }
+  ]
+}

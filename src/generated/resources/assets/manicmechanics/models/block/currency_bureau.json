@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "manicmechanics:block/currency_bureau",
+    "up": "manicmechanics:block/currency_bureau",
+    "north": "manicmechanics:block/bureau_front",
+    "south": "manicmechanics:block/currency_bureau",
+    "east": "manicmechanics:block/currency_bureau",
+    "west": "manicmechanics:block/currency_bureau"
+  }
+}

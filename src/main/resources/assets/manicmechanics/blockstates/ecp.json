@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/ecp",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/ecp",
+      "x": -90
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/ecp"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/ecp",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/ecp",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/ecp",
+      "y": 90
+    }
+  }
+}

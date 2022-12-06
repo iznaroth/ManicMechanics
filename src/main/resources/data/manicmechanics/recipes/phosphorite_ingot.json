@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "manicmechanics:phosphorite_ore"
+  },
+  "result": "manicmechanics:phosphorite_ingot",
+  "experience": 0.9,
+  "cookingtime": 200
+}
