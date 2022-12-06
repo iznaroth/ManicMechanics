@@ -2,7 +2,7 @@ package com.iznaroth.manicmechanics.networking.packet;
 
 
 import com.iznaroth.manicmechanics.container.SealingChamberBlockContainer;
-import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockTile;
+import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -34,12 +34,12 @@ public class EnergySyncS2CPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             TileEntity tileEntity = Minecraft.getInstance().level.getBlockEntity(pos);
-            if(tileEntity instanceof SealingChamberBlockTile) { //TODO - All machines ought to generally implement this thru hasCapability or something
-                ((SealingChamberBlockTile) tileEntity).setEnergy(energy);
+            if(tileEntity instanceof SealingChamberBlockEntity) { //TODO - All machines ought to generally implement this thru hasCapability or something
+                ((SealingChamberBlockEntity) tileEntity).setEnergy(energy);
 
                 if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockContainer &&
                         ((SealingChamberBlockContainer) Minecraft.getInstance().player.containerMenu).getTileEntity().getBlockPos().equals(pos)) {
-                    ((SealingChamberBlockTile) tileEntity).setEnergy(energy);
+                    ((SealingChamberBlockEntity) tileEntity).setEnergy(energy);
                 }
             }
         });

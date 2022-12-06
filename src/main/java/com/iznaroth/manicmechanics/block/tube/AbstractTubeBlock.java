@@ -113,7 +113,7 @@ public abstract class AbstractTubeBlock extends BaseEntityBlock {
 
         TubeBundleBE on = (TubeBundleBE) world.getBlockEntity(pos);
 
-        if(on == null) throw new IllegalArgumentException("Got a null TileEntity on use!");
+        if(on == null) throw new IllegalArgumentException("Got a null BlockEntity on use!");
 
         if(player.getItemInHand(hand).getItem().equals(MMItems.DYSPERSIUM_WIDGET.get())){
             System.out.println("Used widget!");

@@ -1,23 +1,15 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.util.ModSoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.ExplosionContext;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
 
 public class NitrolOreBlock extends Block {
     public NitrolOreBlock(Properties p_i48440_1_) {
@@ -25,11 +17,11 @@ public class NitrolOreBlock extends Block {
     }
 
     @Override
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
         super.onBlockExploded(state, world, pos, explosion);
 
 
-        world.explode((Entity) null, new DamageSource(ManicMechanics.MOD_ID + "_nitrol_busted"), (ExplosionContext) null, pos.getX(), pos.getY(),  pos.getZ(), 5.0F, true, Explosion.Mode.DESTROY);
+        world.explode((Entity) null, new DamageSource(ManicMechanics.MOD_ID + "_nitrol_busted"), (ExplosionDamageCalculator) null, pos.getX(), pos.getY(),  pos.getZ(), 5.0F, true, Explosion.BlockInteraction.DESTROY);
 
     }
 }

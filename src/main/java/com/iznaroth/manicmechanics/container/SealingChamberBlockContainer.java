@@ -2,7 +2,7 @@ package com.iznaroth.manicmechanics.container;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockTile;
+import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -24,13 +24,13 @@ import java.util.List;
 
 public class SealingChamberBlockContainer extends Container {
 
-    private SealingChamberBlockTile tileEntity;
+    private SealingChamberBlockEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
     public SealingChamberBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(MMMenus.SEALER_CONTAINER.get(), windowId);
-        tileEntity = (SealingChamberBlockTile) world.getBlockEntity(pos);
+        tileEntity = (SealingChamberBlockEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
@@ -49,7 +49,7 @@ public class SealingChamberBlockContainer extends Container {
         return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public SealingChamberBlockTile getTileEntity(){
+    public SealingChamberBlockEntity getTileEntity(){
         return this.tileEntity;
     }
 

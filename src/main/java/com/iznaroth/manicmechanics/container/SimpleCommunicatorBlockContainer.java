@@ -2,7 +2,7 @@ package com.iznaroth.manicmechanics.container;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockTile;
+import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -23,13 +23,13 @@ import java.util.List;
 
 public class SimpleCommunicatorBlockContainer extends Container {
 
-    private SimpleCommunicatorBlockTile tileEntity;
+    private SimpleCommunicatorBlockEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
     public SimpleCommunicatorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(MMMenus.SIMPLE_COMMUNICATOR_CONTAINER.get(), windowId);
-        tileEntity = (SimpleCommunicatorBlockTile) world.getBlockEntity(pos);
+        tileEntity = (SimpleCommunicatorBlockEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
@@ -42,7 +42,7 @@ public class SimpleCommunicatorBlockContainer extends Container {
     }
 
 
-    public SimpleCommunicatorBlockTile getTileEntity(){
+    public SimpleCommunicatorBlockEntity getTileEntity(){
         return this.tileEntity;
     }
 

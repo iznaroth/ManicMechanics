@@ -15,6 +15,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -27,7 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class SealingChamberBlockTile extends TileEntity implements IItemHandler, ITickableTileEntity {
+public class SealingChamberBlockEntity extends BlockEntity implements IItemHandler {
 
     protected int energy;
     protected int capacity;
@@ -48,7 +51,7 @@ public class SealingChamberBlockTile extends TileEntity implements IItemHandler,
 
     private int counter;
 
-    public SealingChamberBlockTile() {
+    public SealingChamberBlockEntity() {
         super(MMBlockEntities.SEALER_TILE.get());
         this.capacity = 40000;
         this.energy = 0;

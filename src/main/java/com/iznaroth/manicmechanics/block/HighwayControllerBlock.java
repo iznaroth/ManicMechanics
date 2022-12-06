@@ -1,61 +1,56 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.HighwayControllerBlockTile;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.InteractionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import com.iznaroth.manicmechanics.blockentity.HighwayControllerBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HighwayControllerBlock extends Block{
+public class HighwayControllerBlock extends BaseEntityBlock {
 
-    public HighwayControllerBlock(AbstractBlock.Properties properties) {
+    public HighwayControllerBlock(Properties properties) {
         super(properties);
     }
 
-    @Override
-    public boolean hasTileEntity(BlockState state){ return true; }
-
+    
     @Nullable
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world){ return new HighwayControllerBlockTile(); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new HighwayControllerBlockEntity(pos, state); }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.FACING, BlockStateProperties.POWERED); //syntactically incorrect? tutorial used createBlockStateDefinition
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(BlockStateProperties.FACING, context.getNearestLookingDirection().getOpposite());
     }
 
     @Override
-    public InteractionResult use(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
+    public InteractionResult use(@Nonnull BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
-        ITextComponent msg = new StringTextComponent("Attempting to create Vacuum Highway from this controller. Right click the block again to continue.");
+        Component msg = Component.literal("Attempting to create Vacuum Highway from this controller. Right click the block again to continue.");
 
         System.out.println("Clicked Highway Controller");
 
         if(stack.equals(new ItemStack(MMBlocks.VACUUM_HIGHWAY_SEGMENT.get()))){
-            player.sendMessage(msg, Util.NIL_UUID);
+            player.sendSystemMessage(msg);
             return InteractionResult.SUCCESS;
         }
 

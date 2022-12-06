@@ -1,20 +1,21 @@
 package com.iznaroth.manicmechanics.blockentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CommunicatorBlockTile extends TileEntity {
+public class CommunicatorBlockEntity extends BlockEntity {
 
     private ItemStackHandler itemHandler = createHandler();
 
@@ -23,8 +24,8 @@ public class CommunicatorBlockTile extends TileEntity {
 
     private int counter;
 
-    public CommunicatorBlockTile() {
-        super(MMBlockEntities.COMMUNICATOR_TILE.get());
+    public CommunicatorBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.COMMUNICATOR_TILE.get(), pos, state);
     }
 
     @Override
@@ -35,19 +36,19 @@ public class CommunicatorBlockTile extends TileEntity {
 
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     private ItemStackHandler createHandler() {
@@ -77,7 +78,7 @@ public class CommunicatorBlockTile extends TileEntity {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
         return super.getCapability(cap, side);

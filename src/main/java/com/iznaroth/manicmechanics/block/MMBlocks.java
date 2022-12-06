@@ -5,14 +5,6 @@ import com.iznaroth.manicmechanics.block.tube.*;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.item.ModItemGroup;
 import com.iznaroth.manicmechanics.render.BlockRenderTester;
-import net.minecraft.block.BlockBehaviour;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -22,9 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -60,10 +50,10 @@ public class MMBlocks {
     public static final RegistryObject<Block> SEALER = registerBlock("sealing_chamber", () -> new SealingChamberBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
 
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new UpgradableMachine(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new UpgradableMachine(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachine(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new UpgradableMachine(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
@@ -88,8 +78,6 @@ public class MMBlocks {
 
     public static final RegistryObject<Block> BOUNDING_TESTER = registerBlock("bounding_tester", () -> new BoundingBoxTesting(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
 
-    PickaxeItem
-
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn, tab);
@@ -104,7 +92,7 @@ public class MMBlocks {
 
     public static void register(IEventBus eventBus){
         BLOCKS.register(eventBus);
-        TILES.register(eventBus);
+        BLOCK_ENTITIES.register(eventBus);
     }
 
 }

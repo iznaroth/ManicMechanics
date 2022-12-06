@@ -3,39 +3,53 @@ package com.iznaroth.manicmechanics.blockentity;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import com.mojang.math.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.TickingBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GeneratorBlockTile extends TileEntity implements ITickableTileEntity, IEnergyStorage {
+public class GeneratorBlockEntity extends BlockEntity implements IEnergyStorage, MenuProvider {
     private ItemStackHandler itemHandler = createHandler();
-    private CustomEnergyStorage energyStorage = createEnergy();
+    private final CustomEnergyStorage energyStorage = createEnergy();
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyStorage);
 
-    private int counter;
+    private static int counter;
     private int maxExtract;
 
-    public GeneratorBlockTile() {
-        super(MMBlockEntities.GENERATOR_TILE.get());
+    public GeneratorBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.GENERATOR_TILE.get(), pos, state);
         this.maxExtract = 1000;
     }
 
@@ -46,8 +60,8 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
         energy.invalidate();
     }
 
-    @Override
-    public void tick() {
+
+    public static void tick(Level level, BlockPos pos, BlockState state, GeneratorBlockEntity pEntity) {
         if (level.isClientSide) {
             return;
         }
@@ -55,36 +69,37 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
         if (counter > 0) {
             counter--;
             if (counter <= 0) {
-                energyStorage.addEnergy(Config.FIRSTBLOCK_GENERATE.get());
+                pEntity.energyStorage.addEnergy(Config.FIRSTBLOCK_GENERATE.get());
             }
-            setChanged();
+            setChanged(level, pos, state);
         }
 
         if (counter <= 0) {
-            ItemStack stack = itemHandler.getStackInSlot(0);
+            ItemStack stack = pEntity.itemHandler.getStackInSlot(0);
             if (stack.getItem() == MMItems.DYSPERSIUM_DUST.get()) {
-                itemHandler.extractItem(0, 1, false);
+                pEntity.itemHandler.extractItem(0, 1, false);
                 counter = Config.FIRSTBLOCK_TICKS.get();
-                setChanged();
+                setChanged(level, pos, state);
             }
         }
 
-        BlockState blockState = level.getBlockState(worldPosition);
+        BlockState blockState = level.getBlockState(pos);
         if (blockState.getValue(BlockStateProperties.POWERED) != counter > 0) {
-            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, counter > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+            level.setBlock(pos, blockState.setValue(BlockStateProperties.POWERED, counter > 0),
+                    3);
         }
 
-        sendOutPower();
+        //sendOutPower();
     }
+
 
     private void sendOutPower() {
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
-                TileEntity te = level.getBlockEntity(worldPosition.relative(direction));
+                BlockEntity te = level.getBlockEntity(worldPosition.relative(direction));
                 if (te != null) {
-                    boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
+                    boolean doContinue = te.getCapability(ForgeCapabilities.ENERGY, direction).map(handler -> {
                                 if (handler.canReceive()) {
                                     int received = handler.receiveEnergy(Math.min(capacity.get(), Config.FIRSTBLOCK_SEND.get()), false);
                                     capacity.addAndGet(-received);
@@ -105,21 +120,21 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     private ItemStackHandler createHandler() {
@@ -160,13 +175,18 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        if (cap == CapabilityEnergy.ENERGY) {
+        if (cap == ForgeCapabilities.ENERGY) {
             return energy.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        return super.getCapability(cap);
     }
 
     @Override
@@ -203,5 +223,61 @@ public class GeneratorBlockTile extends TileEntity implements ITickableTileEntit
     @Override
     public boolean canReceive() {
         return false;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        super.deserializeNBT(nbt);
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        return super.serializeNBT();
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        super.onDataPacket(net, pkt);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return super.getRenderBoundingBox();
+    }
+
+    @Override
+    public void requestModelDataUpdate() {
+        super.requestModelDataUpdate();
+    }
+
+    @Override
+    public @NotNull ModelData getModelData() {
+        return super.getModelData();
+    }
+
+    @Override
+    public boolean hasCustomOutlineRendering(Player player) {
+        return super.hasCustomOutlineRendering(player);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return null;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        return null;
     }
 }

@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class HighwayControllerBlockTile extends TileEntity implements ITickableTileEntity {
+public class HighwayControllerBlockEntity extends TileEntity implements ITickableTileEntity {
     private ItemStackHandler itemHandler = createHandler();
     private CustomEnergyStorage energyStorage = createEnergy();
 
@@ -33,7 +33,7 @@ public class HighwayControllerBlockTile extends TileEntity implements ITickableT
 
     private int counter;
 
-    public HighwayControllerBlockTile() {
+    public HighwayControllerBlockEntity() {
         super(MMBlockEntities.HIGHWAY_CONTROLLER_TILE.get());
     }
 

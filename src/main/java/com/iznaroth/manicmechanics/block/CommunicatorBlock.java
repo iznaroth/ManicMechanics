@@ -1,8 +1,7 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
-import com.iznaroth.manicmechanics.container.CommunicatorBlockContainer;
-import com.iznaroth.manicmechanics.blockentity.CommunicatorBlockTile;
+import com.iznaroth.manicmechanics.blockentity.CommunicatorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -26,7 +25,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.List;
 
 public class CommunicatorBlock extends BaseEntityBlock {
@@ -38,7 +36,7 @@ public class CommunicatorBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new CommunicatorBlockTile(pos, state); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new CommunicatorBlockEntity(pos, state); }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
