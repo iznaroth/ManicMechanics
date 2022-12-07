@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.container;
+package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.screen.CommunicatorBlockScreen;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.container;
+package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;

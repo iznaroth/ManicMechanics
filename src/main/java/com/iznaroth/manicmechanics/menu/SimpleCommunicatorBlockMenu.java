@@ -1,19 +1,18 @@
-package com.iznaroth.manicmechanics.container;
+package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -22,40 +21,34 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import java.util.Arrays;
 import java.util.List;
 
-public class SealingChamberBlockContainer extends Container {
+public class SimpleCommunicatorBlockContainer extends Container {
 
-    private SealingChamberBlockEntity tileEntity;
+    private SimpleCommunicatorBlockEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
 
-    public SealingChamberBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(MMMenus.SEALER_CONTAINER.get(), windowId);
-        tileEntity = (SealingChamberBlockEntity) world.getBlockEntity(pos);
+    public SimpleCommunicatorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+        super(MMMenus.SIMPLE_COMMUNICATOR_CONTAINER.get(), windowId);
+        tileEntity = (SimpleCommunicatorBlockEntity) world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 64, 17));
-                addSlot(new SlotItemHandler(h, 1, 64, 50));
-                addSlot(new SlotItemHandler(h, 2, 118, 32));
+                addSlot(new SlotItemHandler(h, 0, 82, 43));
             });
         }
         layoutPlayerInventorySlots(10, 84);
     }
 
 
-    public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
-    }
-
-    public SealingChamberBlockEntity getTileEntity(){
+    public SimpleCommunicatorBlockEntity getTileEntity(){
         return this.tileEntity;
     }
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, MMBlocks.SEALER.get());
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, MMBlocks.SIMPLE_COMMUNICATOR.get());
     }
 
     @Override
@@ -65,26 +58,22 @@ public class SealingChamberBlockContainer extends Container {
         if (slot != null && slot.hasItem()) {
             ItemStack stack = slot.getItem();
             itemstack = stack.copy();
+
             if (index == 0) {
                 if (!this.moveItemStackTo(stack, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (index == 1 && isValidHousing(stack.getItem())) {
+                if (stack.getItem() == Items.BRICK.getItem()) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                }else if(index == 2 && isValidInsertion(stack.getItem())){
-                    if (!this.moveItemStackTo(stack, 1, 2, false)) {
+                } else if (index < 28) {
+                    if (!this.moveItemStackTo(stack, 28, 37, false)) {
                         return ItemStack.EMPTY;
                     }
-
-                } else if (index < 30) {
-                    if (!this.moveItemStackTo(stack, 30, 39, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < 39 && !this.moveItemStackTo(stack, 3, 30, false)) {
+                } else if (index < 37 && !this.moveItemStackTo(stack, 1, 28, false)) {
                     return ItemStack.EMPTY;
                 }
             }
@@ -144,13 +133,5 @@ public class SealingChamberBlockContainer extends Container {
         return valid_for_insertion.contains(what);
     }
 
-    public int getScaledProgress(){
-
-        int progress = this.getTileEntity().getCraftProgress();
-        int maxProgress = 80;
-        int progressArrowSize = 33;
-
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
-    }
 
 }
