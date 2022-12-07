@@ -2,6 +2,7 @@ package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.tube.*;
+
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.item.ModItemGroup;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +25,7 @@ public class MMBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ManicMechanics.MOD_ID);
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ManicMechanics.MOD_ID);
+
 
     //WORLDGEN
     public static final RegistryObject<Block> DYSPERSIUM_ORE = registerBlock("dyspersium_ore", () -> new DyspersiumOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
@@ -76,6 +78,9 @@ public class MMBlocks {
     //public static final RegistryObject<Block> RENDER_TESTER = registerBlock("render_tester", () -> new BlockRenderTester(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
 
     public static final RegistryObject<Block> BOUNDING_TESTER = registerBlock("bounding_tester", () -> new BoundingBoxTesting(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
+
+
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab){
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

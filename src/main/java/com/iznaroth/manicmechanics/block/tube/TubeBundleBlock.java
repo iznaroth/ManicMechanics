@@ -32,17 +32,6 @@ public class TubeBundleBlock extends AbstractTubeBlock {
         super(properties);
     }
 
-    @Override
-    public Item asItem() {
-        return null;
-    }
-
-    @Override
-    protected Block asBlock() {
-        return null;
-    }
-
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state){

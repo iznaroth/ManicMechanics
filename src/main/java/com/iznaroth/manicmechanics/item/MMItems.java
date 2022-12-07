@@ -2,7 +2,7 @@ package com.iznaroth.manicmechanics.item;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
-import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
+//import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.world.item.DiscFragmentItem;
 import net.minecraft.world.item.Item;
@@ -26,13 +26,13 @@ public class MMItems {
 
     //Tools
     public static final RegistryObject<Item> WIRE_CUTTER = ITEMS.register("wire_cutter",
-            () -> new InventoryToolItem(new Item.Properties().tab(ModItemGroup.MM_ITEMS).durability(400)));
+            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS).durability(400)));
 
     public static final RegistryObject<Item> WALLET = ITEMS.register("wallet",
-            () -> new WalletItem(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> LINK_TOOL = ITEMS.register("link_tool",
-            () -> new LinkToolItem(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+            () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> REINFORCED_ARM = ITEMS.register("reinforced_arm",
             () -> new Item(new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
@@ -184,11 +184,11 @@ public class MMItems {
 
 
     //ENTITY
-    public static final RegistryObject<Item> COP_CAR_SPAWN_EGG = ITEMS.register("cop_car_spawn_egg",
-            () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+    //public static final RegistryObject<Item> COP_CAR_SPAWN_EGG = ITEMS.register("cop_car_spawn_egg",
+    //        () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
-            () -> new ModSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+    //public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
+     //       () -> new ModSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
 
     //SPECIAL

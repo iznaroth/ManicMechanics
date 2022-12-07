@@ -13,6 +13,7 @@ public class MMBlockEntities {
     public static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ManicMechanics.MOD_ID);
 
+
     public static final RegistryObject<BlockEntityType<BureauBlockEntity>> BUREAU_BE = BLOCK_ENTITIES.register("currency_bureau", () -> BlockEntityType.Builder.of(BureauBlockEntity::new, MMBlocks.CURRENCY_BUREAU.get()).build(null)); //FIGURE THIS SHIT OUT!
 
     public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_TILE = BLOCK_ENTITIES.register("hep", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, MMBlocks.HEP.get()).build(null)); //FIGURE THIS SHIT OUT!
@@ -31,6 +32,7 @@ public class MMBlockEntities {
     public static final RegistryObject<BlockEntityType<TubeBundleBE>> TUBE_BUNDLE_TILE = BLOCK_ENTITIES.register("tube_bundle_tile", () -> BlockEntityType.Builder.of(TubeBundleBE::new, MMBlocks.TRANSPORT_TUBE.get(), MMBlocks.POWER_TUBE.get(), MMBlocks.FLUID_TUBE.get(), MMBlocks.GAS_TUBE.get(), MMBlocks.TUBE_BUNDLE.get()).build(null)); //FIGURE THIS SHIT OUT!
 
     public static final RegistryObject<BlockEntityType<SealingChamberBlockEntity>> SEALER_TILE = BLOCK_ENTITIES.register("sealer_tile", () -> BlockEntityType.Builder.of(SealingChamberBlockEntity::new, MMBlocks.SEALER.get()).build(null)); //FIGURE THIS SHIT OUT!
+
 
 
     public static void register(IEventBus eventBus) {

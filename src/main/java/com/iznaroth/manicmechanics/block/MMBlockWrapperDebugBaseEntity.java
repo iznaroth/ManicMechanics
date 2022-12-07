@@ -1,14 +1,21 @@
 package com.iznaroth.manicmechanics.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class MMBlockWrapperDebugBaseEntity extends BaseEntityBlock {
+
+    //Default MM implementations and extensions for BlockEntities.
+
     public MMBlockWrapperDebugBaseEntity(Properties p_49795_) {
         super(p_49795_);
     }
@@ -24,5 +31,17 @@ public class MMBlockWrapperDebugBaseEntity extends BaseEntityBlock {
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return null;
     }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab p_49812_, NonNullList<ItemStack> p_49813_) {
+        System.out.println("Fill inv for " + this.getName() + ". Is this null?" + new ItemStack(this));
+        p_49813_.add(new ItemStack(this));
+        System.out.println("Fill inv for " + this.getName());
+    }
     //This was used to troubleshoot a registration/blockstate error.
+
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
 }

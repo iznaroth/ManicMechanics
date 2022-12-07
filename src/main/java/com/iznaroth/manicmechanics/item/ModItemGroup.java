@@ -3,6 +3,7 @@ package com.iznaroth.manicmechanics.item;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class ModItemGroup {
 
@@ -23,7 +24,8 @@ public class ModItemGroup {
     public static final CreativeModeTab MM_MACHINES = new CreativeModeTab("mmMachineTab") { //Split into MACHINES, INTERMEDIATES, TOOLS, OTHER ?
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(MMBlocks.HEP.get());
+            return new ItemStack(Items.ANDESITE);
+            //return new ItemStack(MMBlocks.HEP.get());
         }
     };
 }

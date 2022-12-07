@@ -1,5 +1,6 @@
 package com.iznaroth.manicmechanics.block.tube;
 
+import com.iznaroth.manicmechanics.block.MMBlockWrapperDebugBaseEntity;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.logistics.Connection;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public abstract class AbstractTubeBlock extends BaseEntityBlock {
+public abstract class AbstractTubeBlock extends MMBlockWrapperDebugBaseEntity {
 
     public AbstractTubeBlock(BlockBehaviour.Properties properties) {
         super(properties);

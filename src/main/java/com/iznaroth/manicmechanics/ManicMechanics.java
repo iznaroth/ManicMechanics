@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.menu.CommunicatorBlockMenu;
 import com.iznaroth.manicmechanics.menu.MMMenus;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.entity.custom.PinchEntity;
@@ -11,18 +12,22 @@ import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.logistics.ActiveConnectionQueue;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.recipe.MMRecipeTypes;
+import com.iznaroth.manicmechanics.screen.*;
 import com.iznaroth.manicmechanics.setup.ClientSetup;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
 import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -66,7 +71,7 @@ public class ManicMechanics
         MMBlockEntities.register(eventBus);
         MMMenus.register(eventBus); //NOTE - May need to rearrange for order compliance?
 
-        MMRecipeTypes.register(eventBus);
+        //MMRecipeTypes.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
@@ -85,7 +90,7 @@ public class ManicMechanics
 
         registerCommonEvents(eventBus);
 
-        forgeEventBus.register(ActiveConnectionQueue.class);
+        //forgeEventBus.register(ActiveConnectionQueue.class);
         forgeEventBus.register(new ModEvents());
 
         eventBus.addListener(this::commonSetup);
@@ -138,4 +143,21 @@ public class ManicMechanics
         eventBus.register(com.iznaroth.manicmechanics.setup.ClientSetup.class);
         eventBus.register(com.iznaroth.manicmechanics.setup.CommonSetup.class);
     }
+
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientModEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            System.out.println("Do we ever actually see onClientSetup?");
+            MenuScreens.register(MMMenus.SIMPLE_COMMUNICATOR_MENU.get(), SimpleCommunicatorBlockScreen::new);
+            MenuScreens.register(MMMenus.COMMUNICATOR_MENU.get(), CommunicatorBlockScreen::new);
+            MenuScreens.register(MMMenus.GENERATOR_MENU.get(), GeneratorBlockScreen::new);
+            MenuScreens.register(MMMenus.BUREAU_MENU.get(), BureauBlockScreen::new);
+            MenuScreens.register(MMMenus.SEALER_MENU.get(), SealingChamberBlockScreen::new);
+
+            //EntityRenderers.register(ModEntityTypes.PINCH.get(), ChomperRenderer::new);
+        }
+    }
 }
+

@@ -4,16 +4,22 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.ECPBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.menu.SimpleCommunicatorBlockMenu;
+import com.iznaroth.manicmechanics.networking.MMMessages;
+import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -25,6 +31,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
@@ -32,10 +39,32 @@ import javax.annotation.Nullable;
 
 public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuProvider {
 
-    private ItemStackHandler itemHandler = createHandler();
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                MMMessages.sendToClients(new ItemStackSyncS2CPacket(this, worldPosition));
+            }
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getItem() == Items.BRICK;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
+    };
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
+    }
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     private static Component[] messages = {
             Component.translatable("simplemsg.manicmechanics.001")
@@ -48,18 +77,28 @@ public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuPr
     int counter = 5;
     int latest_message = 0;
 
+    protected final ContainerData data;
+
 
     public SimpleCommunicatorBlockEntity(BlockPos pos, BlockState state) {
         super(MMBlockEntities.SIMPLE_COMMUNICATOR_TILE.get(), pos, state);
+        this.data = new ContainerData() {
+            @Override
+            public int get(int index) {
+                return 0;
+            }
+
+            @Override
+            public void set(int index, int value) {
+
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+        };
     }
-
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        handler.invalidate();
-    }
-
 
     @Override
     public void load(CompoundTag tag) {
@@ -77,37 +116,35 @@ public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuPr
         super.saveAdditional(tag);
     }
 
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(1) {
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                // To make sure the TE persists when the chunk is saved later we need to
-                // mark it dirty every time the item handler changes
-                setChanged();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return true;
-            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
-
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return handler.cast();
+            return lazyItemHandler.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        lazyItemHandler.invalidate();
+    }
+
+    public void drops() {
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SimpleCommunicatorBlockEntity pEntity) {
@@ -157,6 +194,7 @@ public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuPr
     @org.jetbrains.annotations.Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return null;
+        System.out.println("CREATING MENU FROM BE");
+        return new SimpleCommunicatorBlockMenu(p_39954_, p_39955_, this, this.data);
     }
 }
