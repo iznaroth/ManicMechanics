@@ -1,6 +1,8 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,6 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -70,6 +74,12 @@ public class SimpleCommunicatorBlock extends BaseEntityBlock {
         } else {
             list.add(Component.translatable("message.manicmechanics.tooltip").withStyle(ChatFormatting.GRAY));
         }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
+        return createTickerHelper(type, MMBlockEntities.SIMPLE_COMMUNICATOR_TILE.get(), SimpleCommunicatorBlockEntity::tick);
     }
 
 }

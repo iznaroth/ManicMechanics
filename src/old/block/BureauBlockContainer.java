@@ -26,7 +26,7 @@ public class BureauBlockContainer extends Container {
     private IItemHandler playerInventory;
 
     public BureauBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(Registration.GENERATOR_CONTAINER.get(), windowId);
+        super(Registration.GENERATOR_MENU.get(), windowId);
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);

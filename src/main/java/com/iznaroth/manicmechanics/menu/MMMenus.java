@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.container;
+package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import net.minecraft.core.BlockPos;
@@ -12,40 +12,40 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class MMMenus {
 
-    public static DeferredRegister<MenuType<?>> CONTAINERS
+    public static DeferredRegister<MenuType<?>> MENU_TYPES
             = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ManicMechanics.MOD_ID);
 
-    public static final RegistryObject<MenuType<GeneratorBlockContainer>> GENERATOR_CONTAINER = CONTAINERS.register("generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<GeneratorBlockMenu>> GENERATOR_MENU = MENU_TYPES.register("generator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.getCommandSenderWorld();
-        return new GeneratorBlockContainer(windowId, world, pos, inv, inv.player);
+        return new GeneratorBlockMenu(windowId, inv, data);
     }));
 
-    public static final RegistryObject<MenuType<BureauBlockMenu>> BUREAU_CONTAINER = CONTAINERS.register("bureau", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<BureauBlockMenu>> BUREAU_MENU = MENU_TYPES.register("bureau", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.getCommandSenderWorld();
-        return new BureauBlockMenu(windowId, world, pos, inv, inv.player);
+        return new BureauBlockMenu(windowId, inv, data);
     }));
 
-    public static final RegistryObject<MenuType<CommunicatorBlockContainer>> COMMUNICATOR_CONTAINER = CONTAINERS.register("communicator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<CommunicatorBlockMenu>> COMMUNICATOR_MENU = MENU_TYPES.register("communicator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.getCommandSenderWorld();
-        return new CommunicatorBlockContainer(windowId, world, pos, inv, inv.player);
+        return new CommunicatorBlockMenu(windowId, inv, data);
     }));
 
-    public static final RegistryObject<MenuType<SealingChamberBlockContainer>> SEALER_CONTAINER = CONTAINERS.register("sealing_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<SealingChamberBlockMenu>> SEALER_MENU = MENU_TYPES.register("sealing_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.getCommandSenderWorld();
-        return new SealingChamberBlockContainer(windowId, world, pos, inv, inv.player);
+        return new SealingChamberBlockMenu(windowId, inv, data);
     }));
 
-    public static final RegistryObject<MenuType<SimpleCommunicatorBlockContainer>> SIMPLE_COMMUNICATOR_CONTAINER = CONTAINERS.register("simple_communicator", () -> IForgeMenuType.create((windowId, inv, data) -> {
+    public static final RegistryObject<MenuType<SimpleCommunicatorBlockMenu>> SIMPLE_COMMUNICATOR_MENU = MENU_TYPES.register("simple_communicator", () -> IForgeMenuType.create((windowId, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         Level world = inv.player.getCommandSenderWorld();
-        return new SimpleCommunicatorBlockContainer(windowId, world, pos, inv, inv.player);
+        return new SimpleCommunicatorBlockMenu(windowId, inv, data);
     }));
 
     public static void register(IEventBus eventBus) {
-        CONTAINERS.register(eventBus);
+        MENU_TYPES.register(eventBus);
     }
 }

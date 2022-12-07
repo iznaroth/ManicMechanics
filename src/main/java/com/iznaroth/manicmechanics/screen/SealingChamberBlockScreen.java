@@ -1,25 +1,27 @@
 package com.iznaroth.manicmechanics.screen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.container.SealingChamberBlockContainer;
+import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 import com.iznaroth.manicmechanics.screen.renderer.EnergyInfoArea;
 import com.iznaroth.manicmechanics.util.MouseUtil;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.energy.CapabilityEnergy;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
-public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlockContainer> {
+import java.util.Optional;
+
+public class SealingChamberBlockScreen extends AbstractContainerScreen<SealingChamberBlockMenu> {
 
     private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/sealing_chamber.png");
 
     private EnergyInfoArea energyInfoArea;
 
-    public SealingChamberBlockScreen(SealingChamberBlockContainer container, PlayerInventory inv, ITextComponent name) {
+    public SealingChamberBlockScreen(SealingChamberBlockMenu container, Inventory inv, Component name) {
         super(container, inv, name);
     }
 
@@ -33,11 +35,11 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
 
-        energyInfoArea = new EnergyInfoArea(relX + 12, relY + 17, menu.getTileEntity().getCapability(CapabilityEnergy.ENERGY).orElse(null));
+        energyInfoArea = new EnergyInfoArea(relX + 12, relY + 17, menu.getBlockEntity().getCapability(ForgeCapabilities.ENERGY).orElse(null));
     }
 
     @Override
-    protected void renderLabels(MatrixStack pPoseStack, int pMouseX, int pMouseY) {
+    protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
         super.renderLabels(pPoseStack, pMouseX, pMouseX);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
@@ -46,31 +48,32 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         renderOperationModeTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
-    private void renderEnergyAreaTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+    private void renderEnergyAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
         if(isMouseAboveArea(pMouseX, pMouseY, x, y, 12, 17, 12, 48)) {
             renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
-                     pMouseX - x, pMouseY - y);
+                    Optional.empty(), pMouseX - x, pMouseY - y);
         }
     }
 
-    private void renderOperationModeTooltips(MatrixStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+    private void renderOperationModeTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
         if(isMouseAboveArea(pMouseX, pMouseY, x, y, 33, 17, 16, 16)) {
-            renderTooltip(pPoseStack, new StringTextComponent("OPERATION MODE: Unimplemented :)"),
+            renderTooltip(pPoseStack, Component.literal("OPERATION MODE: Unimplemented :)"),
                     pMouseX - x, pMouseY - y);
         }
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.minecraft.getTextureManager().bind(GUI);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
@@ -79,7 +82,7 @@ public class SealingChamberBlockScreen extends ContainerScreen<SealingChamberBlo
         renderProgressArrow(matrixStack, relX, relY);
     }
 
-    private void renderProgressArrow(MatrixStack stack, int x, int y){
+    private void renderProgressArrow(PoseStack stack, int x, int y){
         blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
     }
 

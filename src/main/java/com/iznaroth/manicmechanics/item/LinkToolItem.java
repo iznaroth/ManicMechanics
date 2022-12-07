@@ -1,9 +1,7 @@
 package com.iznaroth.manicmechanics.item;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.item.interfaces.IPositionSelector;
 import com.iznaroth.manicmechanics.logistics.INetworkNavigable;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -20,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.ArrayList;
 
-public class LinkToolItem extends Item implements IPositionSelector {
+public class LinkToolItem extends Item {
 
     BlockPos first;
     BlockPos second;

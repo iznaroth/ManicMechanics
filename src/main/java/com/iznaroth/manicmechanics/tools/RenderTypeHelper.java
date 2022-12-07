@@ -1,14 +1,13 @@
 package com.iznaroth.manicmechanics.tools;
 
-import net.minecraft.client.renderer.RenderState;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import org.lwjgl.opengl.GL11;
 
-import java.util.OptionalDouble;
 
 public final class RenderTypeHelper {
+    /**
+     *
+     * TODO - this was for old 1.16.5 custom rendering and is missing loads of references. I'm not using it now.
+     *
+     *
     // extract the private (protected) transparency settings so that we can create custom RenderTypes with them.
     public static final RenderState.TransparencyState TRANSLUCENT_TRANSPARENCY;
     public static final RenderState.TransparencyState NO_TRANSPARENCY;
@@ -73,4 +72,5 @@ public final class RenderTypeHelper {
         MBE_TRIANGLES_NO_TEXTURE = RenderType.create("mbe_triangles_no_texture",
                 DefaultVertexFormats.POSITION_COLOR, GL11.GL_TRIANGLES, INITIAL_BUFFER_SIZE, renderState);
     }
+     **/
 }

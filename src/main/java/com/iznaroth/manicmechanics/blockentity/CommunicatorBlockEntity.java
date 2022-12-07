@@ -3,6 +3,11 @@ package com.iznaroth.manicmechanics.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CommunicatorBlockEntity extends BlockEntity {
+public class CommunicatorBlockEntity extends BlockEntity implements MenuProvider {
 
     private ItemStackHandler itemHandler = createHandler();
 
@@ -84,4 +89,15 @@ public class CommunicatorBlockEntity extends BlockEntity {
         return super.getCapability(cap, side);
     }
 
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("screen.manicmechanics.communicator");
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        return null;
+        // 'return new CommunicatorMenu();
+    }
 }

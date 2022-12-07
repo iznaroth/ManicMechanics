@@ -2,89 +2,61 @@ package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class GeneratorBlockContainer extends Container {
-    private TileEntity tileEntity;
-    private PlayerEntity playerEntity;
+public class GeneratorBlockMenu extends AbstractContainerMenu {
+    private BlockEntity blockEntity;
+    private final Level level;
+    private final ContainerData data;
+    private Player playerEntity;
     private IItemHandler playerInventory;
 
-    public GeneratorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(MMMenus.GENERATOR_CONTAINER.get(), windowId);
-        tileEntity = world.getBlockEntity(pos);
-        this.playerEntity = player;
-        this.playerInventory = new InvWrapper(playerInventory);
+    private static final Minecraft minecraft = Minecraft.getInstance();
 
-        if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    
+    public GeneratorBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    }
+    
+    public GeneratorBlockMenu(int windowId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(MMMenus.GENERATOR_MENU.get(), windowId);
+        blockEntity = entity;
+        this.level = inv.player.level;
+        this.data = data;
+
+
+        if (blockEntity != null) {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 64, 24));
             });
         }
         layoutPlayerInventorySlots(10, 70);
-        trackPower();
+        //trackPower();
     }
 
-    // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
-    private void trackPower() {
-        // Unfortunatelly on a dedicated server ints are actually truncated to short so we need
-        // to split our integer here (split our 32 bit integer into two 16 bit integers)
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return getEnergy() & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0xffff0000;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored + (value & 0xffff));
-                });
-            }
-        });
-        addDataSlot(new IntReferenceHolder() {
-            @Override
-            public int get() {
-                return (getEnergy() >> 16) & 0xffff;
-            }
-
-            @Override
-            public void set(int value) {
-                tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(h -> {
-                    int energyStored = h.getEnergyStored() & 0x0000ffff;
-                    ((CustomEnergyStorage)h).setEnergy(energyStored | (value << 16));
-                });
-            }
-        });
-    }
 
     public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+        return blockEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, MMBlocks.HEP.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerEntity, MMBlocks.HEP.get());
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {

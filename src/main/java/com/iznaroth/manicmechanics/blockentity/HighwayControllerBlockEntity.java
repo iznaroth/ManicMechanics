@@ -3,19 +3,18 @@ package com.iznaroth.manicmechanics.blockentity;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.tools.CustomEnergyStorage;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -23,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class HighwayControllerBlockEntity extends TileEntity implements ITickableTileEntity {
+public class HighwayControllerBlockEntity extends BlockEntity {
     private ItemStackHandler itemHandler = createHandler();
     private CustomEnergyStorage energyStorage = createEnergy();
 
@@ -33,8 +32,8 @@ public class HighwayControllerBlockEntity extends TileEntity implements ITickabl
 
     private int counter;
 
-    public HighwayControllerBlockEntity() {
-        super(MMBlockEntities.HIGHWAY_CONTROLLER_TILE.get());
+    public HighwayControllerBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.HIGHWAY_CONTROLLER_TILE.get(), pos, state);
     }
 
     @Override
@@ -44,45 +43,44 @@ public class HighwayControllerBlockEntity extends TileEntity implements ITickabl
         energy.invalidate();
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, HighwayControllerBlockEntity pEntity) {
         if (level.isClientSide) {
             return;
         }
 
-        if (counter > 0) {
-            counter--;
-            if (counter <= 0) {
-                energyStorage.addEnergy(Config.FIRSTBLOCK_GENERATE.get());
+        if (pEntity.counter > 0) {
+            pEntity.counter--;
+            if (pEntity.counter <= 0) {
+                pEntity.energyStorage.addEnergy(Config.FIRSTBLOCK_GENERATE.get());
             }
-            setChanged();
+            pEntity.setChanged();
         }
 
-        if (counter <= 0) {
-            ItemStack stack = itemHandler.getStackInSlot(0);
+        if (pEntity.counter <= 0) {
+            ItemStack stack = pEntity.itemHandler.getStackInSlot(0);
             if (stack.getItem() == MMItems.DYSPERSIUM_DUST.get()) {
-                itemHandler.extractItem(0, 1, false);
-                counter = Config.FIRSTBLOCK_TICKS.get();
-                setChanged();
+                pEntity.itemHandler.extractItem(0, 1, false);
+                pEntity.counter = Config.FIRSTBLOCK_TICKS.get();
+                pEntity.setChanged();
             }
         }
 
-        BlockState blockState = level.getBlockState(worldPosition);
-        if (blockState.getValue(BlockStateProperties.POWERED) != counter > 0) {
-            level.setBlock(worldPosition, blockState.setValue(BlockStateProperties.POWERED, counter > 0),
-                    Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
+        BlockState blockState = level.getBlockState(pos);
+        if (blockState.getValue(BlockStateProperties.POWERED) != pEntity.counter > 0) {
+            level.setBlock(pos, blockState.setValue(BlockStateProperties.POWERED, pEntity.counter > 0),
+                    3);
         }
 
-        sendOutPower();
+        //sendOutPower();
     }
 
     private void sendOutPower() {
         AtomicInteger capacity = new AtomicInteger(energyStorage.getEnergyStored());
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
-                TileEntity te = level.getBlockEntity(worldPosition.relative(direction));
+                BlockEntity te = level.getBlockEntity(worldPosition.relative(direction));
                 if (te != null) {
-                    boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
+                    boolean doContinue = te.getCapability(ForgeCapabilities.ENERGY, direction).map(handler -> {
                                 if (handler.canReceive()) {
                                     int received = handler.receiveEnergy(Math.min(capacity.get(), Config.FIRSTBLOCK_SEND.get()), false);
                                     capacity.addAndGet(-received);
@@ -103,21 +101,21 @@ public class HighwayControllerBlockEntity extends TileEntity implements ITickabl
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
         energyStorage.deserializeNBT(tag.getCompound("energy"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
         tag.put("energy", energyStorage.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     private ItemStackHandler createHandler() {
@@ -158,10 +156,10 @@ public class HighwayControllerBlockEntity extends TileEntity implements ITickabl
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        if (cap == CapabilityEnergy.ENERGY) {
+        if (cap == ForgeCapabilities.ENERGY) {
             return energy.cast();
         }
         return super.getCapability(cap, side);

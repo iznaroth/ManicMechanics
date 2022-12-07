@@ -2,9 +2,10 @@ package com.iznaroth.manicmechanics.client.gui;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,12 +25,10 @@ public class HUDEventHandler {
      * @param event The event
      */
     @SubscribeEvent
-    public static void renderCurrencyHud(final RenderGameOverlayEvent.Post event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) return;
+    public static void renderCurrencyHud(final RenderGuiOverlayEvent.Post event) {
 
-        final PlayerEntity player = minecraft.player;
-
-        currencyHUD.drawHUD(event.getMatrixStack(), event.getPartialTicks());
+        final Player player = minecraft.player;
+        currencyHUD.drawHUD(event.getPoseStack(), event.getPartialTick());
 
     }
 

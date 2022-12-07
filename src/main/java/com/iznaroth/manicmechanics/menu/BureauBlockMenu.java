@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.container;
+package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.block.MMBlocks;
@@ -17,8 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
@@ -36,7 +34,7 @@ public class BureauBlockMenu extends AbstractContainerMenu {
     }
 
     public BureauBlockMenu(int windowId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(MMMenus.BUREAU_CONTAINER.get(), windowId);
+        super(MMMenus.BUREAU_MENU.get(), windowId);
         blockEntity = entity;
         this.level = inv.player.level;
         this.data = data;
@@ -47,6 +45,8 @@ public class BureauBlockMenu extends AbstractContainerMenu {
             });
         }
         layoutPlayerInventorySlots(8, 130);
+
+        addDataSlots(data);
     }
 
 
@@ -78,15 +78,11 @@ public class BureauBlockMenu extends AbstractContainerMenu {
                 System.out.println("I don't got a value for that item");
                 return false;
             } else {
-                ICurrency curr = CurrencyCapability.getBalance(player).orElse(null);
-                if (curr == null) {
-                    System.out.println("This dude has no money.");
-                    return false;
-                }
+                player.getCapability(CurrencyCapability.CURRENCY_CAPABILITY).ifPresent(currency -> {
+                    currency.addCurrency( profit * quantity);
+                    sellSlot.set(Items.AIR.getDefaultInstance());
 
-                curr.addCurrency((double) profit * quantity);
-                sellSlot.set(Items.AIR.getDefaultInstance());
-
+                });
                 return true;
             }
         }

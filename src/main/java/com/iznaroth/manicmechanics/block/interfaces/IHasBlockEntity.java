@@ -1,11 +1,11 @@
 package com.iznaroth.manicmechanics.block.interfaces;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 //Borrowed from Mekanism!
-public interface IHasBlockEntity <TILE extends BlockEntity> {
+public interface IHasBlockEntity <BE extends BlockEntity> {
 
-    BlockEntityType<? extends TILE> getTileType();
+    BlockEntityType<? extends BE> getTileType();
 
 }

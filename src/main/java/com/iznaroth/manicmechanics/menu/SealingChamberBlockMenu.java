@@ -3,39 +3,44 @@ package com.iznaroth.manicmechanics.menu;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-
 import java.util.Arrays;
 import java.util.List;
 
-public class SealingChamberBlockContainer extends Container {
+public class SealingChamberBlockMenu extends AbstractContainerMenu {
 
-    private SealingChamberBlockEntity tileEntity;
-    private PlayerEntity playerEntity;
+    private SealingChamberBlockEntity blockEntity;
+    private final Level level;
+    private final ContainerData data;
+    private Player playerEntity;
     private IItemHandler playerInventory;
 
-    public SealingChamberBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(MMMenus.SEALER_CONTAINER.get(), windowId);
-        tileEntity = (SealingChamberBlockEntity) world.getBlockEntity(pos);
-        this.playerEntity = player;
-        this.playerInventory = new InvWrapper(playerInventory);
+    private static final Minecraft minecraft = Minecraft.getInstance();
 
-        if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+
+    public SealingChamberBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, (SealingChamberBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    }
+
+    public SealingChamberBlockMenu(int windowId, Inventory inv, SealingChamberBlockEntity entity, ContainerData data) {
+        super(MMMenus.SEALER_MENU.get(), windowId);
+        blockEntity = entity;
+        this.level = inv.player.level;
+        this.data = data;
+
+        if (blockEntity != null) {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 64, 17));
                 addSlot(new SlotItemHandler(h, 1, 64, 50));
                 addSlot(new SlotItemHandler(h, 2, 118, 32));
@@ -46,20 +51,21 @@ public class SealingChamberBlockContainer extends Container {
 
 
     public int getEnergy() {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
+        return blockEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public SealingChamberBlockEntity getTileEntity(){
-        return this.tileEntity;
-    }
-
-    @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, MMBlocks.SEALER.get());
+    public SealingChamberBlockEntity getBlockEntity(){
+        return this.blockEntity;
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public boolean stillValid(Player playerIn) {
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerEntity, MMBlocks.SEALER.get());
+    }
+
+
+    @Override
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -146,7 +152,7 @@ public class SealingChamberBlockContainer extends Container {
 
     public int getScaledProgress(){
 
-        int progress = this.getTileEntity().getCraftProgress();
+        int progress = this.getBlockEntity().getCraftProgress();
         int maxProgress = 80;
         int progressArrowSize = 33;
 

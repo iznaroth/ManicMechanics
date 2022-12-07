@@ -1,54 +1,48 @@
 package com.iznaroth.manicmechanics.screen;
 
-
-import com.google.common.collect.Maps;
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.container.CommunicatorBlockContainer;
+import com.iznaroth.manicmechanics.menu.CommunicatorBlockMenu;
 import com.iznaroth.manicmechanics.util.CommunicatorInfoGroup;
 import com.iznaroth.manicmechanics.util.EmailHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.screen.inventory.CreativeCraftingListener;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ITagCollection;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.screens.inventory.*;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
+
+import java.util.*;
 import java.util.function.Predicate;
 
-public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockContainer> {
+public class CommunicatorBlockScreen extends AbstractContainerScreen<CommunicatorBlockMenu> {
 
-    public static final Inventory CONTAINER = new Inventory(45);
+    public static final SimpleContainer CONTAINER = new SimpleContainer(45);
     private static int selectedTab = CommunicatorInfoGroup.TAB_EMAIL.getId();
     private float scrollOffs;
     private boolean scrolling;
-    private TextFieldWidget searchBox;
+    private EditBox searchBox;
 
     //@Nullable
     //private List<Slot> originalSlots;
 
-    private CreativeCraftingListener listener;
+    private CreativeInventoryListener listener;
 
     private boolean ignoreTextInput;
     private static int tabPage = 0;
     private int maxPages = 0;
     private boolean hasClickedOutside;
-    private final Map<ResourceLocation, ITag<Item>> visibleTags = Maps.newTreeMap();
+    private final Set<TagKey<Item>> visibleTags = new HashSet<>();
 
     //MY STUFF
     private boolean email_expand;
@@ -57,7 +51,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
     private boolean wiki_expand;
     private int open_wiki = -1;
 
-    public CommunicatorBlockScreen(CommunicatorBlockContainer container, PlayerInventory inv, ITextComponent name)
+    public CommunicatorBlockScreen(CommunicatorBlockMenu container, Inventory inv, Component name)
     {
         super(container, inv, name);
         this.passEvents = true;
@@ -65,12 +59,11 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         this.imageWidth = 195;
     }
 
-    public void tick() { //Required to update on keyboard input. The commented portion would replace the existing inventory with this screen, which is not intended.
-        //if (!this.minecraft.gameMode.hasInfiniteItems()) {
-        //    this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
-        //} else
-
-        if (this.searchBox != null) {
+    public void containerTick() {
+        super.containerTick();
+        if (!this.minecraft.gameMode.hasInfiniteItems()) {
+            this.minecraft.setScreen(new InventoryScreen(this.minecraft.player));
+        } else if (this.searchBox != null) {
             this.searchBox.tick();
         }
 
@@ -83,17 +76,17 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             super.init();
             int tabCount = CommunicatorInfoGroup.TABS.length;  //TODO - LINK TO COMMUNICATOR'S TAB HANDLER - where should that go?
             if (tabCount > 12) { //This loop ensures that extra tabs are appended onto subsequent pages. May not be necessary. Keep for now.
-                addButton(new net.minecraft.client.gui.widget.button.Button(leftPos,              topPos - 50, 20, 20, new StringTextComponent("<"), b -> tabPage = Math.max(tabPage - 1, 0       )));
-                addButton(new net.minecraft.client.gui.widget.button.Button(leftPos + imageWidth - 20, topPos - 50, 20, 20, new StringTextComponent(">"), b -> tabPage = Math.min(tabPage + 1, maxPages)));
+                addRenderableWidget(new net.minecraft.client.gui.components.Button(leftPos,              topPos - 50, 20, 20, Component.literal("<"), b -> tabPage = Math.max(tabPage - 1, 0       )));
+                addRenderableWidget(new net.minecraft.client.gui.components.Button(leftPos + imageWidth - 20, topPos - 50, 20, 20, Component.literal(">"), b -> tabPage = Math.min(tabPage + 1, maxPages)));
                 maxPages = (int) Math.ceil((tabCount - 12) / 10D);
             }
             this.minecraft.keyboardHandler.setSendRepeatsToGui(true); //Searchbox setup.
-            this.searchBox = new TextFieldWidget(this.font, this.leftPos + 82, this.topPos + 6, 80, 9, new TranslationTextComponent("itemGroup.search"));
+            this.searchBox = new EditBox(this.font, this.leftPos + 82, this.topPos + 6, 80, 9, Component.translatable("itemGroup.search"));
             this.searchBox.setMaxLength(50);
             this.searchBox.setBordered(false);
             this.searchBox.setVisible(false);
             this.searchBox.setTextColor(16777215);
-            this.children.add(this.searchBox); //EventListener hooks for search responses, I assume.
+            this.addWidget(this.searchBox); //EventListener hooks for search responses, I assume.
 
 
             int i = selectedTab; //TODO - Change this to communicator's tab handler.
@@ -122,7 +115,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
 
     public void removed() { //Not sure. TODO: Try removing once it works and see what happens?
         super.removed();
-        if (this.minecraft.player != null && this.minecraft.player.inventory != null) {
+        if (this.minecraft.player != null && this.minecraft.player.getInventory() != null) {
             this.minecraft.player.inventoryMenu.removeSlotListener(this.listener);
         }
 
@@ -159,7 +152,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         };
 
 
-        boolean flag1 = InputMappings.getKey(p_231046_1_, p_231046_2_).getNumericKeyValue().isPresent();
+        boolean flag1 = InputConstants.getKey(p_231046_1_, p_231046_2_).getNumericKeyValue().isPresent();
         if (flag && flag1 && this.checkHotbarKeyPressed(p_231046_1_, p_231046_2_)) {
             this.ignoreTextInput = true;
             return true;
@@ -219,13 +212,12 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             };
         }
 
-        ITagCollection<Item> itagcollection = ItemTags.getAllTags();
-        itagcollection.getAvailableTags().stream().filter(predicate).forEach((p_214082_2_) -> {
-            ITag itag = this.visibleTags.put(p_214082_2_, itagcollection.getTag(p_214082_2_));
-        });
+        Registry.ITEM.getTagNames().filter((p_205410_) -> {
+            return predicate.test(p_205410_.location());
+        }).forEach(this.visibleTags::add);
     }
 
-    protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) { //Hovertext(?) labels for tabs. Keep!
+    protected void renderLabels(PoseStack p_230451_1_, int p_230451_2_, int p_230451_3_) { //Hovertext(?) labels for tabs. Keep!
         CommunicatorInfoGroup comgroup = CommunicatorInfoGroup.TABS[selectedTab];
         if (comgroup != null && comgroup.showTitle()) {
             RenderSystem.disableBlend();
@@ -353,7 +345,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         } else {
             int i = ((this.menu).items.size() + 9 - 1) / 9 - 5;
             this.scrollOffs = (float)((double)this.scrollOffs - p_231043_5_ / (double)i);
-            this.scrollOffs = MathHelper.clamp(this.scrollOffs, 0.0F, 1.0F);
+            this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
             this.menu.scrollTo(this.scrollOffs);
             return true;
         }
@@ -380,7 +372,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             int i = this.topPos + 18;
             int j = i + 112;
             this.scrollOffs = ((float)p_231045_3_ - (float)i - 7.5F) / ((float)(j - i) - 15.0F);
-            this.scrollOffs = MathHelper.clamp(this.scrollOffs, 0.0F, 1.0F);
+            this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
             this.menu.scrollTo(this.scrollOffs);
             return true;
         } else {
@@ -388,7 +380,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         }
     }
 
-    public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) { //TODO - Some cleanup. Not everything here needs to be rendered.
+    public void render(PoseStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) { //TODO - Some cleanup. Not everything here needs to be rendered.
         this.renderBackground(p_230430_1_);
         super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
 
@@ -412,8 +404,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         //}
 
         if (maxPages != 0) {
-            ITextComponent page = new StringTextComponent(String.format("%d / %d", tabPage + 1, maxPages + 1));
-            RenderSystem.disableLighting();
+            Component page = Component.literal(String.format("%d / %d", tabPage + 1, maxPages + 1));
             this.setBlitOffset(300);
             this.itemRenderer.blitOffset = 300.0F;
             font.drawShadow(p_230430_1_, page.getVisualOrderText(), leftPos + (imageWidth / 2) - (font.width(page) / 2), topPos - 44, -1);
@@ -421,11 +412,11 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             this.itemRenderer.blitOffset = 0.0F;
         }
 
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.renderTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
     }
 
-    protected void renderTooltip(MatrixStack p_230457_1_, ItemStack p_230457_2_, int p_230457_3_, int p_230457_4_) { //TODO - Probably needs a full rewrite.
+    protected void renderTooltip(PoseStack p_230457_1_, ItemStack p_230457_2_, int p_230457_3_, int p_230457_4_) { //TODO - Probably needs a full rewrite.
 
         //NOTE: Original implementation was for unique tooltips in the search bar. Can possibly be deleted?
         super.renderTooltip(p_230457_1_, p_230457_2_, p_230457_3_, p_230457_4_);
@@ -434,8 +425,9 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
 
     }
 
-    protected void renderBg(MatrixStack ms, float p_230450_2_, int p_230450_3_, int p_230450_4_) { //TODO - mimick the structure, but each Communicator tab is a little different.
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void renderBg(PoseStack ms, float p_230450_2_, int p_230450_3_, int p_230450_4_) { //TODO - mimick the structure, but each Communicator tab is a little different.
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         CommunicatorInfoGroup comgroup = CommunicatorInfoGroup.TABS[selectedTab];
 
         int start = tabPage * 10;
@@ -445,19 +437,19 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         for (int idx = start; idx < end; idx++) {
             CommunicatorInfoGroup comgroup1 = CommunicatorInfoGroup.TABS[idx];
             if (comgroup1 != null && comgroup1.getId() != selectedTab) {
-                this.minecraft.getTextureManager().bind(comgroup1.getTabsImage());
+                this.minecraft.getTextureManager().bindForSetup(comgroup1.getTabsImage());
                 this.renderTabButton(ms, comgroup1);
             }
         }
 
-        this.minecraft.getTextureManager().bind(comgroup.getBackgroundImage());
+        this.minecraft.getTextureManager().bindForSetup(comgroup.getBackgroundImage());
         this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         this.searchBox.render(ms, p_230450_3_, p_230450_4_, p_230450_2_);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.leftPos + 175;
         int j = this.topPos + 18;
         int k = j + 112;
-        this.minecraft.getTextureManager().bind(comgroup.getTabsImage());
+        this.minecraft.getTextureManager().bindForSetup(comgroup.getTabsImage());
 
         if (comgroup.canScroll()) { //BLIT FOR SCROLLBAR
             this.blit(ms, i, j + (int)((float)(k - j - 17) * this.scrollOffs), 232 + (this.canScroll() ? 0 : 12), 0, 12, 15);
@@ -474,11 +466,11 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             open_mail = 0;
             for(int l = 0; l < 5; l++){
 
-                this.minecraft.getTextureManager().bind(comgroup.getTabsImage());
+                this.minecraft.getTextureManager().bindForSetup(comgroup.getTabsImage());
                 this.blit(ms, leftPos + 9, topPos + 17 + ((l) * 18), 0, 139 + (EmailHandler.isSlotEmpty(open_mail) ? 18 : 0), 160, 18);
 
                 if(!EmailHandler.isSlotEmpty(l)){ //Draw subjects & mail icon.
-                    this.minecraft.getTextureManager().bind(new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/mail_icon.png"));
+                    this.minecraft.getTextureManager().bindForSetup(new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/mail_icon.png"));
                     blit(ms, leftPos + 12, topPos + 18 + (l * 18), 0, 0, 16, 16, 16, 16);
                     this.minecraft.font.drawShadow(ms, EmailHandler.active_entries[l].subject, leftPos + (float) 30, topPos + (float) 22 + (l * 18), 16777215);
                 }
@@ -487,7 +479,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         } else if(comgroup == CommunicatorInfoGroup.TAB_EMAIL && email_expand){
 
             //TODO - DO NOT DO FRIGGIN' STRING FORMATTING IN YOUR RENDER LOOP MORON!
-            TranslationTextComponent tc = EmailHandler.active_entries[open_mail].body;
+            Component tc = EmailHandler.active_entries[open_mail].body;
 
             int tx_width = 160;
             int tx_height = 88;
@@ -535,7 +527,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         return p_195375_2_ >= (double)j && p_195375_2_ <= (double)(j + 28) && p_195375_4_ >= (double)k && p_195375_4_ <= (double)(k + 32);
     }
 
-    protected boolean checkTabHovering(MatrixStack p_238809_1_, CommunicatorInfoGroup p_238809_2_, int p_238809_3_, int p_238809_4_) {
+    protected boolean checkTabHovering(PoseStack p_238809_1_, CommunicatorInfoGroup p_238809_2_, int p_238809_3_, int p_238809_4_) {
         int i = p_238809_2_.getColumn();
         int j = 28 * i;
         int k = 0;
@@ -559,7 +551,7 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
         }
     }
 
-    protected void renderTabButton(MatrixStack p_238808_1_, CommunicatorInfoGroup p_238808_2_) {
+    protected void renderTabButton(PoseStack p_238808_1_, CommunicatorInfoGroup p_238808_2_) {
         boolean flag = p_238808_2_.getId() == selectedTab;
         boolean flag1 = p_238808_2_.isTopRow();
         int i = p_238808_2_.getColumn();
@@ -585,13 +577,11 @@ public class CommunicatorBlockScreen extends ContainerScreen<CommunicatorBlockCo
             i1 = i1 + (this.imageHeight - 4);
         }
 
-        RenderSystem.color3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
         RenderSystem.enableBlend(); //Forge: Make sure blend is enabled else tabs show a white border.
         this.blit(p_238808_1_, l, i1, j, k, 28, 32);
         this.itemRenderer.blitOffset = 100.0F;
         l = l + 6;
         i1 = i1 + 8 + (flag1 ? 1 : -1);
-        RenderSystem.enableRescaleNormal();
         ItemStack itemstack = p_238808_2_.getIconItem();
         this.itemRenderer.renderAndDecorateItem(itemstack, l, i1);
         this.itemRenderer.renderGuiItemDecorations(this.font, itemstack, l, i1);

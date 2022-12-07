@@ -3,12 +3,12 @@ package com.iznaroth.manicmechanics.networking;
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public class MMMessages {
     private static SimpleChannel INSTANCE;
@@ -31,13 +31,13 @@ public class MMMessages {
         net.messageBuilder(EnergySyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(EnergySyncS2CPacket::new)
                 .encoder(EnergySyncS2CPacket::toBytes)
-                .consumer(EnergySyncS2CPacket::handle)
+                .consumerMainThread(EnergySyncS2CPacket::handle)
                 .add();
 
         net.messageBuilder(ProgressSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ProgressSyncS2CPacket::new)
                 .encoder(ProgressSyncS2CPacket::toBytes)
-                .consumer(ProgressSyncS2CPacket::handle)
+                .consumerMainThread(ProgressSyncS2CPacket::handle)
                 .add();
 
 
@@ -47,7 +47,7 @@ public class MMMessages {
         INSTANCE.sendToServer(message);
     }
 
-    public static <MSG> void sendToPlayer(MSG message, ServerPlayerEntity player) {
+    public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {
         INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), message);
     }
 

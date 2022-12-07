@@ -1,9 +1,7 @@
 package com.iznaroth.manicmechanics;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
-import com.iznaroth.manicmechanics.client.capability.SuspicionCapability;
-import com.iznaroth.manicmechanics.container.MMMenus;
+import com.iznaroth.manicmechanics.menu.MMMenus;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.entity.custom.PinchEntity;
 import com.iznaroth.manicmechanics.entity.render.CopCarRenderer;
@@ -17,13 +15,13 @@ import com.iznaroth.manicmechanics.setup.ClientSetup;
 import com.iznaroth.manicmechanics.setup.Config;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
+import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
+import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -65,6 +63,9 @@ public class ManicMechanics
 
         MMRecipeTypes.register(eventBus);
 
+        MMConfiguredFeatures.register(eventBus);
+        MMPlacedFeatures.register(eventBus);
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
@@ -93,12 +94,6 @@ public class ManicMechanics
 
     public void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-
-        CurrencyCapability.register();
-        SuspicionCapability.register();
         SpawnPlacements.register(ModEntityTypes.PINCH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PinchEntity::checkSpawnRules);
     }
 

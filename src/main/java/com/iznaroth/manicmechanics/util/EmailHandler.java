@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class EmailHandler {
 
@@ -13,17 +13,17 @@ public abstract class EmailHandler {
         return active_entries[idx] == null;
     }
 
-    public static final Email ANON_01 = new Email(new TranslationTextComponent("subject.manicmechanics.anon01"), new TranslationTextComponent("email.manicmechanics.anon01"), 0);
+    public static final Email ANON_01 = new Email(Component.translatable("subject.manicmechanics.anon01"), Component.translatable("email.manicmechanics.anon01"), 0);
 
     public static class Email{
-        public TranslationTextComponent subject;
-        public TranslationTextComponent body;
+        public Component subject;
+        public Component body;
 
         public ItemStack output;
         public ItemStack blueprint;
 
 
-        public Email(TranslationTextComponent subject, TranslationTextComponent body, int position){
+        public Email(Component subject, Component body, int position){
             this.subject = subject;
             this.body = body;
 

@@ -4,23 +4,22 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.ECPBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
-import net.minecraft.block.BlockState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -31,15 +30,15 @@ import vazkii.patchouli.api.PatchouliAPI;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickableTileEntity {
+public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuProvider {
 
     private ItemStackHandler itemHandler = createHandler();
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
     private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-    private static TranslationTextComponent[] messages = {
-            new TranslationTextComponent("simplemsg.manicmechanics.001")
+    private static Component[] messages = {
+            Component.translatable("simplemsg.manicmechanics.001")
     };
 
     private static Item[] reqToMsgMap = {
@@ -50,8 +49,8 @@ public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickab
     int latest_message = 0;
 
 
-    public SimpleCommunicatorBlockEntity() {
-        super(MMBlockEntities.SIMPLE_COMMUNICATOR_TILE.get());
+    public SimpleCommunicatorBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.SIMPLE_COMMUNICATOR_TILE.get(), pos, state);
     }
 
 
@@ -63,19 +62,19 @@ public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickab
 
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     private ItemStackHandler createHandler() {
@@ -111,9 +110,8 @@ public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickab
         return super.getCapability(cap, side);
     }
 
-    @Override
-    public void tick() {
-        readInput();
+    public static void tick(Level level, BlockPos pos, BlockState state, SimpleCommunicatorBlockEntity pEntity) {
+        pEntity.readInput();
     }
 
     private void readInput(){
@@ -130,7 +128,7 @@ public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickab
         if(level.getBlockState(above).getBlock().equals(MMBlocks.ELECTROSTATIC_COMMUNICATION_PYLON.get())) {
 
             if (in.equals(Items.BRICK)) {
-                boolean success = ((ECPBlock) level.getBlockState(above).getBlock()).strikeAndAffirm(above, (ServerWorld) level);
+                boolean success = ((ECPBlock) level.getBlockState(above).getBlock()).strikeAndAffirm(above, (ServerLevel) level);
                 if(success)
                     itemHandler.setStackInSlot(0, MMItems.AUTHORIZED_SECURITY_BRICK.get().getDefaultInstance());
             }
@@ -151,4 +149,14 @@ public class SimpleCommunicatorBlockEntity extends TileEntity implements ITickab
     }
 
 
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("screen.manicmechanics.simple_communicator");
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        return null;
+    }
 }

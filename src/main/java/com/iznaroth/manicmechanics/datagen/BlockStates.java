@@ -2,12 +2,10 @@ package com.iznaroth.manicmechanics.datagen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -21,17 +19,23 @@ public class BlockStates extends BlockStateProvider {
     public BlockStates(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, ManicMechanics.MOD_ID, exFileHelper);
     }
-
+/**
+ *
+ *
+ * TODO - borrow other base provider code for this
+ **/
     @Override
     protected void registerStatesAndModels() {
-        registerHEPBlock();
-        registerBureauBlock();
-        registerCommunicatorBlock();
-        registerAssembler();
-        registerCondenser();
-        registerInfuser();
+        //registerHEPBlock();
+        //registerBureauBlock();
+        //registerCommunicatorBlock();
+        //registerAssembler();
+        //registerCondenser();
+        //registerInfuser();
     }
 
+
+/**
     private void registerHEPBlock() {
         ResourceLocation txt = new ResourceLocation(ManicMechanics.MOD_ID, "block/hep");
         BlockModelBuilder modelFirstblock = models().cube("hep", txt, txt, new ResourceLocation(ManicMechanics.MOD_ID, "block/hep_front"), txt, txt, txt);
@@ -94,6 +98,8 @@ public class BlockStates extends BlockStateProvider {
                             .build();
                 });
     }
+
+    **/
 
 }
 

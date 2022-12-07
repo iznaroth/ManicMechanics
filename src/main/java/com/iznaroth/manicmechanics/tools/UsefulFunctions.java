@@ -1,9 +1,9 @@
 package com.iznaroth.manicmechanics.tools;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.DoubleNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.math.vector.Vector3d;
+import com.mojang.math.Vector3d;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
 
 public class UsefulFunctions {
     /** linearly interpolate for y between [x1, y1] to [x2, y2] using x
@@ -39,11 +39,11 @@ public class UsefulFunctions {
     /***
      * creates a NBT list from the Vec3d passed to this function
      */
-    public static ListNBT serializeVec3d(Vector3d vec3d) {
-        ListNBT listnbt = new ListNBT();
-        listnbt.add(DoubleNBT.valueOf(vec3d.x));
-        listnbt.add(DoubleNBT.valueOf(vec3d.y));
-        listnbt.add(DoubleNBT.valueOf(vec3d.z));
+    public static ListTag serializeVec3d(Vector3d vec3d) {
+        ListTag listnbt = new ListTag();
+        listnbt.add(DoubleTag.valueOf(vec3d.x));
+        listnbt.add(DoubleTag.valueOf(vec3d.y));
+        listnbt.add(DoubleTag.valueOf(vec3d.z));
         return listnbt;
     }
 
@@ -53,8 +53,8 @@ public class UsefulFunctions {
      * @param tagname name of the tag that was used to save the Vec3d
      * @return the new Vec3d
      */
-    public static Vector3d deserializeVec3d(CompoundNBT nbt, String tagname) {
-        ListNBT listnbt = nbt.getList(tagname, DoubleNBT.valueOf(0).getId());
+    public static Vector3d deserializeVec3d(CompoundTag nbt, String tagname) {
+        ListTag listnbt = nbt.getList(tagname, DoubleTag.valueOf(0).getId());
         Vector3d retval = new Vector3d(listnbt.getDouble(0), listnbt.getDouble(1), listnbt.getDouble(2));
         return retval;
     }

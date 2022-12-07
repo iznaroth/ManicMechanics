@@ -6,23 +6,24 @@ import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
-import com.iznaroth.manicmechanics.recipe.MMRecipeTypes;
 import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -30,7 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class SealingChamberBlockEntity extends BlockEntity implements IItemHandler {
+public class SealingChamberBlockEntity extends BlockEntity implements IItemHandler, MenuProvider {
 
     protected int energy;
     protected int capacity;
@@ -51,8 +52,8 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
 
     private int counter;
 
-    public SealingChamberBlockEntity() {
-        super(MMBlockEntities.SEALER_TILE.get());
+    public SealingChamberBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.SEALER_TILE.get(), pos, state);
         this.capacity = 40000;
         this.energy = 0;
         //No throttling at this stage of development - will be related to machine casing later.
@@ -68,19 +69,19 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
 
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(CompoundTag tag) {
         itemHandler.deserializeNBT(tag.getCompound("inv"));
 
         counter = tag.getInt("counter");
-        super.load(state, tag);
+        super.load(tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
 
         tag.putInt("counter", counter);
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     //TODO - Check if it is acceptable to deprecate this and just implement IItemHandler
@@ -191,17 +192,13 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
-        if (cap == CapabilityEnergy.ENERGY) {
+        if (cap == ForgeCapabilities.ENERGY) {
             return storage.cast();
         }
         return super.getCapability(cap, side);
-    }
-
-    public void sell(){
-
     }
 
     @Override
@@ -242,38 +239,38 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
     }
 
 
-    public void craft(){
-        Inventory inv = new Inventory(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++){
-            inv.setItem(i, itemHandler.getStackInSlot(i));
+    public static void craft(SealingChamberBlockEntity pEntity){
+        SimpleContainer inv = new SimpleContainer(pEntity.itemHandler.getSlots());
+        for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
+            inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<SealingChamberRecipe> recipe = level.getRecipeManager()
-                .getRecipeFor(MMRecipeTypes.SEALING_CHAMBER_RECIPE, inv, level);
+        Optional<SealingChamberRecipe> recipe = pEntity.level.getRecipeManager()
+                .getRecipeFor(SealingChamberRecipe.Type.INSTANCE, inv, pEntity.level);
 
         recipe.ifPresent(iRecipe -> {
 
-            if(itemHandler.getStackInSlot(2).getCount() >= itemHandler.getSlotLimit(2)){
+            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2)){
                 return; //Can't perform the craft, slot is full.
             }
 
-            if(progress < 80){ //Only increment progress if we can take energy.
-                if(energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
-                    progress++;
-                    MMMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
-                    energyStorage.energyOperation(4);
+            if(pEntity.progress < 80){ //Only increment progress if we can take energy.
+                if(pEntity.energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
+                    pEntity.progress++;
+                    MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
+                    pEntity.energyStorage.energyOperation(4);
                 }
             } else {
-                System.out.println("Progress hit " + progress + ", crafting.");
+                System.out.println("Progress hit " + pEntity.progress + ", crafting.");
 
                 ItemStack output = iRecipe.getResultItem();
 
-                craftTheItem(output);
+                pEntity.craftTheItem(output);
 
-                setChanged();
+                pEntity.setChanged();
 
-                progress = 0;
-                MMMessages.sendToClients(new ProgressSyncS2CPacket(this.progress, getBlockPos()));
+                pEntity.progress = 0;
+                MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
             }
         });
     }
@@ -292,11 +289,22 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
         this.progress = progress;
     }
 
-    @Override
-    public void tick() {
+    public static void tick(Level level, BlockPos pos, BlockState state, SealingChamberBlockEntity pEntity) {
         if(level.isClientSide)
                 return;
 
-        craft();
+        pEntity.craft(pEntity);
+    }
+
+
+    @Override
+    public Component getDisplayName() {
+        return null;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        return null;
     }
 }

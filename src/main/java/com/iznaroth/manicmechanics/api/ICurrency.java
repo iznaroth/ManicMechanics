@@ -1,13 +1,22 @@
 package com.iznaroth.manicmechanics.api;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+
 public interface ICurrency {
 
-    double getCurrentBalance();
+    int getCurrentBalance();
 
-    double setBalance(final double mdd);
+    int setBalance(final int mdd);
 
-    double addCurrency(final double mddToAdd);
+    int addCurrency(final int mddToAdd);
 
-    double removeCurrency(final double mddToRemove);
+    int removeCurrency(final int mddToRemove);
+
+    void saveNBTData(CompoundTag nbt);
+
+    void loadNBTData(CompoundTag nbt);
+
+    void copyFrom(ICurrency source);
 
 }

@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.blockentity;
 
-import com.iznaroth.manicmechanics.container.BureauBlockMenu;
+import com.iznaroth.manicmechanics.menu.BureauBlockMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

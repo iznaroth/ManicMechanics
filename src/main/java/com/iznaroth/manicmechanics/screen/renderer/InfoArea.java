@@ -1,7 +1,8 @@
 package com.iznaroth.manicmechanics.screen.renderer;
-import net.minecraft.client.gui.AbstractGui;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.Rectangle2d;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.Rect2i;
 
 /*
  *  BluSunrize
@@ -10,14 +11,12 @@ import net.minecraft.client.renderer.Rectangle2d;
  *  This code is licensed under "Blu's License of Common Sense"
  *  Details can be found in the license file in the root folder of this project
  */
+public abstract class InfoArea extends GuiComponent {
+    protected final Rect2i area;
 
-//Some adaptations made for 1.16.4 - will be undone soon enough lol
-public abstract class InfoArea extends AbstractGui {
-    protected final Rectangle2d area;
-
-    protected InfoArea(Rectangle2d area) {
+    protected InfoArea(Rect2i area) {
         this.area = area;
     }
 
-    public abstract void draw(MatrixStack transform);
+    public abstract void draw(PoseStack transform);
 }

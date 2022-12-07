@@ -2,23 +2,20 @@ package com.iznaroth.manicmechanics.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public class SealingChamberRecipe implements ISealingChamberRecipe{
+public class SealingChamberRecipe implements Recipe<SimpleContainer> {
 
     private final ResourceLocation id;
     private final ItemStack output;
@@ -31,17 +28,22 @@ public class SealingChamberRecipe implements ISealingChamberRecipe{
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
-        if(recipeItems.get(0).test(inv.getItem(0))){
-            return recipeItems.get(1).test(inv.getItem(1));
+    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+        if(pLevel.isClientSide()) {
+            return false;
         }
 
-        return false;
+        return recipeItems.get(0).test(pContainer.getItem(1));
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(SimpleContainer inv) {
         return output;
+    }
+
+    @Override
+    public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
+        return true;
     }
 
     @Override
@@ -59,25 +61,32 @@ public class SealingChamberRecipe implements ISealingChamberRecipe{
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return MMRecipeTypes.SEALING_CHAMBER_SERIALIZER.get();
     }
 
-    public static class SealingChamberRecipeType implements IRecipeType<SealingChamberRecipe> {
-        @Override
-        public String toString(){
-            return SealingChamberRecipe.TYPE_ID.toString();
-        }
+    @Override
+    public RecipeType<?> getType() {
+        return Type.INSTANCE;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>
-        implements IRecipeSerializer<SealingChamberRecipe> {
+    public static class Type implements RecipeType<SealingChamberRecipe> {
+        private Type() { }
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "sealer";
+    }
+
+    public static class Serializer implements RecipeSerializer<SealingChamberRecipe> {
+
+        public static final Serializer INSTANCE = new Serializer();
+        public static final ResourceLocation ID =
+                new ResourceLocation(ManicMechanics.MOD_ID, "sealer");
 
         @Override
         public SealingChamberRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "output"));
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
 
-            JsonArray ingredients = JSONUtils.getAsJsonArray(json, "ingredients");
+            JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY);
 
             for(int i = 0; i < inputs.size(); i++){
@@ -89,7 +98,7 @@ public class SealingChamberRecipe implements ISealingChamberRecipe{
 
         @Nullable
         @Override
-        public SealingChamberRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+        public SealingChamberRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY);
 
             for(int i = 0; i < inputs.size(); i++){
@@ -101,7 +110,7 @@ public class SealingChamberRecipe implements ISealingChamberRecipe{
         }
 
         @Override
-        public void toNetwork(PacketBuffer buffer, SealingChamberRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, SealingChamberRecipe recipe) {
             buffer.writeInt(recipe.getIngredients().size());
             for(Ingredient ing : recipe.getIngredients()){
                 ing.toNetwork(buffer);

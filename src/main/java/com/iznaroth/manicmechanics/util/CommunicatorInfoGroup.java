@@ -1,12 +1,10 @@
 package com.iznaroth.manicmechanics.util;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -48,10 +46,10 @@ public abstract class CommunicatorInfoGroup {
 
     private final int id;
     private final String langId;
-    private final ITextComponent displayName;
+    private final Component displayName;
     @Deprecated
     private String backgroundSuffix = "items.png";
-    private net.minecraft.util.ResourceLocation backgroundLocation;
+    private ResourceLocation backgroundLocation;
     private boolean canScroll = true;
     private boolean showTitle = true;
     private ItemStack iconItemStack;
@@ -62,7 +60,7 @@ public abstract class CommunicatorInfoGroup {
 
     public CommunicatorInfoGroup(int p_i1853_1_, String p_i1853_2_) {
         this.langId = p_i1853_2_;
-        this.displayName = new TranslationTextComponent("commGroup." + p_i1853_2_);
+        this.displayName = Component.translatable("commGroup." + p_i1853_2_);
         this.iconItemStack = ItemStack.EMPTY;
         this.id = addGroupSafe(p_i1853_1_, this);
     }
@@ -73,7 +71,7 @@ public abstract class CommunicatorInfoGroup {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return this.displayName;
     }
 
@@ -89,7 +87,7 @@ public abstract class CommunicatorInfoGroup {
     @OnlyIn(Dist.CLIENT)
     public abstract ItemStack makeIcon();
 
-    public CommunicatorInfoGroup setBackgroundImage(net.minecraft.util.ResourceLocation texture) {
+    public CommunicatorInfoGroup setBackgroundImage(ResourceLocation texture) {
         this.backgroundLocation = texture;
         return this;
     }
@@ -156,13 +154,13 @@ public abstract class CommunicatorInfoGroup {
     @OnlyIn(Dist.CLIENT)
     public ResourceLocation getBackgroundImage() {
         if (backgroundLocation != null) return backgroundLocation; //FORGE: allow custom namespace
-        return new net.minecraft.util.ResourceLocation("textures/gui/container/creative_inventory/tab_" + this.getBackgroundSuffix());
+        return new ResourceLocation("textures/gui/container/creative_inventory/tab_" + this.getBackgroundSuffix());
     }
 
     private static final ResourceLocation CREATIVE_INVENTORY_TABS = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/communicator_tabs.png");
 
     @OnlyIn(Dist.CLIENT)
-    public net.minecraft.util.ResourceLocation getTabsImage() {
+    public ResourceLocation getTabsImage() {
         return CREATIVE_INVENTORY_TABS;
     }
 
@@ -186,7 +184,7 @@ public abstract class CommunicatorInfoGroup {
     }
 
     public static synchronized int getGroupCountSafe() {
-        return ItemGroup.TABS.length;
+        return CommunicatorInfoGroup.TABS.length;
     }
 
     private static synchronized int addGroupSafe(int index, CommunicatorInfoGroup newGroup) {

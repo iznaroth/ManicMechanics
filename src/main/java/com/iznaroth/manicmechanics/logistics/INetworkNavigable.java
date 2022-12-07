@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.logistics;
 
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 /** Network-Navigable blocks do a few things:
  *  - Permit passage through them when network manager is routing - see onItemPassesPoint()

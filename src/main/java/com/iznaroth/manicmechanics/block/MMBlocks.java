@@ -4,7 +4,6 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.tube.*;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.item.ModItemGroup;
-import com.iznaroth.manicmechanics.render.BlockRenderTester;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -74,7 +73,7 @@ public class MMBlocks {
     public static final RegistryObject<Block> BELT = registerBlock("belt", () -> new BeltBlock(BlockBehaviour.Properties.of(Material.METAL).strength(5).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
 
 
-    public static final RegistryObject<Block> RENDER_TESTER = registerBlock("render_tester", () -> new BlockRenderTester(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
+    //public static final RegistryObject<Block> RENDER_TESTER = registerBlock("render_tester", () -> new BlockRenderTester(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
 
     public static final RegistryObject<Block> BOUNDING_TESTER = registerBlock("bounding_tester", () -> new BoundingBoxTesting(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), ModItemGroup.MM_MACHINES);
 

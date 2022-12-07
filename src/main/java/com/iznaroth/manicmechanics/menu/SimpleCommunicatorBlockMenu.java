@@ -3,38 +3,45 @@ package com.iznaroth.manicmechanics.menu;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SimpleCommunicatorBlockContainer extends Container {
+public class SimpleCommunicatorBlockMenu extends AbstractContainerMenu {
 
-    private SimpleCommunicatorBlockEntity tileEntity;
-    private PlayerEntity playerEntity;
+    private BlockEntity blockEntity;
+    private final Level level;
+    private final ContainerData data;
+    private Player playerEntity;
     private IItemHandler playerInventory;
 
-    public SimpleCommunicatorBlockContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(MMMenus.SIMPLE_COMMUNICATOR_CONTAINER.get(), windowId);
-        tileEntity = (SimpleCommunicatorBlockEntity) world.getBlockEntity(pos);
-        this.playerEntity = player;
-        this.playerInventory = new InvWrapper(playerInventory);
+    private static final Minecraft minecraft = Minecraft.getInstance();
 
-        if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+    public SimpleCommunicatorBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    }
+
+    public SimpleCommunicatorBlockMenu(int windowId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(MMMenus.SIMPLE_COMMUNICATOR_MENU.get(), windowId);
+        blockEntity = entity;
+        this.level = inv.player.level;
+        this.data = data;
+
+        if (blockEntity != null) {
+            blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 82, 43));
             });
         }
@@ -42,17 +49,18 @@ public class SimpleCommunicatorBlockContainer extends Container {
     }
 
 
-    public SimpleCommunicatorBlockEntity getTileEntity(){
-        return this.tileEntity;
+    public SimpleCommunicatorBlockEntity getBlockEntity(){
+        return (SimpleCommunicatorBlockEntity) this.blockEntity;
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, MMBlocks.SIMPLE_COMMUNICATOR.get());
+    public boolean stillValid(Player playerIn) {
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerEntity, MMBlocks.SIMPLE_COMMUNICATOR.get());
     }
 
+
     @Override
-    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -65,7 +73,7 @@ public class SimpleCommunicatorBlockContainer extends Container {
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (stack.getItem() == Items.BRICK.getItem()) {
+                if (stack.getItem() == Items.BRICK) {
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
