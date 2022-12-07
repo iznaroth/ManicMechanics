@@ -24,7 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HighwayControllerBlock extends BaseEntityBlock {
+public class HighwayControllerBlock extends MMBlockWrapperDebugBaseEntity {
 
     public HighwayControllerBlock(Properties properties) {
         super(properties);

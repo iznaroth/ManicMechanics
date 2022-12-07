@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public class NitrolOreBlock extends Block {
+public class NitrolOreBlock extends MMBlockWrapperDebug {
     public NitrolOreBlock(Properties p_i48440_1_) {
         super(p_i48440_1_.randomTicks());
     }

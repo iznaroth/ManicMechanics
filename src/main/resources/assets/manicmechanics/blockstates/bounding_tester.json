@@ -1,5 +1,6 @@
 {
   "variants": {
     "": { "model": "manicmechanics:block/bounding_tester" }
-  }
+  },
+  "render_type": "cutout"
 }

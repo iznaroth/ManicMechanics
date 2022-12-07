@@ -20,16 +20,17 @@ public class HUDEventHandler {
     private static final GuiCurrencyHUD currencyHUD = new GuiCurrencyHUD();
 
     /**
-     * Render the current spell when the SpellBook is held in the players hand
      *
      * @param event The event
-     */
+     *
     @SubscribeEvent
     public static void renderCurrencyHud(final RenderGuiOverlayEvent.Post event) {
 
+        System.out.println("Intercept and draw - error?");
         final Player player = minecraft.player;
         currencyHUD.drawHUD(event.getPoseStack(), event.getPartialTick());
 
     }
+    **/
 
 }

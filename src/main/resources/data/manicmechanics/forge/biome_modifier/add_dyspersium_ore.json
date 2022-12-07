@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biome": "#minecraft:is_overworld",
-  "features": "tutorialmod:dyspersium_ore_placed",
+  "biomes": "#minecraft:is_overworld",
+  "features": "manicmechanics:dyspersium_ore_placed",
   "step": "underground_ores"
 }

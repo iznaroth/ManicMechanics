@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import javax.annotation.Nullable;
 
-public class BeltBlock extends Block {
+public class BeltBlock extends MMBlockWrapperDebug {
 
     public BeltBlock(Properties properties) {
         super(properties);

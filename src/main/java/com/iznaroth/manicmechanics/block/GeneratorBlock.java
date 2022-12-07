@@ -31,7 +31,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GeneratorBlock extends BaseEntityBlock {
+public class GeneratorBlock extends MMBlockWrapperDebugBaseEntity {
     public GeneratorBlock(Properties properties) {
         super(properties);
     }

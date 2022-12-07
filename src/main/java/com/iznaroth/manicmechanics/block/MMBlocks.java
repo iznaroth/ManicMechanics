@@ -27,18 +27,18 @@ public class MMBlocks {
 
     //WORLDGEN
     public static final RegistryObject<Block> DYSPERSIUM_ORE = registerBlock("dyspersium_ore", () -> new DyspersiumOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> THALLITE_ORE = registerBlock("thallite_ore", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> PHOSPHORITE_ORE = registerBlock("phosphorite_ore", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> THALLITE_ORE = registerBlock("thallite_ore", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> PHOSPHORITE_ORE = registerBlock("phosphorite_ore", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> NITROL_ORE = registerBlock("nitrol_ore", () -> new NitrolOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
 
 
 
-    public static final RegistryObject<Block> OBAMIUM_ORE = registerBlock("obamium_ore", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> OBAMIUM_BLOCK = registerBlock("obamium_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> OBAMIUM_ORE = registerBlock("obamium_ore", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> OBAMIUM_BLOCK = registerBlock("obamium_block", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), ModItemGroup.MM_RESOURCES);
 
 
     //NO POWER
-    public static final RegistryObject<Block> BENCH_ENGINE = registerBlock("bench_engine", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> BENCH_ENGINE = registerBlock("bench_engine", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ELECTROSTATIC_COMMUNICATION_PYLON = registerBlock("ecp", () -> new ECPBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> SIMPLE_COMMUNICATOR = registerBlock("simple_communicator", () -> new SimpleCommunicatorBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
 
@@ -48,17 +48,17 @@ public class MMBlocks {
     public static final RegistryObject<Block> CURRENCY_BUREAU = registerBlock("currency_bureau", () -> new BureauBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> SEALER = registerBlock("sealing_chamber", () -> new SealingChamberBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
 
-    public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> COMMUNICATOR = registerBlock("communicator", () -> new CommunicatorBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
 
-    public static final RegistryObject<Block> EXCHANGE_CENTER = registerBlock("exchange_center", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> EXCHANGE_CENTER = registerBlock("exchange_center", () -> new MMBlockWrapperDebug(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), ModItemGroup.MM_MACHINES);
 
     //LOGISTICS
     public static final RegistryObject<Block> VACUUM_HIGHWAY_SEGMENT = registerBlock("vacuum_highway_segment", () -> new VacuumHighwaySegmentBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f)), ModItemGroup.MM_MACHINES);

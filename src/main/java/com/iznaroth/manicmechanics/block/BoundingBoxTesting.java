@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class BoundingBoxTesting extends Block {
+public class BoundingBoxTesting extends MMBlockWrapperDebug {
     public BoundingBoxTesting(Properties p_i48440_1_) {
 
         super(p_i48440_1_);
@@ -33,7 +33,7 @@ public class BoundingBoxTesting extends Block {
     protected static final VoxelShape UP = Block.box(6.0D, 13.0D, 6.0D, 10.0D, 16.0D, 10.0D); //Connected on UP
     protected static final VoxelShape DOWN = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 3.0D, 10.0D); //Connected on DOWN
 
-    protected static final VoxelShape ERROR = Block.box(6.0D, 10.0D, 6.0D, 10.0D, 6.0D, 10.0D); //Connected on DOWN
+    protected static final VoxelShape ERROR = Block.box(6.0D, 13.0D, 6.0D, 10.0D, 16.0D, 10.0D); //Connected on DOWN
 
 
     private static final VoxelShape[] connections = {EAST, WEST, NORTH, SOUTH, UP, DOWN};

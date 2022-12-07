@@ -21,5 +21,6 @@
       "model": "manicmechanics:block/etcher",
       "y": 90
     }
-  }
+  },
+  "render_type": "translucent"
 }

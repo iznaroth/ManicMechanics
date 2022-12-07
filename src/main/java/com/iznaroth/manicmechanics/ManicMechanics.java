@@ -19,6 +19,7 @@ import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
 import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,6 +57,9 @@ public class ManicMechanics
         MMItems.register(eventBus);
         MMBlocks.register(eventBus);
 
+        MMConfiguredFeatures.register(eventBus);
+        MMPlacedFeatures.register(eventBus);
+
         ModSoundEvents.register(eventBus);
         ModEntityTypes.register(eventBus);
 
@@ -62,9 +67,6 @@ public class ManicMechanics
         MMMenus.register(eventBus); //NOTE - May need to rearrange for order compliance?
 
         MMRecipeTypes.register(eventBus);
-
-        MMConfiguredFeatures.register(eventBus);
-        MMPlacedFeatures.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
@@ -102,12 +104,16 @@ public class ManicMechanics
 
         EntityRenderers.register(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
         EntityRenderers.register(ModEntityTypes.PINCH.get(), PinchRenderer::new);
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             MMMessages.register();
         });
+
+        LOGGER.info("HELLO FROM COMMON SETUP");
+        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)

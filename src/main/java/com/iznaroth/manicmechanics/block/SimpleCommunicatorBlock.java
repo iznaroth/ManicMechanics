@@ -31,7 +31,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SimpleCommunicatorBlock extends BaseEntityBlock {
+public class SimpleCommunicatorBlock extends MMBlockWrapperDebugBaseEntity {
 
     public SimpleCommunicatorBlock(Properties properties) {
         super(properties);

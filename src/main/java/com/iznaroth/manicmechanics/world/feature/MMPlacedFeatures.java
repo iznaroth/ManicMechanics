@@ -1,5 +1,6 @@
 package com.iznaroth.manicmechanics.world.feature;
 
+
 import com.iznaroth.manicmechanics.ManicMechanics;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -17,8 +18,9 @@ public class MMPlacedFeatures {
 
     public static final RegistryObject<PlacedFeature> DYSPERSIUM_ORE_PLACED = PLACED_FEATURES.register("dyspersium_ore_placed",
             () -> new PlacedFeature(MMConfiguredFeatures.DYSPERSIUM_ORE.getHolder().get(),
-                    rareOrePlacement(4,
-                            HeightRangePlacement.triangle(VerticalAnchor.absolute(-80), VerticalAnchor.absolute(-30)))));
+                    commonOrePlacement(7, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
+
 
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {
         return List.of(p_195347_, InSquarePlacement.spread(), p_195348_, BiomeFilter.biome());
@@ -32,7 +34,8 @@ public class MMPlacedFeatures {
         return orePlacement(RarityFilter.onAverageOnceEvery(p_195350_), p_195351_);
     }
 
-    public static void register(IEventBus eventBus){
-        eventBus.register(PLACED_FEATURES);
+    public static void register(IEventBus eventBus) {
+        PLACED_FEATURES.register(eventBus);
     }
 }
+

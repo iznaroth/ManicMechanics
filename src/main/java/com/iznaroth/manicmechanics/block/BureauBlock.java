@@ -28,7 +28,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BureauBlock extends BaseEntityBlock implements ILogisticTube {
+public class BureauBlock extends MMBlockWrapperDebugBaseEntity implements ILogisticTube {
     public BureauBlock(Properties properties) {
         super(properties);
     }

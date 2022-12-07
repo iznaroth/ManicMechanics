@@ -31,7 +31,7 @@ import java.util.HashMap;
 //Big thanks to TheGreyGhost's MinecraftByExample repo. Go check it out! --> https://github.com/TheGreyGhost/MinecraftByExample
 
 
-public class VacuumHighwaySegmentBlock extends Block {
+public class VacuumHighwaySegmentBlock extends MMBlockWrapperDebug {
 
     public VacuumHighwaySegmentBlock(Properties properties) {
         super(properties);

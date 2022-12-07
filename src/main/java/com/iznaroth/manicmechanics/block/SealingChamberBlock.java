@@ -31,7 +31,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SealingChamberBlock extends BaseEntityBlock {
+public class SealingChamberBlock extends MMBlockWrapperDebugBaseEntity {
 
     public SealingChamberBlock(Properties properties) {
         super(properties);
