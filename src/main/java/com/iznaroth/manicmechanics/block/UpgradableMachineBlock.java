@@ -1,6 +1,5 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.logistics.INetworkNavigable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -10,7 +9,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import javax.annotation.Nullable;
 
-public class UpgradableMachineBlock extends MMBlockWrapperDebug {
+public class UpgradableMachineBlock extends MMBlockWrapper {
     public UpgradableMachineBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }

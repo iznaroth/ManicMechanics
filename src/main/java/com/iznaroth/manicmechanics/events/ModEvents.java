@@ -69,7 +69,7 @@ public class ModEvents {
         }
     }
 
-    /**
+
     @SubscribeEvent
     public void onNitrolBroken(BlockEvent.BreakEvent e){
 
@@ -84,7 +84,7 @@ public class ModEvents {
         }
     }
 
-     **/
+
 
     @SubscribeEvent
     public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {

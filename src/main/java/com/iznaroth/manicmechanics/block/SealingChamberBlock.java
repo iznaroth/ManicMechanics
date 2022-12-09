@@ -1,7 +1,6 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.ChatFormatting;
@@ -17,7 +16,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -31,7 +29,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SealingChamberBlock extends MMBlockWrapperDebugBaseEntity {
+public class SealingChamberBlock extends MMBaseEntityBlock {
 
     public SealingChamberBlock(Properties properties) {
         super(properties);

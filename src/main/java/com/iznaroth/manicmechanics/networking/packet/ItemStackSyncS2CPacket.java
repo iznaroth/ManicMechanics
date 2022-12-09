@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.networking.packet;
 
 import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -46,8 +47,9 @@ public class ItemStackSyncS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof SimpleCommunicatorBlockEntity blockEntity) {
-                blockEntity.setHandler(this.itemStackHandler);
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof IHasInvHandler blockEntity) {
+                System.out.println("Handle inv handler packet.");
+                blockEntity.setHandler(this.itemStackHandler); //Just need to ensure that there's no such thing as an IHasInvHandler with null hazard.
             }
         });
         return true;

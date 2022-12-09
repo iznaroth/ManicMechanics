@@ -1,9 +1,9 @@
 package com.iznaroth.manicmechanics.networking;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-//import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
+import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
-//import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
+import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -35,7 +35,7 @@ public class MMMessages {
                 .consumerMainThread(ItemStackSyncS2CPacket::handle)
                 .add();
 
-        /*
+
         net.messageBuilder(EnergySyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(EnergySyncS2CPacket::new)
                 .encoder(EnergySyncS2CPacket::toBytes)
@@ -48,7 +48,7 @@ public class MMMessages {
                 .consumerMainThread(ProgressSyncS2CPacket::handle)
                 .add();
 
-         */
+
 
 
     }

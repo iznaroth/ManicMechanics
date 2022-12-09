@@ -1,7 +1,6 @@
 package com.iznaroth.manicmechanics.block;
 
 import com.iznaroth.manicmechanics.logistics.ILogisticTube;
-import com.iznaroth.manicmechanics.logistics.INetworkNavigable;
 import com.mojang.math.Vector3d;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -31,7 +30,7 @@ import java.util.HashMap;
 //Big thanks to TheGreyGhost's MinecraftByExample repo. Go check it out! --> https://github.com/TheGreyGhost/MinecraftByExample
 
 
-public class VacuumHighwaySegmentBlock extends MMBlockWrapperDebug {
+public class VacuumHighwaySegmentBlock extends MMBlockWrapper {
 
     public VacuumHighwaySegmentBlock(Properties properties) {
         super(properties);

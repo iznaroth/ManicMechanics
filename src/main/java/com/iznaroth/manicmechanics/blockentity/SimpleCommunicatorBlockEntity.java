@@ -3,6 +3,7 @@ package com.iznaroth.manicmechanics.blockentity;
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.ECPBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.menu.SimpleCommunicatorBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
@@ -37,7 +38,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuProvider {
+public class SimpleCommunicatorBlockEntity extends BlockEntity implements MenuProvider, IHasInvHandler {
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override

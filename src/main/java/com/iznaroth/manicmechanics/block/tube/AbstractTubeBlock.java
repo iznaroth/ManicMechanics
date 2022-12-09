@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.block.tube;
 
-import com.iznaroth.manicmechanics.block.MMBlockWrapperDebugBaseEntity;
+import com.iznaroth.manicmechanics.block.MMBaseEntityBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.logistics.Connection;
@@ -17,7 +17,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,6 +26,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public abstract class AbstractTubeBlock extends MMBlockWrapperDebugBaseEntity {
+public abstract class AbstractTubeBlock extends MMBaseEntityBlock {
 
     public AbstractTubeBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -214,7 +214,7 @@ public abstract class AbstractTubeBlock extends MMBlockWrapperDebugBaseEntity {
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty WEST = BlockStateProperties.WEST;
 
-    public VoxelShape getShape(BlockState state, LevelAccessor worldIn, BlockPos pos) {
+    public VoxelShape getShape(BlockState state, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
         VoxelShape voxelShape = voxelShapeCache.get(state);
         return voxelShape != null ? voxelShape : Shapes.block();  // should always find it... just being defensive
     }

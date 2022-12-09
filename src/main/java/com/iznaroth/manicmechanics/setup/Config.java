@@ -48,7 +48,7 @@ public class Config {
         SERVER_BUILDER.comment("FirstBlock settings").push(SUBCATEGORY_FIRSTBLOCK);
 
         FIRSTBLOCK_MAXPOWER = SERVER_BUILDER.comment("Maximum power for the FirstBlock generator")
-                .defineInRange("maxPower", 100000, 0, Integer.MAX_VALUE);
+                .defineInRange("maxPower", 20000, 0, Integer.MAX_VALUE);
         FIRSTBLOCK_GENERATE = SERVER_BUILDER.comment("Power generation per diamond")
                 .defineInRange("generate", 1000, 0, Integer.MAX_VALUE);
         FIRSTBLOCK_SEND = SERVER_BUILDER.comment("Power generation to send per tick")

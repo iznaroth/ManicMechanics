@@ -17,11 +17,11 @@ public class EnergyInfoArea extends InfoArea {
     private final IEnergyStorage energy;
 
     public EnergyInfoArea(int xMin, int yMin)  {
-        this(xMin, yMin, null,8,64);
+        this(xMin, yMin, null,12,49);
     }
 
     public EnergyInfoArea(int xMin, int yMin, IEnergyStorage energy)  {
-        this(xMin, yMin, energy,8,64);
+        this(xMin, yMin, energy,12,49);
     }
 
     public EnergyInfoArea(int xMin, int yMin, IEnergyStorage energy, int width, int height)  {

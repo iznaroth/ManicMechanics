@@ -20,6 +20,7 @@ public class DyspersiumOreBlock extends Block {
     Random r = new Random();
     int r_timer = r.nextInt(25) + 5; //at least every 5 random ticks and at most every 25, a random Dysp. ore block will be allowed to play a sound at you.
 
+
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
 
@@ -37,6 +38,7 @@ public class DyspersiumOreBlock extends Block {
 
         r_timer = r.nextInt(25) + 5;
     }
+
 
     public SoundEvent getAppropriateSE(int which){
         switch(which){

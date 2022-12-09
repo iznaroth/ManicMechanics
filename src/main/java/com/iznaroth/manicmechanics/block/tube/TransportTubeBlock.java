@@ -39,8 +39,9 @@ public class TransportTubeBlock extends AbstractTubeBlock {
 
         //System.out.println("Logistic Tube trying to connect to non-conduit face");
 
-
+        System.out.println("Check against: " + iBlockReader.getBlockEntity(neighborPos));
         if(neighborBlockState.hasBlockEntity() && iBlockReader.getBlockEntity(neighborPos) instanceof IItemHandler || iBlockReader.getBlockEntity(neighborPos) instanceof BaseContainerBlockEntity){
+            System.out.println("Connection success!");
             here.buildOrUpdateConnection(this.getTubeType(), direction); //dont worry it wont
             return true;
         }

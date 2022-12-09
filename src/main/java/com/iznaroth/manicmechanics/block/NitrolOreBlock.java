@@ -7,11 +7,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 
-public class NitrolOreBlock extends MMBlockWrapperDebug {
+public class NitrolOreBlock extends MMBlockWrapper {
     public NitrolOreBlock(Properties p_i48440_1_) {
         super(p_i48440_1_.randomTicks());
     }

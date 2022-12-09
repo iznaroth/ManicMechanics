@@ -5,7 +5,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class ModItemGroup {
+public class MMItemGroup {
 
     public static final CreativeModeTab MM_ITEMS = new CreativeModeTab("mmItemTab") { //Split into MACHINES, INTERMEDIATES, TOOLS, OTHER ?
         @Override
@@ -24,8 +24,7 @@ public class ModItemGroup {
     public static final CreativeModeTab MM_MACHINES = new CreativeModeTab("mmMachineTab") { //Split into MACHINES, INTERMEDIATES, TOOLS, OTHER ?
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Items.ANDESITE);
-            //return new ItemStack(MMBlocks.HEP.get());
+            return new ItemStack(MMBlocks.HEP.get());
         }
     };
 }

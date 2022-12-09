@@ -1,13 +1,5 @@
 {
   "variants": {
-    "facing=down,powered=false": {
-      "model": "manicmechanics:block/hep",
-      "x": 90
-    },
-    "facing=up,powered=false": {
-      "model": "manicmechanics:block/hep",
-      "x": -90
-    },
     "facing=north,powered=false": {
       "model": "manicmechanics:block/hep"
     },
@@ -22,14 +14,6 @@
     "facing=east,powered=false": {
       "model": "manicmechanics:block/hep",
       "y": 90
-    },
-    "facing=down,powered=true": {
-      "model": "manicmechanics:block/hep_powered",
-      "x": 90
-    },
-    "facing=up,powered=true": {
-      "model": "manicmechanics:block/hep_powered",
-      "x": -90
     },
     "facing=north,powered=true": {
       "model": "manicmechanics:block/hep_powered"

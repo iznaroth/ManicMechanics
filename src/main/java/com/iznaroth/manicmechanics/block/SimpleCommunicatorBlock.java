@@ -29,7 +29,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SimpleCommunicatorBlock extends MMBlockWrapperDebugBaseEntity {
+public class SimpleCommunicatorBlock extends MMBaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 

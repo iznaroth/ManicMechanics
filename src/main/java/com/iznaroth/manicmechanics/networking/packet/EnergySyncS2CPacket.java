@@ -1,8 +1,9 @@
 package com.iznaroth.manicmechanics.networking.packet;
 
 
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
-import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
+//import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -34,13 +35,14 @@ public class EnergySyncS2CPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             BlockEntity blockEntity = Minecraft.getInstance().level.getBlockEntity(pos);
-            if(blockEntity instanceof SealingChamberBlockEntity) { //TODO - All machines ought to generally implement this thru hasCapability or something
-                ((SealingChamberBlockEntity) blockEntity).setEnergy(energy);
+            if(blockEntity instanceof IHasEnergyStorage) { //TODO - All machines ought to generally implement this thru hasCapability or something
+                ((IHasEnergyStorage) blockEntity).setEnergy(energy);
+                System.out.println("Updating energy for entity!");
 
-                if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockMenu &&
-                        ((SealingChamberBlockMenu) Minecraft.getInstance().player.containerMenu).getBlockEntity().getBlockPos().equals(pos)) {
-                    ((SealingChamberBlockEntity) blockEntity).setEnergy(energy);
-                }
+                //if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockMenu &&
+                //        ((SealingChamberBlockMenu) Minecraft.getInstance().player.containerMenu).getBlockEntity().getBlockPos().equals(pos)) {
+                //     blockEntity).setEnergy(energy);
+                //} NOTE - This might be redundant. If it isn't (if it doesn't update screen bars), just add an interface to menus with power indicators.
             }
         });
         return true;

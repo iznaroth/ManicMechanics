@@ -1,6 +1,5 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.HighwayControllerBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -24,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HighwayControllerBlock extends MMBlockWrapperDebugBaseEntity {
+public class HighwayControllerBlock extends MMBaseEntityBlock {
 
     public HighwayControllerBlock(Properties properties) {
         super(properties);
