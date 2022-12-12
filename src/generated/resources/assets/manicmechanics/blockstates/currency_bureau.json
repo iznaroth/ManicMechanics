@@ -1,13 +1,5 @@
 {
   "variants": {
-    "facing=down,powered=false": {
-      "model": "manicmechanics:block/currency_bureau",
-      "x": 90
-    },
-    "facing=up,powered=false": {
-      "model": "manicmechanics:block/currency_bureau",
-      "x": -90
-    },
     "facing=north,powered=false": {
       "model": "manicmechanics:block/currency_bureau"
     },
@@ -22,14 +14,6 @@
     "facing=east,powered=false": {
       "model": "manicmechanics:block/currency_bureau",
       "y": 90
-    },
-    "facing=down,powered=true": {
-      "model": "manicmechanics:block/currency_bureau",
-      "x": 90
-    },
-    "facing=up,powered=true": {
-      "model": "manicmechanics:block/currency_bureau",
-      "x": -90
     },
     "facing=north,powered=true": {
       "model": "manicmechanics:block/currency_bureau"

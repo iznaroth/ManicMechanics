@@ -29,11 +29,21 @@ public class SealingChamberRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
+        System.out.println("Calling for validity against SEALER recipe instance.");
+
         if(pLevel.isClientSide()) {
             return false;
         }
 
-        return recipeItems.get(0).test(pContainer.getItem(1));
+        if(!recipeItems.get(0).test(pContainer.getItem(0))){
+            return false;
+        }
+
+        if(!recipeItems.get(1).test(pContainer.getItem(1))){
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -62,7 +72,7 @@ public class SealingChamberRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return MMRecipeTypes.SEALING_CHAMBER_SERIALIZER.get();
+        return Serializer.INSTANCE;
     }
 
     @Override

@@ -133,6 +133,9 @@ repositories {
 
     maven { url = 'https://maven.blamejared.com' }
 
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+
+
     maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
@@ -174,6 +177,8 @@ dependencies {
 
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.19.2-77")
+
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.38')
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

@@ -32,6 +32,9 @@ public class MMMenus {
     public static final RegistryObject<MenuType<SealingChamberBlockMenu>> SEALER_MENU =
             registerMenuType(SealingChamberBlockMenu::new, "sealer");
 
+    public static final RegistryObject<MenuType<InfuserBlockMenu>> INFUSER_MENU =
+            registerMenuType(InfuserBlockMenu::new, "infuser");
+
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,

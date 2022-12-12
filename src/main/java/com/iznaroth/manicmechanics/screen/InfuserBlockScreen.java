@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.screen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
 import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 import com.iznaroth.manicmechanics.screen.renderer.EnergyInfoArea;
 import com.iznaroth.manicmechanics.util.MouseUtil;
@@ -15,18 +16,20 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import java.util.Optional;
 
-public class SealingChamberBlockScreen extends AbstractContainerScreen<SealingChamberBlockMenu> {
+public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu> {
 
-    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/sealing_chamber.png");
+    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/infuser.png");
 
     private EnergyInfoArea energyInfoArea;
 
-    public SealingChamberBlockScreen(SealingChamberBlockMenu container, Inventory inv, Component name) {
+    public InfuserBlockScreen(InfuserBlockMenu container, Inventory inv, Component name) {
         super(container, inv, name);
+        System.out.println("Screen created?");
     }
 
     @Override
     protected void init() {
+        System.out.println("Got to screen init.");
         super.init();
         assignEnergyInfoArea();
     }
@@ -45,7 +48,6 @@ public class SealingChamberBlockScreen extends AbstractContainerScreen<SealingCh
         int y = (height - imageHeight) / 2;
 
         renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
-        renderOperationModeTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
     private void renderEnergyAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
@@ -55,12 +57,6 @@ public class SealingChamberBlockScreen extends AbstractContainerScreen<SealingCh
         }
     }
 
-    private void renderOperationModeTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 33, 17, 16, 16)) {
-            renderTooltip(pPoseStack, Component.literal("OPERATION MODE: Unimplemented :)"),
-                    pMouseX - x, pMouseY - y);
-        }
-    }
 
     @Override
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
@@ -79,12 +75,8 @@ public class SealingChamberBlockScreen extends AbstractContainerScreen<SealingCh
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
         energyInfoArea.draw(matrixStack);
-        renderProgressArrow(matrixStack, relX, relY);
     }
 
-    private void renderProgressArrow(PoseStack stack, int x, int y){
-        blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
-    }
 
 
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {

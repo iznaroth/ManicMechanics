@@ -1,16 +1,31 @@
 package com.iznaroth.manicmechanics.blockentity;
 
+import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.block.ECPBlock;
+import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
+import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.menu.BureauBlockMenu;
+import com.iznaroth.manicmechanics.menu.SimpleCommunicatorBlockMenu;
+import com.iznaroth.manicmechanics.networking.MMMessages;
+import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,46 +33,66 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.awt.*;
 
-public class BureauBlockEntity extends BlockEntity implements IItemHandler, MenuProvider {
-    private ItemStackHandler itemHandler = createHandler();
+public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                MMMessages.sendToClients(new ItemStackSyncS2CPacket(this, worldPosition));
+            }
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getItem() == Items.BRICK;
+                default -> super.isItemValid(slot, stack);
+            };
+        }
+    };
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
+    }
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
-    private int counter;
+    int counter = 5;
+    int latest_message = 0;
 
     protected final ContainerData data;
+
 
     public BureauBlockEntity(BlockPos pos, BlockState state) {
         super(MMBlockEntities.BUREAU_BE.get(), pos, state);
         this.data = new ContainerData() {
             @Override
-            public int get(int p_39284_) {
+            public int get(int index) {
                 return 0;
             }
 
             @Override
-            public void set(int p_39285_, int p_39286_) {
+            public void set(int index, int value) {
 
             }
 
             @Override
             public int getCount() {
-                return 0;
+                return 2;
             }
         };
     }
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        handler.invalidate();
-    }
-
 
     @Override
     public void load(CompoundTag tag) {
@@ -75,75 +110,41 @@ public class BureauBlockEntity extends BlockEntity implements IItemHandler, Menu
         super.saveAdditional(tag);
     }
 
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(1) {
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                // To make sure the TE persists when the chunk is saved later we need to
-                // mark it dirty every time the item handler changes
-                setChanged();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return true;
-            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
-
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return handler.cast();
+            return lazyItemHandler.cast();
         }
         return super.getCapability(cap, side);
     }
 
-    public void sell(){
-
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        lazyItemHandler = LazyOptional.of(() -> itemHandler);
     }
 
     @Override
-    public int getSlots() {
-        return 0;
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        lazyItemHandler.invalidate();
     }
 
-    @Nonnull
-    @Override
-    public ItemStack getStackInSlot(int slot) {
-        return null;
+    public void drops() {
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        return null;
+    public static void tick(Level level, BlockPos pos, BlockState state, BureauBlockEntity pEntity) {
+        //pEntity.readInput();
     }
 
-    @Nonnull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return null;
-    }
-
-    @Override
-    public int getSlotLimit(int slot) {
-        return 0;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return false;
-    }
 
     @Override
     public Component getDisplayName() {
@@ -152,7 +153,8 @@ public class BureauBlockEntity extends BlockEntity implements IItemHandler, Menu
 
     @org.jetbrains.annotations.Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return new BureauBlockMenu(id, inventory, this, this.data);
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        System.out.println("CREATING MENU FROM BE");
+        return new BureauBlockMenu(p_39954_, p_39955_, this, this.data);
     }
 }

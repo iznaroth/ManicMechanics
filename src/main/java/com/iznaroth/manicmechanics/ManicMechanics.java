@@ -1,5 +1,6 @@
 package com.iznaroth.manicmechanics;
 
+import com.iznaroth.manicmechanics.block.InfuserBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.menu.CommunicatorBlockMenu;
 import com.iznaroth.manicmechanics.menu.MMMenus;
@@ -71,7 +72,7 @@ public class ManicMechanics
         MMBlockEntities.register(eventBus);
         MMMenus.register(eventBus); //NOTE - May need to rearrange for order compliance?
 
-        //MMRecipeTypes.register(eventBus);
+        MMRecipeTypes.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
@@ -90,7 +91,7 @@ public class ManicMechanics
 
         registerCommonEvents(eventBus);
 
-        //forgeEventBus.register(ActiveConnectionQueue.class);
+        forgeEventBus.register(ActiveConnectionQueue.class);
         forgeEventBus.register(new ModEvents());
 
         eventBus.addListener(this::commonSetup);
@@ -155,6 +156,7 @@ public class ManicMechanics
             MenuScreens.register(MMMenus.GENERATOR_MENU.get(), GeneratorBlockScreen::new);
             MenuScreens.register(MMMenus.BUREAU_MENU.get(), BureauBlockScreen::new);
             MenuScreens.register(MMMenus.SEALER_MENU.get(), SealingChamberBlockScreen::new);
+            MenuScreens.register(MMMenus.INFUSER_MENU.get(), InfuserBlockScreen::new);
 
             //EntityRenderers.register(ModEntityTypes.PINCH.get(), ChomperRenderer::new);
         }

@@ -1,9 +1,9 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
-import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
+import com.iznaroth.manicmechanics.item.MMItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,12 +16,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import java.util.Arrays;
-import java.util.List;
 
-public class SealingChamberBlockMenu extends AbstractContainerMenu {
+public class InfuserBlockMenu extends AbstractContainerMenu {
 
-    private SealingChamberBlockEntity blockEntity;
+    private InfuserBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
     private Player playerEntity;
@@ -30,26 +28,30 @@ public class SealingChamberBlockMenu extends AbstractContainerMenu {
     private static final Minecraft minecraft = Minecraft.getInstance();
 
 
-    public SealingChamberBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, (SealingChamberBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    public InfuserBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, (InfuserBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public SealingChamberBlockMenu(int windowId, Inventory inv, SealingChamberBlockEntity entity, ContainerData data) {
-        super(MMMenus.SEALER_MENU.get(), windowId);
+    public InfuserBlockMenu(int windowId, Inventory inv, InfuserBlockEntity entity, ContainerData data) {
+        super(MMMenus.INFUSER_MENU.get(), windowId);
+        System.out.println("Inside Infuser MENU constructor");
         checkContainerSize(inv, 3);
-        blockEntity = (SealingChamberBlockEntity) entity;
+        blockEntity = (InfuserBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
+        System.out.println("Parameters done.");
 
 
         layoutPlayerInventorySlots(10, 84, inv);
         blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 64, 17));
-            addSlot(new SlotItemHandler(h, 1, 64, 50));
-            addSlot(new SlotItemHandler(h, 2, 118, 32));
+            addSlot(new SlotItemHandler(h, 0, 64, 10));
+            addSlot(new SlotItemHandler(h, 1, 64, 54));
+            addSlot(new SlotItemHandler(h, 2, 95, 60));
         });
+        System.out.println("Slots done.");
 
         addDataSlots(data);
+        System.out.println("Data done.");
 
 
     }
@@ -59,13 +61,13 @@ public class SealingChamberBlockMenu extends AbstractContainerMenu {
         return blockEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public SealingChamberBlockEntity getBlockEntity(){
+    public InfuserBlockEntity getBlockEntity(){
         return this.blockEntity;
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.SEALER.get());
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.INFUSER.get());
     }
 
 
@@ -147,17 +149,6 @@ public class SealingChamberBlockMenu extends AbstractContainerMenu {
         // Hotbar
         topRow += 58;
         addSlotRange(inv, 0, leftCol, topRow, 9, 18);
-    }
-
-    private final List<Item> valid_for_housing = Arrays.asList(MMItems.TUBE_HOUSING.get());
-    private final List<Item> valid_for_insertion = Arrays.asList(MMItems.SEALANT.get());
-
-    public boolean isValidHousing(Item what){
-        return valid_for_housing.contains(what);
-    }
-
-    public boolean isValidInsertion(Item what){
-        return valid_for_insertion.contains(what);
     }
 
     public int getScaledProgress(){

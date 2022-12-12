@@ -286,7 +286,7 @@ public class LogisticNetworkManager {
         }
 
         ArrayList<Connection> subnetwork = power_subnetworks.get(parent); //No need to manhattan this - power transfer is universally instantaneous.
-        PowerJob jobCxns = new PowerJob((IEnergyStorage) cxn.getAttached()); //what we're building
+        PowerJob jobCxns = new PowerJob((IEnergyStorage) cxn.getAttached().getCapability(ForgeCapabilities.ENERGY).orElse(null)); //what we're building
 
         //With that done, we can check those connections for any that can ACCEPT, adding them to our job list.
 

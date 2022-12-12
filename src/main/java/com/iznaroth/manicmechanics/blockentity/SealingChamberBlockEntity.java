@@ -1,23 +1,34 @@
 package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
 import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
+import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
 import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -26,47 +37,131 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.lang.model.util.AbstractTypeVisitor6;
 import java.util.Optional;
 
-public class SealingChamberBlockEntity extends BlockEntity implements IItemHandler, MenuProvider {
+public class SealingChamberBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, MenuProvider {
 
-    protected int energy;
-    protected int capacity;
-    protected int maxReceive;
-    protected int maxExtract;
 
     int progress = 0;
 
-    private ItemStackHandler itemHandler = createHandler();
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide()) {
+                MMMessages.sendToClients(new ItemStackSyncS2CPacket(this, worldPosition));
+            }
+        }
 
-    // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return switch (slot) {
+                case 0 -> stack.getItem() == MMItems.TUBE_HOUSING.get();
+                case 1 -> stack.getItem() == MMItems.SEALANT.get();
+                case 2 -> Block.byItem(stack.getItem()) instanceof AbstractTubeBlock; //NOTE - might fuck up recipe
+                default -> super.isItemValid(slot, stack);
+            };
+        }
+    };
 
 
-    private EnergyStorageWrapper energyStorage = createStorage(0);
+    private EnergyStorageWrapper energyStorage = new EnergyStorageWrapper(40000, 1000, 0, 0){
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            if (!canReceive())
+                return 0;
 
-    private LazyOptional<IEnergyStorage> storage = LazyOptional.of(() -> energyStorage);
+            int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
+            if (!simulate){
+                energy += energyReceived;
+                onEnergyChanged();
+            }
+
+            return energyReceived;
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate)
+        {
+            if (!canExtract())
+                return 0;
+
+            int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
+            if (!simulate) {
+                energy -= energyExtracted;
+                onEnergyChanged();
+            }
+
+            return energyExtracted;
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return energy;
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return capacity;
+        }
+
+        @Override
+        public boolean canExtract()
+        {
+            return this.maxExtract > 0;
+        }
+
+        @Override
+        public boolean canReceive()
+        {
+            return this.maxReceive > 0;
+        }
+
+        @Override
+        public void energyOperation(int tickAmount){
+            super.energyOperation(tickAmount);
+            onEnergyChanged();
+        }
+
+        public void onEnergyChanged(){
+            setChanged();
+            System.out.println("CREATE PACKET ---------- ENERGY CHANGED ----------- UPDATE SCREEN");
+            MMMessages.sendToClients(new EnergySyncS2CPacket(this.getEnergyStored(), getBlockPos()));
+        }
+    };
+
+    protected final ContainerData data;
+
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IEnergyStorage> lazyEnergyStorage = LazyOptional.empty();
 
     private int counter;
 
     public SealingChamberBlockEntity(BlockPos pos, BlockState state) {
         super(MMBlockEntities.SEALER_TILE.get(), pos, state);
-        this.capacity = 40000;
-        this.energy = 0;
-        //No throttling at this stage of development - will be related to machine casing later.
-        this.maxExtract = 0;
-        this.maxReceive = 10000;
-    }
 
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        handler.invalidate();
-    }
+        this.data = new ContainerData() { //For passing any important info through to the Menu on creation.
+            @Override
+            public int get(int p_39284_) {
+                return 0;
+            }
 
+            @Override
+            public void set(int p_39285_, int p_39286_) {
+
+            }
+
+            @Override
+            public int getCount() {
+                return 0;
+            }
+        };
+    }
 
     @Override
     public void load(CompoundTag tag) {
@@ -84,154 +179,53 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
         super.saveAdditional(tag);
     }
 
-    //TODO - Check if it is acceptable to deprecate this and just implement IItemHandler
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(3) {
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                // To make sure the TE persists when the chunk is saved later we need to
-                // mark it dirty every time the item handler changes
-                setChanged();
-            }
-
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return true;
-            }
-
-            @Nonnull
-            @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-
-                if(slot == 0 && !stack.getItem().equals(MMItems.TUBE_HOUSING.get())){
-                    return stack;
-                }
-
-                if(slot == 1 && !stack.getItem().equals(MMItems.SEALANT.get())){
-                    return stack;
-                }
-
-                if(slot == 2 && !stack.getItem().equals(MMBlocks.TRANSPORT_TUBE.get().asItem())){ //TODO - This slot should be a part of a separate ItemHandler that does not respond to player input.
-                    return stack;
-                }
-
-                return super.insertItem(slot, stack, simulate);
-            }
-        };
-    }
-
-    private EnergyStorageWrapper createStorage(int startingCharge){
-        return new EnergyStorageWrapper(40000, 1000, 0, startingCharge){
-            @Override
-            public int receiveEnergy(int maxReceive, boolean simulate) {
-                if (!canReceive())
-                    return 0;
-
-                int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
-                if (!simulate){
-                    energy += energyReceived;
-                    onEnergyChanged();
-                }
-
-                return energyReceived;
-            }
-
-            @Override
-            public int extractEnergy(int maxExtract, boolean simulate)
-            {
-                if (!canExtract())
-                    return 0;
-
-                int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-                if (!simulate) {
-                    energy -= energyExtracted;
-                    onEnergyChanged();
-                }
-
-                return energyExtracted;
-            }
-
-            @Override
-            public int getEnergyStored() {
-                return energy;
-            }
-
-            @Override
-            public int getMaxEnergyStored() {
-                return capacity;
-            }
-
-            @Override
-            public boolean canExtract()
-            {
-                return this.maxExtract > 0;
-            }
-
-            @Override
-            public boolean canReceive()
-            {
-                return this.maxReceive > 0;
-            }
-
-            @Override
-            public void energyOperation(int tickAmount){
-                super.energyOperation(tickAmount);
-                onEnergyChanged();
-            }
-
-            public void onEnergyChanged(){
-                setChanged();
-                System.out.println("CREATE PACKET ---------- ENERGY CHANGED ----------- UPDATE SCREEN");
-                MMMessages.sendToClients(new EnergySyncS2CPacket(this.getEnergyStored(), getBlockPos()));
-            }
-        };
-    }
 
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return handler.cast();
+            return lazyItemHandler.cast();
         }
         if (cap == ForgeCapabilities.ENERGY) {
-            return storage.cast();
+            return lazyEnergyStorage.cast();
         }
         return super.getCapability(cap, side);
     }
 
-    @Override
-    public int getSlots() {
-        return 0;
-    }
 
-    @Nonnull
     @Override
-    public ItemStack getStackInSlot(int slot) {
-        return null;
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        return null;
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        return null;
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        return super.getCapability(cap);
     }
 
     @Override
-    public int getSlotLimit(int slot) {
-        return 0;
+    public void onLoad() {
+        super.onLoad();
+        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyEnergyStorage = LazyOptional.of(() -> energyStorage);
     }
 
     @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return false;
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        lazyItemHandler.invalidate();
+        lazyEnergyStorage.invalidate();
+    }
+
+    public void drops() {
+        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        }
+
+        Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
+
+    public void setHandler(ItemStackHandler itemStackHandler) {
+        for (int i = 0; i < itemStackHandler.getSlots(); i++) {
+            itemHandler.setStackInSlot(i, itemStackHandler.getStackInSlot(i));
+        }
     }
 
     public void setEnergy(int to){
@@ -240,6 +234,7 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
 
 
     public static void craft(SealingChamberBlockEntity pEntity){
+
         SimpleContainer inv = new SimpleContainer(pEntity.itemHandler.getSlots());
         for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
             inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
@@ -250,8 +245,11 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
 
         recipe.ifPresent(iRecipe -> {
 
-            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2)){
-                return; //Can't perform the craft, slot is full.
+            System.out.println("Recipe works.");
+
+            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2) || !pEntity.itemHandler.getStackInSlot(2).getItem().equals(iRecipe.getResultItem().getItem())){
+                System.out.println("No room.");
+                return; //Can't perform the craft, slot is full or holds a different itemstack.
             }
 
             if(pEntity.progress < 80){ //Only increment progress if we can take energy.
@@ -293,18 +291,19 @@ public class SealingChamberBlockEntity extends BlockEntity implements IItemHandl
         if(level.isClientSide)
                 return;
 
-        pEntity.craft(pEntity);
+        craft(pEntity);
     }
 
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("screen.manicmechanics.sealer");
     }
 
     @org.jetbrains.annotations.Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return null;
+        return new SealingChamberBlockMenu(p_39954_, p_39955_, this, this.data);
     }
+
 }

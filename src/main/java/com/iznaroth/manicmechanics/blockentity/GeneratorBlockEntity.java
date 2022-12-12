@@ -73,7 +73,7 @@ public class GeneratorBlockEntity extends BlockEntity implements MenuProvider, I
             }
     };
 
-    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(Config.FIRSTBLOCK_MAXPOWER.get(), 0) {
+    private final CustomEnergyStorage energyStorage = new CustomEnergyStorage(Config.FIRSTBLOCK_MAXPOWER.get(), 16) {
         @Override
         protected void onEnergyChanged() {
             setChanged();

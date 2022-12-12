@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.logistics;
 
 import com.iznaroth.manicmechanics.blockentity.TubeBundleBE;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -71,7 +72,8 @@ public class Connection {
 
         if(which == 1 && this.getParentTile().getLevel().isLoaded(this.attached.getBlockPos())){ //We need to check if we're a provider first.
             System.out.println("Neighbor loaded TRUE");
-            if(this.attached instanceof IEnergyStorage && ((IEnergyStorage) this.attached).canExtract()){
+            System.out.println("Instance of IHES? " + (this.attached instanceof IHasEnergyStorage));
+            if(this.attached instanceof IHasEnergyStorage && ((IEnergyStorage) this.attached.getCapability(ForgeCapabilities.ENERGY).orElse(null)).canExtract()){
                 System.out.println("Instanceof check and extract PASSED");
                 this.isProvider = true; //TODO - We will enqueue as active for ticking here once the rest of the system doesn't suck.
             }
@@ -83,6 +85,8 @@ public class Connection {
         fluid_counter--;
         gas_counter--;
 
+        //System.out.println("In queue.");
+
         if (this.parent.hasTube(0) && item_counter <= 0 && connection_mode == 1) { //ITEMS
             System.out.println("Try to enqueue job for ITEM TRANSFER");
 
@@ -92,7 +96,7 @@ public class Connection {
         }
 
         if (this.parent.hasTube(1) && this.isProvider) { //POWER - no cooldown as cables always transfer constantly. Also ignores MODE because cables just automatically maximize for saturation.
-            System.out.println("Try to enqueue job for POWER TRANSFER");
+            //System.out.println("Try to enqueue job for POWER TRANSFER");
             this.executePowerJob();
         }
 

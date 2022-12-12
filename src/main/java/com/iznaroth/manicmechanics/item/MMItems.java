@@ -2,9 +2,11 @@ package com.iznaroth.manicmechanics.item;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 //import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
+import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.RecordItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -185,8 +187,8 @@ public class MMItems {
     //public static final RegistryObject<Item> COP_CAR_SPAWN_EGG = ITEMS.register("cop_car_spawn_egg",
     //        () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
-    //public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
-     //       () -> new ModSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
+    public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
+            () -> new ForgeSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 
     //SPECIAL
