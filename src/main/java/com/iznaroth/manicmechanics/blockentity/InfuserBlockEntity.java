@@ -1,15 +1,22 @@
 package com.iznaroth.manicmechanics.blockentity;
 
+import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
 import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
+import com.iznaroth.manicmechanics.networking.packet.FluidSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
-import net.minecraft.client.gui.screens.inventory.CraftingScreen;
+import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
+import com.iznaroth.manicmechanics.recipe.InfuserRecipe;
+import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
@@ -19,26 +26,41 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.WaterFluid;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.lang.model.util.AbstractTypeVisitor6;
+import java.util.Optional;
 
-public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuProvider {
+public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, MenuProvider {
+
 
     int progress = 0;
 
+    public int[] modes = {0, 0, 0};
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -51,9 +73,9 @@ public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuPro
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> stack.getItem() == MMItems.TUBE_HOUSING.get(); //Tagged as INFUSER COMPONENT
-                case 1 -> false; //Output slot.
-                case 2 -> true; //Any fluid-carrying container.
+                case 0 -> stack.getItem() == MMItems.TUBE_HOUSING.get();
+                case 1 -> stack.getItem() == MMItems.SEALANT.get();
+                case 2 -> stack.getItem() == Items.WATER_BUCKET; //NOTE - might fuck up recipe
                 default -> super.isItemValid(slot, stack);
             };
         }
@@ -125,32 +147,57 @@ public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuPro
         }
     };
 
+    private final FluidTank FLUID_TANK = new FluidTank(64000) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+            if(!level.isClientSide()) {
+                MMMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
+            }
+        }
+
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return true;
+        }
+    };
+
+    public void setFluid(FluidStack stack) {
+        this.FLUID_TANK.setFluid(stack);
+    }
+
+    public FluidStack getFluidStack() {
+        return this.FLUID_TANK.getFluid();
+    }
+
+
+    protected final ContainerData data;
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IEnergyStorage> lazyEnergyStorage = LazyOptional.empty();
 
     private int counter;
 
-    protected final ContainerData data;
-    public InfuserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(MMBlockEntities.INFUSER_BE.get(), p_155229_, p_155230_);
-        this.data = new ContainerData() {
+    public InfuserBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.INFUSER_BE.get(), pos, state);
+
+        this.data = new ContainerData() { //For passing any important info through to the Menu on creation.
             @Override
-            public int get(int index) {
+            public int get(int p_39284_) {
                 return 0;
             }
 
             @Override
-            public void set(int index, int value) {
+            public void set(int p_39285_, int p_39286_) {
 
             }
 
             @Override
             public int getCount() {
-                return 2;
+                return 0;
             }
         };
     }
-
 
     @Override
     public void load(CompoundTag tag) {
@@ -172,7 +219,7 @@ public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuPro
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @javax.annotation.Nullable Direction side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
             return lazyItemHandler.cast();
         }
@@ -221,16 +268,72 @@ public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuPro
         this.energyStorage.setEnergy(to);
     }
 
-    @Override
-    public Component getDisplayName() {
-        return null;
+    public static void checkForBuckets(InfuserBlockEntity pEntity){
+        if(pEntity.itemHandler.getStackInSlot(2).getItem().equals(Items.WATER_BUCKET.asItem())){ //TODO - ForgeTags check for fluid bucket
+            pEntity.FLUID_TANK.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
+            pEntity.itemHandler.setStackInSlot(2, new ItemStack(Items.BUCKET.asItem(), 1));
+        }
     }
 
-    @Nullable
-    @Override
-    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        System.out.println("Creating INFUSER menu from ENTITY");
-        return new InfuserBlockMenu(p_39954_, p_39955_, this, this.data);
+    public static void craft(InfuserBlockEntity pEntity){
+
+        SimpleContainer inv = new SimpleContainer(pEntity.itemHandler.getSlots());
+        for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
+            inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
+        }
+
+        Optional<InfuserRecipe> recipe = pEntity.level.getRecipeManager()
+                .getRecipeFor(InfuserRecipe.Type.INSTANCE, inv, pEntity.level);
+
+        recipe.ifPresent(iRecipe -> {
+
+            System.out.println("Recipe works.");
+
+            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2) || !pEntity.itemHandler.getStackInSlot(2).getItem().equals(iRecipe.getResultItem().getItem())){
+                System.out.println("No room.");
+                return; //Can't perform the craft, slot is full or holds a different itemstack.
+            }
+
+            if(!pEntity.hasEnoughFluid(iRecipe.getRecipeFluids(), 40, pEntity)){
+                System.out.println("Insufficient fluid.");
+                return;
+            }
+
+            if(pEntity.progress < 120){ //Only increment progress if we can take energy.
+                if(pEntity.energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
+                    pEntity.progress++;
+                    MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
+                    pEntity.energyStorage.energyOperation(4);
+                    pEntity.FLUID_TANK.drain(4, IFluidHandler.FluidAction.EXECUTE);
+                }
+            } else {
+                System.out.println("Progress hit " + pEntity.progress + ", crafting.");
+
+                ItemStack output = iRecipe.getResultItem();
+
+                pEntity.craftTheItem(output);
+
+                pEntity.setChanged();
+
+                pEntity.progress = 0;
+                MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
+            }
+        });
+    }
+
+    private boolean hasEnoughFluid(NonNullList<Fluid> ingredients, int lengthPerOp, InfuserBlockEntity pEntity){
+        for(Fluid f : ingredients){
+            if((pEntity.FLUID_TANK.getFluid().getFluid() != f || pEntity.FLUID_TANK.getFluid().getAmount() < lengthPerOp * 4) && pEntity.FLUID_TANK.getFluid().getFluid() != Fluids.EMPTY){ //4 mb/tick by default, use config
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void craftTheItem(ItemStack output){
+        itemHandler.extractItem(0, 1, false);
+        itemHandler.insertItem(1, output, false);
     }
 
     public int getCraftProgress(){
@@ -244,5 +347,33 @@ public class InfuserBlockEntity extends UpgradableBlockEntity implements MenuPro
     public static void tick(Level level, BlockPos pos, BlockState state, InfuserBlockEntity pEntity) {
         if(level.isClientSide)
             return;
+
+        checkForBuckets(pEntity);
+        craft(pEntity);
     }
+
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("screen.manicmechanics.infuser");
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
+        return new InfuserBlockMenu(p_39954_, p_39955_, this, this.data);
+    }
+
+    public int getModeFor(int whichButton){
+        return modes[whichButton];
+    }
+
+    public void cycleModeFor(int whichButton){
+        if(modes[whichButton] == 2){
+            modes[whichButton] = 0;
+        } else {
+            modes[whichButton]++;
+        }
+    }
+
 }

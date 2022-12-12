@@ -184,11 +184,15 @@ public class FluidTankRenderer {
             long milliBuckets = (amount * 1000) / FluidType.BUCKET_VOLUME;
 
             if (tooltipMode == TooltipMode.SHOW_AMOUNT_AND_CAPACITY) {
-                MutableComponent amountString = Component.translatable("tutorialmod.tooltip.liquid.amount.with.capacity", nf.format(milliBuckets), nf.format(capacity));
+                MutableComponent amountString = Component.translatable("manicmechanics.tooltip.liquid.amount.with.capacity", nf.format(milliBuckets), nf.format(capacity));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("manicmechanics.tooltip.liquid.togglemode").withStyle(ChatFormatting.DARK_AQUA));
+                tooltip.add(Component.translatable("manicmechanics.tooltip.liquid.flushtank").withStyle(ChatFormatting.DARK_RED));
             } else if (tooltipMode == TooltipMode.SHOW_AMOUNT) {
-                MutableComponent amountString = Component.translatable("tutorialmod.tooltip.liquid.amount", nf.format(milliBuckets));
+                MutableComponent amountString = Component.translatable("manicmechanics.tooltip.liquid.amount", nf.format(milliBuckets));
                 tooltip.add(amountString.withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("manicmechanics.tooltip.liquid.togglemode").withStyle(ChatFormatting.DARK_AQUA));
+                tooltip.add(Component.translatable("manicmechanics.tooltip.liquid.flushtank").withStyle(ChatFormatting.DARK_RED));
             }
         } catch (RuntimeException e) {
             LOGGER.error("Failed to get tooltip for fluid: " + e);

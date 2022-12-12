@@ -1,8 +1,6 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.block.UpgradableMachineBlock;
 import com.iznaroth.manicmechanics.blockentity.*;
-import com.iznaroth.manicmechanics.screen.InfuserBlockScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -34,8 +32,9 @@ import java.util.List;
 
 public class InfuserBlock extends UpgradableMachineBlock {
 
-    public InfuserBlock(Properties p_i48440_1_) {
-        super(p_i48440_1_);
+
+    public InfuserBlock(Properties properties) {
+        super(properties);
     }
 
     @Nullable
@@ -75,12 +74,14 @@ public class InfuserBlock extends UpgradableMachineBlock {
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
+            System.out.println(blockEntity);
             if (blockEntity instanceof InfuserBlockEntity) {
-                System.out.println("Opening screen from BLOCK USE");
+
                 NetworkHooks.openScreen((ServerPlayer) player, (InfuserBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");

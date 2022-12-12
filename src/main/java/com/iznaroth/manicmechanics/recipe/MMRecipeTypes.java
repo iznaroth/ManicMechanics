@@ -17,6 +17,10 @@ public class MMRecipeTypes {
             = SERIALIZERS.register("sealer", () -> SealingChamberRecipe.Serializer.INSTANCE);
 
 
+    public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSER_SERIALIZER
+            = SERIALIZERS.register("infuser", () -> InfuserRecipe.Serializer.INSTANCE);
+
+
     public static void register(IEventBus eventBus){
         SERIALIZERS.register(eventBus);
     }

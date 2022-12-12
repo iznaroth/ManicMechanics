@@ -29,7 +29,6 @@ public class SealingChamberRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer pContainer, Level pLevel) {
-        System.out.println("Calling for validity against SEALER recipe instance.");
 
         if(pLevel.isClientSide()) {
             return false;

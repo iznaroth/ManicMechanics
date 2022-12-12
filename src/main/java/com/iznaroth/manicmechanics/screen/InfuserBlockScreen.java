@@ -2,17 +2,21 @@ package com.iznaroth.manicmechanics.screen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
-import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 import com.iznaroth.manicmechanics.screen.renderer.EnergyInfoArea;
+import com.iznaroth.manicmechanics.screen.renderer.FluidTankRenderer;
 import com.iznaroth.manicmechanics.util.MouseUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import java.util.Optional;
 
@@ -21,17 +25,21 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
     private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/infuser.png");
 
     private EnergyInfoArea energyInfoArea;
+    private FluidTankRenderer frenderer;
 
     public InfuserBlockScreen(InfuserBlockMenu container, Inventory inv, Component name) {
         super(container, inv, name);
-        System.out.println("Screen created?");
     }
 
     @Override
     protected void init() {
-        System.out.println("Got to screen init.");
         super.init();
         assignEnergyInfoArea();
+        assignFluidRenderer();
+    }
+
+    private void assignFluidRenderer() {
+        frenderer = new FluidTankRenderer(64000, true, 16, 67);
     }
 
     private void assignEnergyInfoArea(){
@@ -48,11 +56,19 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
         int y = (height - imageHeight) / 2;
 
         renderEnergyAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
+        renderFluidAreaTooltips(pPoseStack, pMouseX, pMouseY, x, y);
     }
 
     private void renderEnergyAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
         if(isMouseAboveArea(pMouseX, pMouseY, x, y, 12, 17, 12, 48)) {
             renderTooltip(pPoseStack, energyInfoArea.getTooltips(),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        }
+    }
+
+    private void renderFluidAreaTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 115, 9)) {
+            renderTooltip(pPoseStack, frenderer.getTooltip(menu.getFluidStack(), TooltipFlag.Default.NORMAL),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }
     }
@@ -75,12 +91,56 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
 
         energyInfoArea.draw(matrixStack);
+        renderButtonModes(matrixStack, relX, relY);
+        renderProgressArrow(matrixStack, relX, relY);
+        frenderer.render(matrixStack, relX + 115, relY + 9, menu.getFluidStack());
     }
 
+    private void renderButtonModes(PoseStack stack, int x, int y){
+        blit(stack, x + 33, y + 20, 180 + (13 * menu.getModeFor(0)), 36, 12, 10); //BUTTON 1
+        blit(stack, x + 33, y + 36, 180 + (13 * menu.getModeFor(1)), 36, 12, 10); //BUTTON 2
+        blit(stack, x + 33, y + 52, 180 + (13 * menu.getModeFor(2)), 36, 12, 10); //BUTTON 3
+    }
 
+    private void renderProgressArrow(PoseStack stack, int x, int y){
+        blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
+    }
+
+    private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY) {
+        return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, frenderer.getWidth(), frenderer.getHeight());
+    }
 
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {
         return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, width, height);
     }
 
+
+    @Override
+    public boolean mouseClicked(double p_97748_, double p_97749_, int p_97750_) {
+
+
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        System.out.println("CLICKED AT " + p_97748_ + " " + p_97749_);
+
+
+        if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+18 && p_97749_ < y+31)){ //in BUTTON 1
+            this.menu.getBlockEntity().cycleModeFor(0);
+        }
+
+        if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+34 && p_97749_ < y+47)){ //in BUTTON 2
+            this.menu.getBlockEntity().cycleModeFor(1);
+        }
+
+        if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+50 && p_97749_ < y+63)){ //in BUTTON 3
+            this.menu.getBlockEntity().cycleModeFor(2);
+        }
+
+        return super.mouseClicked(p_97748_, p_97749_, p_97750_);
+    }
+
+    @Override
+    public boolean mouseReleased(double p_97812_, double p_97813_, int p_97814_) {
+        return super.mouseReleased(p_97812_, p_97813_, p_97814_);
+    }
 }

@@ -1,35 +1,36 @@
 {
-  "parent": "manicmechanics:contact/root",
+  "criteria": {
+    "has_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "manicmechanics:security_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "manicmechanics:security_brick"
-    },
-    "title": {
-      "translate": "advancements.contact.brick.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.contact.brick.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "manicmechanics:security_brick"
+    },
     "show_toast": false,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "has_secure_brick": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "manicmechanics:security_brick"
-          }
-        ]
-      }
+    "title": {
+      "translate": "advancements.contact.brick.title"
     }
   },
   "requirements": [
     [
-      "has_secure_brick"
+      "has_brick"
     ]
   ]
 }

@@ -1,9 +1,9 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
-import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
 import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,8 +14,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import java.util.Arrays;
+import java.util.List;
 
 public class InfuserBlockMenu extends AbstractContainerMenu {
 
@@ -24,6 +27,8 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
     private final ContainerData data;
     private Player playerEntity;
     private IItemHandler playerInventory;
+    private FluidStack fluidStack;
+
 
     private static final Minecraft minecraft = Minecraft.getInstance();
 
@@ -34,12 +39,11 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
 
     public InfuserBlockMenu(int windowId, Inventory inv, InfuserBlockEntity entity, ContainerData data) {
         super(MMMenus.INFUSER_MENU.get(), windowId);
-        System.out.println("Inside Infuser MENU constructor");
         checkContainerSize(inv, 3);
         blockEntity = (InfuserBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
-        System.out.println("Parameters done.");
+        this.fluidStack = blockEntity.getFluidStack();
 
 
         layoutPlayerInventorySlots(10, 84, inv);
@@ -48,10 +52,8 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
             addSlot(new SlotItemHandler(h, 1, 64, 54));
             addSlot(new SlotItemHandler(h, 2, 95, 60));
         });
-        System.out.println("Slots done.");
 
         addDataSlots(data);
-        System.out.println("Data done.");
 
 
     }
@@ -151,6 +153,17 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
         addSlotRange(inv, 0, leftCol, topRow, 9, 18);
     }
 
+    private final List<Item> valid_for_housing = Arrays.asList(MMItems.TUBE_HOUSING.get());
+    private final List<Item> valid_for_insertion = Arrays.asList(MMItems.SEALANT.get());
+
+    public boolean isValidHousing(Item what){
+        return valid_for_housing.contains(what);
+    }
+
+    public boolean isValidInsertion(Item what){
+        return valid_for_insertion.contains(what);
+    }
+
     public int getScaledProgress(){
 
         int progress = this.getBlockEntity().getCraftProgress();
@@ -158,6 +171,18 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
         int progressArrowSize = 33;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    public int getModeFor(int whichButton){
+        return blockEntity.getModeFor(whichButton);
+    }
+
+    public void setFluid(FluidStack fluidStack) {
+        this.fluidStack = fluidStack;
+    }
+
+    public FluidStack getFluidStack() {
+        return fluidStack;
     }
 
 }
