@@ -1,0 +1,15 @@
+{
+  "type": "manicmechanics:sealer",
+  "ingredients": [
+    {
+      "item": "manicmechanics:tube_housing"
+    },
+    {
+      "item": "manicmechanics:sealant"
+    }
+  ],
+  "output": {
+    "item": "manicmechanics:transport_tube",
+    "count": 8
+  }
+}
