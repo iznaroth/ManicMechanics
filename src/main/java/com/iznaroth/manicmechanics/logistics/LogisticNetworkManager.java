@@ -1,9 +1,9 @@
-package com.iznaroth.manicmechanics.logistics;
+package com.iznaroth.manicmechanics.menu.logistics;
 
-import com.iznaroth.manicmechanics.logistics.job.FluidJob;
-import com.iznaroth.manicmechanics.logistics.job.GasJob;
-import com.iznaroth.manicmechanics.logistics.job.LogisticJob;
-import com.iznaroth.manicmechanics.logistics.job.PowerJob;
+import com.iznaroth.manicmechanics.menu.logistics.job.FluidJob;
+import com.iznaroth.manicmechanics.menu.logistics.job.GasJob;
+import com.iznaroth.manicmechanics.menu.logistics.job.LogisticJob;
+import com.iznaroth.manicmechanics.menu.logistics.job.PowerJob;
 import com.iznaroth.manicmechanics.blockentity.TubeBundleBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

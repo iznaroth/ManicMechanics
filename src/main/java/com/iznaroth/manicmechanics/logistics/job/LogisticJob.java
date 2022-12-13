@@ -1,7 +1,7 @@
-package com.iznaroth.manicmechanics.logistics.job;
+package com.iznaroth.manicmechanics.menu.logistics.job;
 
-import com.iznaroth.manicmechanics.logistics.Connection;
-import com.iznaroth.manicmechanics.logistics.LogisticNetworkManager;
+import com.iznaroth.manicmechanics.menu.logistics.Connection;
+import com.iznaroth.manicmechanics.menu.logistics.LogisticNetworkManager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;

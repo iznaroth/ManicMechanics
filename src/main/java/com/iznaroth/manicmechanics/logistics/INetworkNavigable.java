@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.logistics;
+package com.iznaroth.manicmechanics.menu.logistics;
 
 
 import net.minecraft.world.item.ItemStack;

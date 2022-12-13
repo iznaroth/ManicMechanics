@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.logistics.job;
+package com.iznaroth.manicmechanics.menu.logistics.job;
 
 import net.minecraftforge.energy.IEnergyStorage;
 

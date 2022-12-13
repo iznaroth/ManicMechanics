@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.logistics;
+package com.iznaroth.manicmechanics.menu.logistics;
 
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
