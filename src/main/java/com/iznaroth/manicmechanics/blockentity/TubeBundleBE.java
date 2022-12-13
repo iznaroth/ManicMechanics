@@ -376,4 +376,12 @@ public class TubeBundleBE extends BlockEntity {
 
     }
 
+    public void clearAll(){
+        //Called on remove
+        for(int i = 0; i < connections.length; i++){
+            connections[i].dequeueSelfIfActive();
+            connections[i] = null;
+        }
+    }
+
 }

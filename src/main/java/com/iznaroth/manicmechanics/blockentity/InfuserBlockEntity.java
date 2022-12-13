@@ -2,6 +2,7 @@ package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
@@ -55,7 +56,7 @@ import javax.annotation.Nullable;
 import javax.lang.model.util.AbstractTypeVisitor6;
 import java.util.Optional;
 
-public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, MenuProvider {
+public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, MenuProvider {
 
 
     int progress = 0;
@@ -73,8 +74,8 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
             return switch (slot) {
-                case 0 -> stack.getItem() == MMItems.TUBE_HOUSING.get();
-                case 1 -> stack.getItem() == MMItems.SEALANT.get();
+                case 0 -> stack.getItem() == MMItems.LUMINOUS_PHOSPHOTHALLITE_MIXTURE.get();
+                case 1 -> stack.getItem() == MMItems.NEUTRALIZED_PHOSPHOTHALLITE_MIXTURE.get();
                 case 2 -> stack.getItem() == Items.WATER_BUCKET; //NOTE - might fuck up recipe
                 default -> super.isItemValid(slot, stack);
             };
@@ -147,7 +148,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         }
     };
 
-    private final FluidTank FLUID_TANK = new FluidTank(64000) {
+    private final FluidTank FLUID_TANK = new FluidTank(16000) {
         @Override
         protected void onContentsChanged() {
             setChanged();
@@ -249,6 +250,8 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         lazyEnergyStorage.invalidate();
     }
 
+
+
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
         for (int i = 0; i < itemHandler.getSlots(); i++) {
@@ -289,7 +292,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
 
             System.out.println("Recipe works.");
 
-            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2) || !pEntity.itemHandler.getStackInSlot(2).getItem().equals(iRecipe.getResultItem().getItem())){
+            if(pEntity.itemHandler.getStackInSlot(1).getCount() >= pEntity.itemHandler.getSlotLimit(1) || (!pEntity.itemHandler.getStackInSlot(1).getItem().equals(iRecipe.getResultItem().getItem()) && !pEntity.itemHandler.getStackInSlot(1).getItem().equals(Items.AIR))){
                 System.out.println("No room.");
                 return; //Can't perform the craft, slot is full or holds a different itemstack.
             }
@@ -322,8 +325,10 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
     }
 
     private boolean hasEnoughFluid(NonNullList<Fluid> ingredients, int lengthPerOp, InfuserBlockEntity pEntity){
+        System.out.println(ingredients.toString());
         for(Fluid f : ingredients){
-            if((pEntity.FLUID_TANK.getFluid().getFluid() != f || pEntity.FLUID_TANK.getFluid().getAmount() < lengthPerOp * 4) && pEntity.FLUID_TANK.getFluid().getFluid() != Fluids.EMPTY){ //4 mb/tick by default, use config
+            System.out.println("Checking " + f + " against " + pEntity.FLUID_TANK.getFluid().getFluid() + " with amount " + pEntity.FLUID_TANK.getFluid().getAmount() + " , is it not empty? " + !f.equals(Fluids.EMPTY));
+            if((pEntity.FLUID_TANK.getFluid().getFluid() != f || pEntity.FLUID_TANK.getFluid().getAmount() < lengthPerOp * 4) && !f.equals(Fluids.EMPTY)){ //4 mb/tick by default, use config
                 return false;
             }
         }
@@ -340,6 +345,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         return this.progress;
     }
 
+    @Override
     public void setProgress(int progress){ //For clientside tile update.
         this.progress = progress;
     }

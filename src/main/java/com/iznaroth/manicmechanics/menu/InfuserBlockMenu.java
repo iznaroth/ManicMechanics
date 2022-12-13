@@ -167,8 +167,8 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
     public int getScaledProgress(){
 
         int progress = this.getBlockEntity().getCraftProgress();
-        int maxProgress = 80;
-        int progressArrowSize = 33;
+        int maxProgress = 120;
+        int progressArrowSize = 22;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }

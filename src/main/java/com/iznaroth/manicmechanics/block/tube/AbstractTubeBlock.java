@@ -309,4 +309,10 @@ public abstract class AbstractTubeBlock extends MMBaseEntityBlock {
         return -1;
     }
 
+    @Override
+    public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
+        super.onRemove(p_60515_, p_60516_, p_60517_, p_60518_, p_60519_);
+        //((TubeBundleBE) p_60516_.getBlockEntity(p_60517_)).clearAll();
+    }
+
 }

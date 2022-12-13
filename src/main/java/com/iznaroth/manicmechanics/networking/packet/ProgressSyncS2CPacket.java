@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.networking.packet;
 
 
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.client.Minecraft;
@@ -34,13 +35,13 @@ public class ProgressSyncS2CPacket {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             BlockEntity blockEntity = Minecraft.getInstance().level.getBlockEntity(pos);
-            if(blockEntity instanceof SealingChamberBlockEntity) { //TODO - All machines ought to generally implement this thru hasCapability or something
-                ((SealingChamberBlockEntity) blockEntity).setProgress(progress);
+            if(blockEntity instanceof IHasCraftProgress) {
+                ((IHasCraftProgress) blockEntity).setProgress(progress);
 
-                if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockMenu &&
-                        ((SealingChamberBlockMenu) Minecraft.getInstance().player.containerMenu).getBlockEntity().getBlockPos().equals(pos)) {
-                    ((SealingChamberBlockEntity) blockEntity).setProgress(progress);
-                }
+                //if(Minecraft.getInstance().player.containerMenu instanceof SealingChamberBlockMenu &&
+                //        ((SealingChamberBlockMenu) Minecraft.getInstance().player.containerMenu).getBlockEntity().getBlockPos().equals(pos)) {
+                //    ((SealingChamberBlockEntity) blockEntity).setProgress(progress);
+                //}
             }
         });
         return true;

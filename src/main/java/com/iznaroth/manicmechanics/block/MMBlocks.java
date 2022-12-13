@@ -28,9 +28,12 @@ public class MMBlocks {
 
     //WORLDGEN
     public static final RegistryObject<Block> DYSPERSIUM_ORE = registerBlock("dyspersium_ore", () -> new DyspersiumOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> DYSPERSIUM_DEEPSLATE_ORE = registerBlock("dyspersium_deepslate_ore", () -> new DyspersiumOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+
     public static final RegistryObject<Block> THALLITE_ORE = registerBlock("thallite_ore", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> PHOSPHORITE_ORE = registerBlock("phosphorite_ore", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> NITROL_ORE = registerBlock("nitrol_ore", () -> new NitrolOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> NITROL_DEEPSLATE_ORE = registerBlock("nitrol_deepslate_ore", () -> new NitrolOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
 
 
 

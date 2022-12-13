@@ -39,7 +39,7 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
     }
 
     private void assignFluidRenderer() {
-        frenderer = new FluidTankRenderer(64000, true, 16, 67);
+        frenderer = new FluidTankRenderer(16000, true, 16, 67);
     }
 
     private void assignEnergyInfoArea(){
@@ -103,7 +103,8 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
     }
 
     private void renderProgressArrow(PoseStack stack, int x, int y){
-        blit(stack, x + 83, y + 24, 182, 2, menu.getScaledProgress(), 36);
+        System.out.println("Progress: " + menu.getScaledProgress());
+        blit(stack, x + 64, y + 29, 181, 12, 16, menu.getScaledProgress());
     }
 
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY) {

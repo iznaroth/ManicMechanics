@@ -1,2 +1,5 @@
-package com.iznaroth.manicmechanics.blockentity.interfaces;public class IHasCraftProgress {
+package com.iznaroth.manicmechanics.blockentity.interfaces;
+
+public interface IHasCraftProgress {
+    public void setProgress(int to);
 }

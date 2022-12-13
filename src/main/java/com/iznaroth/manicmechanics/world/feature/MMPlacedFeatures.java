@@ -19,7 +19,12 @@ public class MMPlacedFeatures {
     public static final RegistryObject<PlacedFeature> DYSPERSIUM_ORE_PLACED = PLACED_FEATURES.register("dyspersium_ore_placed",
             () -> new PlacedFeature(MMConfiguredFeatures.DYSPERSIUM_ORE.getHolder().get(),
                     commonOrePlacement(7, // VeinsPerChunk
-                            HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-80), VerticalAnchor.aboveBottom(80)))));
+                            HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)))));
+
+    public static final RegistryObject<PlacedFeature> NITROL_ORE_PLACED = PLACED_FEATURES.register("nitrol_ore_placed",
+            () -> new PlacedFeature(MMConfiguredFeatures.NITROL_ORE.getHolder().get(),
+                    commonOrePlacement(15, // VeinsPerChunk
+                            HeightRangePlacement.triangle(VerticalAnchor.bottom(), VerticalAnchor.absolute(40)))));
 
 
     public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

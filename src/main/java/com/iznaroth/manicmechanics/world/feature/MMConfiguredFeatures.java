@@ -23,12 +23,19 @@ public class MMConfiguredFeatures {
 
     public static final Supplier<List<OreConfiguration.TargetBlockState>> OVERWORLD_DYSPERSIUM_ORES = Suppliers.memoize(() -> List.of(
             OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, MMBlocks.DYSPERSIUM_ORE.get().defaultBlockState()),
-            OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, MMBlocks.DYSPERSIUM_ORE.get().defaultBlockState())));
+            OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, MMBlocks.DYSPERSIUM_DEEPSLATE_ORE.get().defaultBlockState())));
 
+
+    public static final Supplier<List<OreConfiguration.TargetBlockState>> OVERWORLD_NITROL_ORE = Suppliers.memoize(() -> List.of(
+            OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, MMBlocks.NITROL_ORE.get().defaultBlockState()),
+            OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, MMBlocks.NITROL_DEEPSLATE_ORE.get().defaultBlockState())));
 
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> DYSPERSIUM_ORE = CONFIGURED_FEATURES.register("dyspersium_ore",
-            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_DYSPERSIUM_ORES.get(),7)));
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_DYSPERSIUM_ORES.get(),32)));
+
+    public static final RegistryObject<ConfiguredFeature<?, ?>> NITROL_ORE = CONFIGURED_FEATURES.register("nitrol_ore",
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OVERWORLD_DYSPERSIUM_ORES.get(),32)));
 
     public static void register(IEventBus eventBus) {
         CONFIGURED_FEATURES.register(eventBus);

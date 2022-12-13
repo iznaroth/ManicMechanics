@@ -49,11 +49,8 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
         }
 
         if(!recipeItems.get(0).test(pContainer.getItem(0))){
-            return false;
-        }
-
-        if(!recipeItems.get(1).test(pContainer.getItem(1))){
-            return false;
+            return false; //This layer of recipe check only looks for matched ingredients. It probably needs to do more.
+                          //One idea is to use three bogus recipe items to correspond to modes 1 2 and 3
         }
 
         return true;
@@ -139,14 +136,21 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
         public Fluid getFluidFromJson(@Nullable JsonElement fluid){
             if (fluid != null && !fluid.isJsonNull()) {
 
-                System.out.println(fluid);
+                System.out.println(fluid.toString().substring(10, fluid.toString().length()-2));
                 if (fluid.isJsonObject()) {
-                    //This has been re-called on one element.
-                    //Registry.FLUID.get(new ResourceLocation(fluid.getAsString()));
-                    Fluid result = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(fluid.getAsString()));
+
+                    Fluid result = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(fluid.toString().substring(10, fluid.toString().length()-2)));
+                    System.out.println(result);
                     if(result != Fluids.EMPTY){
                         return result;
-                    }; //NOTE - A legal Vanilla may be present in forge. Test it !
+                    };
+
+                    result = Registry.FLUID.get(new ResourceLocation(fluid.toString().substring(10, fluid.toString().length()-2)));
+                    System.out.println(result);
+                    if(result != Fluids.EMPTY){
+                        return result;
+                    };
+
                 } else if (fluid.isJsonArray()) {
                     JsonArray jsonarray = fluid.getAsJsonArray();
                     if (jsonarray.size() == 0) {

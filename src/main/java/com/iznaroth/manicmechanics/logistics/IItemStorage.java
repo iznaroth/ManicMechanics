@@ -1,4 +1,4 @@
-package com.iznaroth.manicmechanics.menu.logistics;
+package com.iznaroth.manicmechanics.logistics;
 
 public class IItemStorage {
 }
