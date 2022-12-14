@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -41,8 +43,8 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
         this.modes = modes;
     }
 
-    @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+
+    public boolean matches(SimpleContainer pContainer, Level pLevel, InfuserBlockEntity entity) {
 
         if(pLevel.isClientSide()) {
             return false;
@@ -53,7 +55,20 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
                           //One idea is to use three bogus recipe items to correspond to modes 1 2 and 3
         }
 
-        return true;
+        System.out.println("Recipe wants these modes: " + Arrays.toString(modes));
+        System.out.println("Entity has these modes: " + entity.getModeFor(0) + " " + entity.getModeFor(1) + " " + entity.getModeFor(2));
+        for(int i = 0; i < modes.length; i++){
+            if(entity.getModeFor(i) != modes[i])
+                return false; //compare mode mismatch
+        }
+
+        return true; //fluid validity is a tick operation, so it is verified during the craft.
+    }
+
+    //NOTE - special recipe types bypass this thru NonItemRecipeHelper
+    @Override
+    public boolean matches(SimpleContainer p_44002_, Level p_44003_) {
+        return false;
     }
 
     @Override
@@ -130,6 +145,10 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
                 fluidInputs.set(i, getFluidFromJson(fluids.get(i)));
             }
 
+            for(int i = 0; i < modeRequirements.length; i++){
+                modeRequirements[i] = getModeFromJson(modes.get(i));
+            }
+
             return new InfuserRecipe(recipeId, output, inputs, fluidInputs, modeRequirements);
         }
         
@@ -166,6 +185,22 @@ public class InfuserRecipe implements Recipe<SimpleContainer> {
                 throw new JsonSyntaxException("Item cannot be null");
             }
             return Fluids.EMPTY;
+        }
+
+        public int getModeFromJson(@Nullable JsonElement mode){
+            if (mode != null && !mode.isJsonNull()) {
+
+                //System.out.println(mode.toString());
+                //System.out.println(mode.toString().substring(8, mode.toString().length()-1));
+                if (mode.isJsonObject()) {
+
+                    int result = Integer.parseInt(mode.toString().substring(8, mode.toString().length()-1));
+                    return result;
+
+                }
+            }
+
+            return -1;
         }
 
         @Nullable

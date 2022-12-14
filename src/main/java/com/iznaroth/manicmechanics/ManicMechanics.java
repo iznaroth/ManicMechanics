@@ -70,12 +70,14 @@ public class ManicMechanics
         ModEntityTypes.register(eventBus);
 
         MMBlockEntities.register(eventBus);
-        MMMenus.register(eventBus); //NOTE - May need to rearrange for order compliance?
+
 
         MMRecipeTypes.register(eventBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+
+        MMMenus.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         // Register the setup method for modloading
         //FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
@@ -88,6 +90,7 @@ public class ManicMechanics
         eventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         eventBus.addListener(this::doClientStuff);
+
 
         registerCommonEvents(eventBus);
 
@@ -107,6 +110,9 @@ public class ManicMechanics
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
+
+        //NOTE - May need to rearrange for order compliance?
+        FMLJavaModLoadingContext.get().getModEventBus().register(com.iznaroth.manicmechanics.setup.ClientSetup.class);
 
         EntityRenderers.register(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
         EntityRenderers.register(ModEntityTypes.PINCH.get(), PinchRenderer::new);
@@ -141,7 +147,6 @@ public class ManicMechanics
 
 
         //----------------
-        eventBus.register(com.iznaroth.manicmechanics.setup.ClientSetup.class);
         eventBus.register(com.iznaroth.manicmechanics.setup.CommonSetup.class);
     }
 

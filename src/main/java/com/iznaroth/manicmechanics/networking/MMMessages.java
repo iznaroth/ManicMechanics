@@ -1,10 +1,7 @@
 package com.iznaroth.manicmechanics.networking;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
-import com.iznaroth.manicmechanics.networking.packet.FluidSyncS2CPacket;
-import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
-import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
+import com.iznaroth.manicmechanics.networking.packet.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -53,6 +50,12 @@ public class MMMessages {
                 .decoder(FluidSyncS2CPacket::new)
                 .encoder(FluidSyncS2CPacket::toBytes)
                 .consumerMainThread(FluidSyncS2CPacket::handle)
+                .add();
+
+        net.messageBuilder(ButtonCycleC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(ButtonCycleC2SPacket::new)
+                .encoder(ButtonCycleC2SPacket::toBytes)
+                .consumerMainThread(ButtonCycleC2SPacket::handle)
                 .add();
 
 

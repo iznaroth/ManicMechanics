@@ -2,19 +2,25 @@ package com.iznaroth.manicmechanics.screen;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
+import com.iznaroth.manicmechanics.networking.MMMessages;
+import com.iznaroth.manicmechanics.networking.packet.ButtonCycleC2SPacket;
 import com.iznaroth.manicmechanics.screen.renderer.EnergyInfoArea;
 import com.iznaroth.manicmechanics.screen.renderer.FluidTankRenderer;
 import com.iznaroth.manicmechanics.util.MouseUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.OptionsScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -103,7 +109,6 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
     }
 
     private void renderProgressArrow(PoseStack stack, int x, int y){
-        System.out.println("Progress: " + menu.getScaledProgress());
         blit(stack, x + 64, y + 29, 181, 12, 16, menu.getScaledProgress());
     }
 
@@ -119,22 +124,24 @@ public class InfuserBlockScreen extends AbstractContainerScreen<InfuserBlockMenu
     @Override
     public boolean mouseClicked(double p_97748_, double p_97749_, int p_97750_) {
 
-
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         System.out.println("CLICKED AT " + p_97748_ + " " + p_97749_);
 
 
+        //TODO - this likely fails to sync for any OTHER clients.
         if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+18 && p_97749_ < y+31)){ //in BUTTON 1
-            this.menu.getBlockEntity().cycleModeFor(0);
-        }
-
-        if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+34 && p_97749_ < y+47)){ //in BUTTON 2
-            this.menu.getBlockEntity().cycleModeFor(1);
-        }
-
-        if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+50 && p_97749_ < y+63)){ //in BUTTON 3
-            this.menu.getBlockEntity().cycleModeFor(2);
+            this.menu.getBlockEntity().cycleForward(0);
+            MMMessages.sendToServer(new ButtonCycleC2SPacket(0, 1, this.menu.getBlockEntity().getBlockPos()));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        }else if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+34 && p_97749_ < y+47)){ //in BUTTON 2
+            this.menu.getBlockEntity().cycleForward(1);
+            MMMessages.sendToServer(new ButtonCycleC2SPacket(1, 1, this.menu.getBlockEntity().getBlockPos()));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+        } else if((p_97748_ > x+31 && p_97748_ < x+46) && (p_97749_ > y+50 && p_97749_ < y+63)){ //in BUTTON 3
+            this.menu.getBlockEntity().cycleForward(2);
+            MMMessages.sendToServer(new ButtonCycleC2SPacket(2, 1, this.menu.getBlockEntity().getBlockPos()));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
         }
 
         return super.mouseClicked(p_97748_, p_97749_, p_97750_);

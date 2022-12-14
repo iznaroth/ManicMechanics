@@ -20,7 +20,7 @@ public class NitrolOreBlock extends MMBlockWrapper {
         super.onBlockExploded(state, world, pos, explosion);
 
 
-        world.explode((Entity) null, new DamageSource(ManicMechanics.MOD_ID + "_nitrol_busted"), (ExplosionDamageCalculator) null, pos.getX(), pos.getY(),  pos.getZ(), 5.0F, true, Explosion.BlockInteraction.DESTROY);
+        world.explode((Entity) null, new DamageSource(ManicMechanics.MOD_ID + "_nitrol_busted"), (ExplosionDamageCalculator) null, pos.getX(), pos.getY(),  pos.getZ(), 5.0F, true, Explosion.BlockInteraction.BREAK);
 
     }
 }

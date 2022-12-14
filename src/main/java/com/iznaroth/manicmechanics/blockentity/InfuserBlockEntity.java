@@ -2,6 +2,7 @@ package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasButtonState;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
@@ -15,6 +16,7 @@ import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
 import com.iznaroth.manicmechanics.recipe.InfuserRecipe;
 import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
+import com.iznaroth.manicmechanics.util.NonItemRecipeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -54,9 +56,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.lang.model.util.AbstractTypeVisitor6;
+import java.util.Arrays;
 import java.util.Optional;
 
-public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, MenuProvider {
+public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, IHasButtonState, MenuProvider {
 
 
     int progress = 0;
@@ -285,8 +288,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
             inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = pEntity.level.getRecipeManager()
-                .getRecipeFor(InfuserRecipe.Type.INSTANCE, inv, pEntity.level);
+        Optional<InfuserRecipe> recipe = NonItemRecipeHelper.getInfuserRecipeFor(inv, pEntity.level, pEntity);
 
         recipe.ifPresent(iRecipe -> {
 
@@ -297,7 +299,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
                 return; //Can't perform the craft, slot is full or holds a different itemstack.
             }
 
-            if(!pEntity.hasEnoughFluid(iRecipe.getRecipeFluids(), 40, pEntity)){
+            if(!pEntity.hasEnoughFluid(iRecipe.getRecipeFluids(), 120 - pEntity.progress, pEntity)){
                 System.out.println("Insufficient fluid.");
                 return;
             }
@@ -324,11 +326,23 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         });
     }
 
-    private boolean hasEnoughFluid(NonNullList<Fluid> ingredients, int lengthPerOp, InfuserBlockEntity pEntity){
+    private boolean hasEnoughFluid(NonNullList<Fluid> ingredients, int lengthRemaining, InfuserBlockEntity pEntity){
         System.out.println(ingredients.toString());
-        for(Fluid f : ingredients){
-            System.out.println("Checking " + f + " against " + pEntity.FLUID_TANK.getFluid().getFluid() + " with amount " + pEntity.FLUID_TANK.getFluid().getAmount() + " , is it not empty? " + !f.equals(Fluids.EMPTY));
-            if((pEntity.FLUID_TANK.getFluid().getFluid() != f || pEntity.FLUID_TANK.getFluid().getAmount() < lengthPerOp * 4) && !f.equals(Fluids.EMPTY)){ //4 mb/tick by default, use config
+        int progForStep; //If this is >0, that's how many ticks for FIRST FLUID. Ex prog 0 = lengthRemaining 120. 120 - 80 = 40, so this batch has 40 ticks left.
+
+        for(int i = 0; i < ingredients.size(); i++){
+
+            if(ingredients.get(i).equals(Fluids.EMPTY)){
+                continue; //EMPTY is a flag for a nonfluid operation (dw about it)
+            }
+
+            progForStep = lengthRemaining - (40 * (2-i));
+            //System.out.println("Checking " + ingredients.get(i) + " against " + pEntity.FLUID_TANK.getFluid().getFluid() + " with amount " + pEntity.FLUID_TANK.getFluid().getAmount() + " , is it not empty? " + !ingredients.get(i).equals(Fluids.EMPTY));
+            if(pEntity.FLUID_TANK.getFluid().getFluid() != ingredients.get(i) && !ingredients.get(i).equals(Fluids.EMPTY)){ //4 mb/tick by default, use config
+                return false;
+            }
+
+            if(progForStep > 0 && pEntity.FLUID_TANK.getFluid().getAmount() < Math.min(progForStep, 40) * 4){ //If the existing number is ever larger than 40, then this step is maxed out. Also forces true for any fluid in a completed step.
                 return false;
             }
         }
@@ -374,12 +388,26 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         return modes[whichButton];
     }
 
-    public void cycleModeFor(int whichButton){
-        if(modes[whichButton] == 2){
-            modes[whichButton] = 0;
+    @Override
+    public void cycleForward(int which) {
+        if(modes[which] == 2){
+            modes[which] = 0;
         } else {
-            modes[whichButton]++;
+            modes[which]++;
         }
+
+        System.out.println("Cycle button " + which + " forward to " + modes[which]);
+        setChanged();
     }
 
+    @Override
+    public void cycleBackward(int which) {
+        if(modes[which] == 0){
+            modes[which] = 2;
+        } else {
+            modes[which]--;
+        }
+
+        setChanged();
+    }
 }
