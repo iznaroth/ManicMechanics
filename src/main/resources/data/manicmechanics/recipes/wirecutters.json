@@ -2,25 +2,22 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "AIA",
-    "DID",
-    "ISI"
+    "ASA",
+    "SAS"
   ],
   "key": {
     "A": {
       "item": "minecraft:air"
     },
-    "D": {
-      "item": "manicmechanics:dyspersium_alloy"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "manicmechanics:sticky_thallite"
+      "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "manicmechanics:reinforced_arm",
+    "item": "manicmechanics:wire_cutter",
     "count": 1
   }
 }

@@ -9,6 +9,7 @@ public class InventoryToolItem extends Item {
     }
 
     //Item that can be used in-inventory at a durability cost.
+
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack)
     {

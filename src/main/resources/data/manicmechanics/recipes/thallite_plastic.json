@@ -1,23 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "IGI",
-    "GRG",
-    "IGI"
+    "AAA",
+    "SGS",
+    "AAA"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:gold_ingot"
+    "A": {
+      "item": "minecraft:air"
     },
     "G": {
-      "item": "manicmechanics:gold_wire"
+      "item": "minecraft:glass_pane"
     },
-    "R": {
-      "item": "minecraft:redstone"
+    "S": {
+      "item": "manicmechanics:sticky_thallite"
     }
   },
   "result": {
-    "item": "manicmechanics:gold_part",
-    "count": 1
+    "item": "manicmechanics:thallite_plastic",
+    "count": 4
   }
 }

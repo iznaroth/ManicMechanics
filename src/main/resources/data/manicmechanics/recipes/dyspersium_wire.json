@@ -5,11 +5,11 @@
       "item": "manicmechanics:wire_cutter"
     },
     {
-      "item": "manicmechanics:phosphorite_ingot"
+      "item": "manicmechanics:dyspersium_alloy"
     }
   ],
   "result": {
-    "item": "manicmechanics:phosphorite_filament",
+    "item": "manicmechanics:dyspersium_wire",
     "count": 8
   }
 }

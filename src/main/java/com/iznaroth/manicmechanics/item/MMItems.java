@@ -135,6 +135,9 @@ public class MMItems {
     public static final RegistryObject<Item> GOLD_WIRE = ITEMS.register("gold_wire",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
+    public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire",
+            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
     public static final RegistryObject<Item> DYSPERSIUM_WIRE = ITEMS.register("dyspersium_wire",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
@@ -150,7 +153,7 @@ public class MMItems {
     public static final RegistryObject<Item> GOLD_PART = ITEMS.register("gold_part",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> DYSPERSIUM_PART = ITEMS.register("dyspersium_part",
+    public static final RegistryObject<Item> DYSPERSIUM_PART = ITEMS.register("dyspersium_part.json",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> DYSPERSIUM_WELL = ITEMS.register("dyspersium_well",

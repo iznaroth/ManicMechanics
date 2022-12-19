@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "IGI",
-    "GRG",
-    "IGI"
+    "ADA",
+    "DPD",
+    "ADA"
   ],
   "key": {
-    "I": {
-      "item": "manicmechanics:dyspersium_alloy"
+    "A": {
+      "item": "minecraft:air"
     },
-    "G": {
-      "item": "manicmechanics:gold_wire"
+    "D": {
+      "item": "manicmechanics:dyspersium_part"
     },
-    "R": {
-      "item": "minecraft:redstone"
+    "P": {
+      "item": "manicmechanics:pinch"
     }
   },
   "result": {

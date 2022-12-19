@@ -1,15 +1,26 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "manicmechanics:wire_cutter"
-    },
-    {
-      "item": "minecraft:copper_ingot"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AIA",
+    "DID",
+    "ISI"
   ],
+  "key": {
+    "A": {
+      "item": "minecraft:air"
+    },
+    "D": {
+      "item": "manicmechanics:dyspersium_alloy"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "manicmechanics:sticky_thallite"
+    }
+  },
   "result": {
-    "item": "manicmechanics:copper_wire",
-    "count": 8
+    "item": "manicmechanics:reinforced_arm",
+    "count": 1
   }
 }
