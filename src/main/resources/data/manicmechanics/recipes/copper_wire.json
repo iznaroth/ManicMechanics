@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "manicmechanics:wire_cutter"
+    },
+    {
+      "item": "manicmechanics:dyspersium_alloy"
+    }
+  ],
+  "result": {
+    "item": "manicmechanics:dyspersium_wire",
+    "count": 8
+  }
+}
