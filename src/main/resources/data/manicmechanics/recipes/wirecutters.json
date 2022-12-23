@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AIA",
-    "ASA",
-    "SAS"
+    " I ",
+    " S ",
+    "S S"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:air"
-    },
     "I": {
       "item": "minecraft:iron_ingot"
     },

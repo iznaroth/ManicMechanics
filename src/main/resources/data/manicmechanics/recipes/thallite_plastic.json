@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AAA",
+    "   ",
     "SGS",
-    "AAA"
+    "   "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:air"
-    },
     "G": {
       "item": "minecraft:glass_pane"
     },

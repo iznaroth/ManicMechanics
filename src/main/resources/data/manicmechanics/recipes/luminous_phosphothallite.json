@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "manicmechanics:wire_cutter"
+      "item": "manicmechanics:sticky_thallite"
     },
     {
       "item": "manicmechanics:phosphorite_ingot"
     }
   ],
   "result": {
-    "item": "manicmechanics:phosphorite_filament",
-    "count": 8
+    "item": "manicmechanics:luminous_phosphothallite_mixture",
+    "count": 1
   }
 }

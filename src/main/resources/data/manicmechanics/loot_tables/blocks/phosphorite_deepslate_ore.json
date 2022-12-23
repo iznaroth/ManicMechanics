@@ -24,7 +24,7 @@
                   }
                 }
               ],
-              "name": "manicmechanics:phosphorite_ore"
+              "name": "manicmechanics:phosphorite_deepslate_ore"
             },
             {
               "type": "minecraft:item",
@@ -38,7 +38,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "manicmechanics:phosphorite_ore"
+              "name": "manicmechanics:phosphorite_deepslate_ore"
             }
           ]
         }

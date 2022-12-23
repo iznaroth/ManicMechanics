@@ -7,7 +7,7 @@
   ],
   "key": {
     "N": {
-      "item": "manicmechanics:neutralized_phosphothallite_mixture"
+      "item": "manicmechanics:dyspersium_alloy"
     },
     "T": {
       "item": "manicmechanics:thallite_plastic"
@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "manicmechanics:gold_part",
+    "item": "manicmechanics:pseudoract",
     "count": 1
   }
 }

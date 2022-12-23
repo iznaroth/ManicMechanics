@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "AIA",
+    " I ",
     "DID",
     "ISI"
   ],
   "key": {
-    "A": {
-      "item": "minecraft:air"
-    },
     "D": {
       "item": "manicmechanics:dyspersium_alloy"
     },

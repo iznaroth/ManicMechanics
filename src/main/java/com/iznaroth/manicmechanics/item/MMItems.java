@@ -155,7 +155,7 @@ public class MMItems {
     public static final RegistryObject<Item> GOLD_PART = ITEMS.register("gold_part",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
-    public static final RegistryObject<Item> DYSPERSIUM_PART = ITEMS.register("dyspersium_part.json",
+    public static final RegistryObject<Item> DYSPERSIUM_PART = ITEMS.register("dyspersium_part",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> DYSPERSIUM_WELL = ITEMS.register("dyspersium_well",

@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ADA",
+    " D ",
     "DPD",
-    "ADA"
+    " D "
   ],
   "key": {
-    "A": {
-      "item": "minecraft:air"
-    },
     "D": {
       "item": "manicmechanics:dyspersium_part"
     },
@@ -17,7 +14,7 @@
     }
   },
   "result": {
-    "item": "manicmechanics:dyspersium_part",
+    "item": "manicmechanics:dyspersium_well",
     "count": 1
   }
 }
