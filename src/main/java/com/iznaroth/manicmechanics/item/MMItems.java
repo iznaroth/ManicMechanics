@@ -5,7 +5,9 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -104,7 +106,7 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> LUMINOUS_PHOSPHOTHALLITE_MIXTURE = ITEMS.register("luminous_phosphothallite_mixture",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+            () -> new LuminousPhosphothalliteItem(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> NEUTRALIZED_PHOSPHOTHALLITE_MIXTURE = ITEMS.register("neutralized_phosphothallite_mixture",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
@@ -211,6 +213,9 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> IRON_FAN = ITEMS.register("iron_fan",
+            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> TOOL_HYPERCOOLANT = ITEMS.register("tool_hypercoolant",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 

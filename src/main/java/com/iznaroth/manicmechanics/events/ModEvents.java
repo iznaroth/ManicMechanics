@@ -61,7 +61,7 @@ public class ModEvents {
             persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
         }
 
-        if (!persistent.hasUUID(NBT_KEY)) {
+        if (!persistent.contains(NBT_KEY)) {
             persistent.putBoolean(NBT_KEY, true);
             System.out.println("Player gets book.");
             event.getEntity().getInventory().add(new ItemStack(MMItems.ILLEGIBLE_TOME.get()));

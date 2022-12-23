@@ -6,21 +6,18 @@
     "NBN"
   ],
   "key": {
-    "N": {
-      "item": "manicmechanics:neutralized_phosphothallite_mixture"
+    "S": {
+      "item": "manicmechanics:sticky_thallite"
     },
     "I": {
-      "item": "manicmechanics:iron_part"
+      "item": "minecraft:ice"
     },
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "P": {
-      "item": "manicmechanics:pseudoract"
+    "W": {
+      "item": "minecraft:water_bucket"
     }
   },
   "result": {
-    "item": "manicmechanics:infuser",
-    "count": 1
+    "item": "manicmechanics:tool_hypercoolant",
+    "count": 4
   }
 }

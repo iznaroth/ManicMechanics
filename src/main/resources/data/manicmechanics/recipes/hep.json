@@ -1,26 +1,29 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "NBN",
-    "I3I",
-    "NBN"
+    "NDN",
+    "GPG",
+    "NRN"
   ],
   "key": {
     "N": {
       "item": "manicmechanics:neutralized_phosphothallite_mixture"
     },
-    "I": {
-      "item": "manicmechanics:iron_part"
+    "R": {
+      "item": "minecraft:redstone_block"
     },
-    "B": {
-      "item": "minecraft:bucket"
+    "G": {
+      "item": "manicmechanics:gold_wire"
     },
     "P": {
       "item": "manicmechanics:pseudoract"
+    },
+    "D": {
+      "item": "manicmechanics:dyspersium_well"
     }
   },
   "result": {
-    "item": "manicmechanics:gold_part",
+    "item": "manicmechanics:hep",
     "count": 1
   }
 }

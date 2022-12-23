@@ -1,26 +1,26 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "NTN",
+    "NBN",
     "IPI",
-    "NTN"
+    "NBN"
   ],
   "key": {
     "N": {
       "item": "manicmechanics:neutralized_phosphothallite_mixture"
     },
-    "T": {
-      "item": "manicmechanics:thallite_plastic"
-    },
     "I": {
       "item": "manicmechanics:iron_part"
     },
+    "B": {
+      "item": "minecraft:bucket"
+    },
     "P": {
-      "item": "manicmechanics:pinch"
+      "item": "manicmechanics:pseudoract"
     }
   },
   "result": {
-    "item": "manicmechanics:gold_part",
+    "item": "manicmechanics:infuser",
     "count": 1
   }
 }

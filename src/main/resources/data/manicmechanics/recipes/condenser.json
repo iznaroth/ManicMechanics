@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "NDN",
-    "IPI",
-    "NHN"
+    "NIN",
+    "I3I",
+    "NSN"
   ],
   "key": {
     "N": {
@@ -12,18 +12,18 @@
     "I": {
       "item": "manicmechanics:iron_part"
     },
-    "H": {
-      "item": "minecraft:heavy_weighted_pressure_plate"
-    },
     "P": {
-      "item": "manicmechanics:pseudoract"
+      "item": "minecraft:iron_pickaxe"
     },
-    "D": {
-      "item": "minecraft:diamond"
+    "S": {
+      "item": "minecraft:stone"
+    },
+    "3": {
+      "item": "manicmechanics:pseudoract"
     }
   },
   "result": {
-    "item": "manicmechanics:assembler",
+    "item": "manicmechanics:condenser",
     "count": 1
   }
 }

@@ -9,6 +9,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,7 +32,10 @@ public class MMBlocks {
     public static final RegistryObject<Block> DYSPERSIUM_DEEPSLATE_ORE = registerBlock("dyspersium_deepslate_ore", () -> new DyspersiumOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
 
     public static final RegistryObject<Block> THALLITE_ORE = registerBlock("thallite_ore", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+
     public static final RegistryObject<Block> PHOSPHORITE_ORE = registerBlock("phosphorite_ore", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> PHOSPHORITE_DEEPSLATE_ORE = registerBlock("phosphorite_deepslate_ore", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
+
     public static final RegistryObject<Block> NITROL_ORE = registerBlock("nitrol_ore", () -> new NitrolOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> NITROL_DEEPSLATE_ORE = registerBlock("nitrol_deepslate_ore", () -> new NitrolOreBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.2f)), MMItemGroup.MM_RESOURCES);
 
