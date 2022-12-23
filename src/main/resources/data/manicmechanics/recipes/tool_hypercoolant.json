@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NBN",
+    "IPI",
+    "NBN"
+  ],
+  "key": {
+    "N": {
+      "item": "manicmechanics:neutralized_phosphothallite_mixture"
+    },
+    "I": {
+      "item": "manicmechanics:iron_part"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "P": {
+      "item": "manicmechanics:pseudoract"
+    }
+  },
+  "result": {
+    "item": "manicmechanics:infuser",
+    "count": 1
+  }
+}
