@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.*;
+import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -23,23 +24,22 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class InfuserBlock extends UpgradableMachineBlock {
+public class CondenserBlock extends UpgradableMachineBlock {
 
 
-    public InfuserBlock(Properties properties) {
+    public CondenserBlock(Properties properties) {
         super(properties);
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new InfuserBlockEntity(pos, state); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new CondenserBlockEntity(pos, state); }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -67,8 +67,8 @@ public class InfuserBlock extends UpgradableMachineBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof InfuserBlockEntity) {
-                ((InfuserBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof CondenserBlockEntity) {
+                ((CondenserBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -80,9 +80,9 @@ public class InfuserBlock extends UpgradableMachineBlock {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             System.out.println(blockEntity);
-            if (blockEntity instanceof InfuserBlockEntity) {
+            if (blockEntity instanceof CondenserBlockEntity) {
 
-                NetworkHooks.openScreen((ServerPlayer) player, (InfuserBlockEntity) blockEntity, blockEntity.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) player, (CondenserBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
             }
@@ -93,7 +93,7 @@ public class InfuserBlock extends UpgradableMachineBlock {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
         if(Screen.hasShiftDown()){
-            list.add(Component.translatable("message.infuser.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
+            list.add(Component.translatable("message.condenser.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
         } else {
             list.add(Component.translatable("message.manicmechanics.tooltip").withStyle(ChatFormatting.GRAY));
         }
@@ -102,6 +102,6 @@ public class InfuserBlock extends UpgradableMachineBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
-        return createTickerHelper(type, MMBlockEntities.INFUSER_BE.get(), InfuserBlockEntity::tick);
+        return createTickerHelper(type, MMBlockEntities.CONDENSER_BE.get(), CondenserBlockEntity::tick);
     }
 }

@@ -162,6 +162,7 @@ public class ManicMechanics
             MenuScreens.register(MMMenus.BUREAU_MENU.get(), BureauBlockScreen::new);
             MenuScreens.register(MMMenus.SEALER_MENU.get(), SealingChamberBlockScreen::new);
             MenuScreens.register(MMMenus.INFUSER_MENU.get(), InfuserBlockScreen::new);
+            MenuScreens.register(MMMenus.CONDENSER_MENU.get(), CondenserBlockScreen::new);
 
             //EntityRenderers.register(ModEntityTypes.PINCH.get(), ChomperRenderer::new);
         }

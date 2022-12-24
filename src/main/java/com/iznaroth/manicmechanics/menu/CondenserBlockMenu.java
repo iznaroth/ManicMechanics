@@ -1,9 +1,8 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,12 +16,13 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class InfuserBlockMenu extends AbstractContainerMenu {
+public class CondenserBlockMenu extends AbstractContainerMenu {
 
-    private InfuserBlockEntity blockEntity;
+    private CondenserBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
     private Player playerEntity;
@@ -33,14 +33,14 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
     private static final Minecraft minecraft = Minecraft.getInstance();
 
 
-    public InfuserBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, (InfuserBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    public CondenserBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, (CondenserBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public InfuserBlockMenu(int windowId, Inventory inv, InfuserBlockEntity entity, ContainerData data) {
-        super(MMMenus.INFUSER_MENU.get(), windowId);
+    public CondenserBlockMenu(int windowId, Inventory inv, CondenserBlockEntity entity, ContainerData data) {
+        super(MMMenus.CONDENSER_MENU.get(), windowId);
         checkContainerSize(inv, 3);
-        blockEntity = (InfuserBlockEntity) entity;
+        blockEntity = (CondenserBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
         this.fluidStack = blockEntity.getFluidStack();
@@ -48,9 +48,13 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
 
         layoutPlayerInventorySlots(10, 84, inv);
         blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 64, 10));
-            addSlot(new SlotItemHandler(h, 1, 64, 54));
-            addSlot(new SlotItemHandler(h, 2, 95, 60));
+            addSlot(new SlotItemHandler(h, 0, 31, 50));
+            addSlot(new SlotItemHandler(h, 1, 42, 29));
+            addSlot(new SlotItemHandler(h, 2, 67, 29));
+            addSlot(new SlotItemHandler(h, 3, 92, 29));
+            addSlot(new SlotItemHandler(h, 4, 117, 29));
+            addSlot(new SlotItemHandler(h, 5, 142, 29));
+            addSlot(new SlotItemHandler(h, 6, 153, 50));
         });
 
         addDataSlots(data);
@@ -63,13 +67,13 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
         return blockEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public InfuserBlockEntity getBlockEntity(){
+    public CondenserBlockEntity getBlockEntity(){
         return this.blockEntity;
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.INFUSER.get());
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.CONDENSER.get());
     }
 
 
@@ -89,7 +93,7 @@ public class InfuserBlockMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 3;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 7;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {

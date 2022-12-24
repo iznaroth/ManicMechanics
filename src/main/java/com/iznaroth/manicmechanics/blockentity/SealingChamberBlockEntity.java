@@ -248,7 +248,7 @@ public class SealingChamberBlockEntity extends BlockEntity implements IHasInvHan
 
             System.out.println("Recipe works.");
 
-            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2) || !pEntity.itemHandler.getStackInSlot(2).getItem().equals(iRecipe.getResultItem().getItem())){
+            if(pEntity.itemHandler.getStackInSlot(2).getCount() >= pEntity.itemHandler.getSlotLimit(2) || (!pEntity.itemHandler.getStackInSlot(2).getItem().equals(iRecipe.getResultItem().getItem())) && !pEntity.itemHandler.getStackInSlot(2).getItem().equals(Items.AIR)){
                 System.out.println("No room.");
                 return; //Can't perform the craft, slot is full or holds a different itemstack.
             }

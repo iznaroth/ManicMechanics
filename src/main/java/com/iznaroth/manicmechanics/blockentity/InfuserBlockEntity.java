@@ -8,6 +8,7 @@ import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
 import com.iznaroth.manicmechanics.item.MMItems;
+import com.iznaroth.manicmechanics.logistics.IFluidStorage;
 import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
@@ -180,6 +181,8 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IEnergyStorage> lazyEnergyStorage = LazyOptional.empty();
 
+    private LazyOptional<IFluidHandler> lazyFluidStorage = LazyOptional.empty();
+
     private int counter;
 
     public InfuserBlockEntity(BlockPos pos, BlockState state) {
@@ -230,6 +233,9 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         if (cap == ForgeCapabilities.ENERGY) {
             return lazyEnergyStorage.cast();
         }
+        if(cap == ForgeCapabilities.FLUID_HANDLER){
+            return lazyFluidStorage.cast();
+        }
         return super.getCapability(cap, side);
     }
 
@@ -244,6 +250,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
         lazyEnergyStorage = LazyOptional.of(() -> energyStorage);
+        lazyFluidStorage = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
@@ -251,6 +258,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyEnergyStorage.invalidate();
+        lazyFluidStorage.invalidate();
     }
 
 

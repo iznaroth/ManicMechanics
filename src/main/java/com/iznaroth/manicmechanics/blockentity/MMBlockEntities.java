@@ -14,10 +14,11 @@ public class MMBlockEntities {
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ManicMechanics.MOD_ID);
 
 
-    public static final RegistryObject<BlockEntityType<BureauBlockEntity>> BUREAU_BE = BLOCK_ENTITIES.register("currency_bureau", () -> BlockEntityType.Builder.of(BureauBlockEntity::new, MMBlocks.CURRENCY_BUREAU.get()).build(null)); //FIGURE THIS SHIT OUT!
+    public static final RegistryObject<BlockEntityType<BureauBlockEntity>> BUREAU_BE = BLOCK_ENTITIES.register("currency_bureau", () -> BlockEntityType.Builder.of(BureauBlockEntity::new, MMBlocks.CURRENCY_BUREAU.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<InfuserBlockEntity>> INFUSER_BE = BLOCK_ENTITIES.register("infuser", () -> BlockEntityType.Builder.of(InfuserBlockEntity::new, MMBlocks.INFUSER.get()).build(null)); //FIGURE THIS SHIT OUT!
+    public static final RegistryObject<BlockEntityType<InfuserBlockEntity>> INFUSER_BE = BLOCK_ENTITIES.register("infuser", () -> BlockEntityType.Builder.of(InfuserBlockEntity::new, MMBlocks.INFUSER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<CondenserBlockEntity>> CONDENSER_BE = BLOCK_ENTITIES.register("condenser", () -> BlockEntityType.Builder.of(CondenserBlockEntity::new, MMBlocks.CONDENSER.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_TILE = BLOCK_ENTITIES.register("hep", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, MMBlocks.HEP.get()).build(null)); //FIGURE THIS SHIT OUT!
 

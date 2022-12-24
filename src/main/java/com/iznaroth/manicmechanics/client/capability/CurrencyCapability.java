@@ -46,7 +46,7 @@ public class CurrencyCapability implements ICapabilityProvider, INBTSerializable
             return optional.cast();
         }
 
-        return null;
+        return LazyOptional.empty();
     }
 
     @Override

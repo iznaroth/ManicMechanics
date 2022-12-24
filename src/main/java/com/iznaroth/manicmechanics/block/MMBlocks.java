@@ -59,7 +59,7 @@ public class MMBlocks {
     public static final RegistryObject<Block> SEALER = registerBlock("sealing_chamber", () -> new SealingChamberBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new CondenserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new InfuserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);

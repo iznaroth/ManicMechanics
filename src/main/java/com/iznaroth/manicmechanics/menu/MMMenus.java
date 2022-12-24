@@ -35,6 +35,9 @@ public class MMMenus {
     public static final RegistryObject<MenuType<InfuserBlockMenu>> INFUSER_MENU =
             registerMenuType(InfuserBlockMenu::new, "infuser");
 
+    public static final RegistryObject<MenuType<CondenserBlockMenu>> CONDENSER_MENU =
+            registerMenuType(CondenserBlockMenu::new, "condenser");
+
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,

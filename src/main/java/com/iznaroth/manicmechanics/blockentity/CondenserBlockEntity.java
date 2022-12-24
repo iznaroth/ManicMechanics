@@ -1,22 +1,18 @@
 package com.iznaroth.manicmechanics.blockentity;
 
-import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasButtonState;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.EnergyStorageWrapper;
 import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.logistics.IFluidStorage;
-import com.iznaroth.manicmechanics.menu.InfuserBlockMenu;
+import com.iznaroth.manicmechanics.menu.CondenserBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.FluidSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
-import com.iznaroth.manicmechanics.recipe.InfuserRecipe;
-import com.iznaroth.manicmechanics.recipe.SealingChamberRecipe;
+//import com.iznaroth.manicmechanics.recipe.CondenserRecipe;
 import com.iznaroth.manicmechanics.util.NonItemRecipeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,25 +26,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.WaterFluid;
-import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -56,17 +46,15 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.lang.model.util.AbstractTypeVisitor6;
-import java.util.Arrays;
 import java.util.Optional;
 
-public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, IHasButtonState, MenuProvider {
+public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, IHasButtonState, MenuProvider {
 
 
     int progress = 0;
 
-    public int[] modes = {0, 0, 0};
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+    public int[] modes = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final ItemStackHandler itemHandler = new ItemStackHandler(7) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -185,8 +173,8 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
 
     private int counter;
 
-    public InfuserBlockEntity(BlockPos pos, BlockState state) {
-        super(MMBlockEntities.INFUSER_BE.get(), pos, state);
+    public CondenserBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.CONDENSER_BE.get(), pos, state);
 
         this.data = new ContainerData() { //For passing any important info through to the Menu on creation.
             @Override
@@ -233,9 +221,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         if (cap == ForgeCapabilities.ENERGY) {
             return lazyEnergyStorage.cast();
         }
-        if(cap == ForgeCapabilities.FLUID_HANDLER){
-            return lazyFluidStorage.cast();
-        }
+
         return super.getCapability(cap, side);
     }
 
@@ -250,7 +236,6 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         super.onLoad();
         lazyItemHandler = LazyOptional.of(() -> itemHandler);
         lazyEnergyStorage = LazyOptional.of(() -> energyStorage);
-        lazyFluidStorage = LazyOptional.of(() -> FLUID_TANK);
     }
 
     @Override
@@ -258,7 +243,6 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         super.invalidateCaps();
         lazyItemHandler.invalidate();
         lazyEnergyStorage.invalidate();
-        lazyFluidStorage.invalidate();
     }
 
 
@@ -282,21 +266,23 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         this.energyStorage.setEnergy(to);
     }
 
-    public static void checkForBuckets(InfuserBlockEntity pEntity){
+    public static void checkForBuckets(CondenserBlockEntity pEntity){
         if(pEntity.itemHandler.getStackInSlot(2).getItem().equals(Items.WATER_BUCKET.asItem())){ //TODO - ForgeTags check for fluid bucket
             pEntity.FLUID_TANK.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
             pEntity.itemHandler.setStackInSlot(2, new ItemStack(Items.BUCKET.asItem(), 1));
         }
     }
 
-    public static void craft(InfuserBlockEntity pEntity){
 
+    public static void craft(CondenserBlockEntity pEntity){
+
+        /**
         SimpleContainer inv = new SimpleContainer(pEntity.itemHandler.getSlots());
         for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
             inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        Optional<InfuserRecipe> recipe = NonItemRecipeHelper.getInfuserRecipeFor(inv, pEntity.level, pEntity);
+        Optional<CondenserRecipe> recipe = NonItemRecipeHelper.getCondenserRecipeFor(inv, pEntity.level, pEntity);
 
         recipe.ifPresent(iRecipe -> {
 
@@ -305,11 +291,6 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
             if(pEntity.itemHandler.getStackInSlot(1).getCount() >= pEntity.itemHandler.getSlotLimit(1) || (!pEntity.itemHandler.getStackInSlot(1).getItem().equals(iRecipe.getResultItem().getItem()) && !pEntity.itemHandler.getStackInSlot(1).getItem().equals(Items.AIR))){
                 System.out.println("No room.");
                 return; //Can't perform the craft, slot is full or holds a different itemstack.
-            }
-
-            if(!pEntity.hasEnoughFluid(iRecipe.getRecipeFluids(), 120 - pEntity.progress, pEntity)){
-                System.out.println("Insufficient fluid.");
-                return;
             }
 
             if(pEntity.progress < 120){ //Only increment progress if we can take energy.
@@ -332,31 +313,10 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
                 MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
             }
         });
+         **/
     }
 
-    private boolean hasEnoughFluid(NonNullList<Fluid> ingredients, int lengthRemaining, InfuserBlockEntity pEntity){
-        System.out.println(ingredients.toString());
-        int progForStep; //If this is >0, that's how many ticks for FIRST FLUID. Ex prog 0 = lengthRemaining 120. 120 - 80 = 40, so this batch has 40 ticks left.
 
-        for(int i = 0; i < ingredients.size(); i++){
-
-            if(ingredients.get(i).equals(Fluids.EMPTY)){
-                continue; //EMPTY is a flag for a nonfluid operation (dw about it)
-            }
-
-            progForStep = lengthRemaining - (40 * (2-i));
-            //System.out.println("Checking " + ingredients.get(i) + " against " + pEntity.FLUID_TANK.getFluid().getFluid() + " with amount " + pEntity.FLUID_TANK.getFluid().getAmount() + " , is it not empty? " + !ingredients.get(i).equals(Fluids.EMPTY));
-            if(pEntity.FLUID_TANK.getFluid().getFluid() != ingredients.get(i) && !ingredients.get(i).equals(Fluids.EMPTY)){ //4 mb/tick by default, use config
-                return false;
-            }
-
-            if(progForStep > 0 && pEntity.FLUID_TANK.getFluid().getAmount() < Math.min(progForStep, 40) * 4){ //If the existing number is ever larger than 40, then this step is maxed out. Also forces true for any fluid in a completed step.
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     private void craftTheItem(ItemStack output){
         itemHandler.extractItem(0, 1, false);
@@ -372,7 +332,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
         this.progress = progress;
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, InfuserBlockEntity pEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, CondenserBlockEntity pEntity) {
         if(level.isClientSide)
             return;
 
@@ -383,13 +343,13 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("screen.manicmechanics.infuser");
+        return Component.translatable("screen.manicmechanics.condenser");
     }
 
     @org.jetbrains.annotations.Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return new InfuserBlockMenu(p_39954_, p_39955_, this, this.data);
+        return new CondenserBlockMenu(p_39954_, p_39955_, this, this.data);
     }
 
     public int getModeFor(int whichButton){
@@ -398,10 +358,19 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
 
     @Override
     public void cycleForward(int which) {
-        if(modes[which] == 2){
-            modes[which] = 0;
+
+        if(which < 5) {
+            if (modes[which] == 2) {
+                modes[which] = 0;
+            } else {
+                modes[which]++;
+            }
         } else {
-            modes[which]++;
+            if (modes[which] == 3) {
+                modes[which] = 0;
+            } else {
+                modes[which]++;
+            }
         }
 
         System.out.println("Cycle button " + which + " forward to " + modes[which]);
@@ -410,10 +379,18 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
 
     @Override
     public void cycleBackward(int which) {
-        if(modes[which] == 0){
-            modes[which] = 2;
+        if(which < 5) {
+            if (modes[which] == 0) {
+                modes[which] = 2;
+            } else {
+                modes[which]--;
+            }
         } else {
-            modes[which]--;
+            if (modes[which] == 0) {
+                modes[which] = 3;
+            } else {
+                modes[which]--;
+            }
         }
 
         setChanged();
