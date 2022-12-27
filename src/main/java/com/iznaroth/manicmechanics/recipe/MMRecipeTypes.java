@@ -20,6 +20,9 @@ public class MMRecipeTypes {
     public static final RegistryObject<RecipeSerializer<InfuserRecipe>> INFUSER_SERIALIZER
             = SERIALIZERS.register("infuser", () -> InfuserRecipe.Serializer.INSTANCE);
 
+    public static final RegistryObject<RecipeSerializer<CondenserRecipe>> CONDENSER_SERIALIZER
+            = SERIALIZERS.register("condenser", () -> CondenserRecipe.Serializer.INSTANCE);
+
 
     public static void register(IEventBus eventBus){
         SERIALIZERS.register(eventBus);

@@ -1,6 +1,8 @@
 package com.iznaroth.manicmechanics.util;
 
+import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
+import com.iznaroth.manicmechanics.recipe.CondenserRecipe;
 import com.iznaroth.manicmechanics.recipe.InfuserRecipe;
 import com.iznaroth.manicmechanics.recipe.MMRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -20,4 +22,13 @@ public class NonItemRecipeHelper {
                 .filter(recipe -> recipe.matches(pContainer, pLevel, pEntity)) // Checks if the recipe inputs are valid
                 .findFirst(); // Finds the first recipe whose inputs match. Should never, ever be multiple.
     }
+
+    public static Optional<CondenserRecipe> getCondenserRecipeFor(SimpleContainer pContainer, Level pLevel, CondenserBlockEntity pEntity) {
+        return pLevel.getRecipeManager()
+                .getAllRecipesFor(CondenserRecipe.Type.INSTANCE) // Gets all recipes
+                .stream() // Looks through all recipes for types
+                .filter(recipe -> recipe.matches(pContainer, pLevel, pEntity)) // Checks if the recipe inputs are valid
+                .findFirst(); // Finds the first recipe whose inputs match. Should never, ever be multiple.
+    }
 }
+

@@ -1,40 +1,48 @@
 {
-  "type": "manicmechanics:infuser",
+  "type": "manicmechanics:condenser",
 
-  "duration": 20,
+  "duration": 80,
 
   "ingredients": [
     {
-      "item": "manicmechanics:luminous_phosphothallite_mixture"
+      "item": "minecraft:iron_ore"
     }
   ],
 
-  "fluids": [
-    {
-      "fluid": "minecraft:water"
-    },
-    {
-      "fluid": "minecraft:empty"
-    },
-    {
-      "fluid": "minecraft:empty"
-    }
-  ],
 
   "modes": [
     {
+      "mode": 3
+    },
+    {
+      "mode": 3
+    },
+    {
+      "mode": 3
+    },
+    {
+      "mode": 3
+    },
+    {
+      "mode": 3
+    },
+    {
       "mode": 0
     },
     {
-      "mode": 1
+      "mode": 2
+    },
+    {
+      "mode": 3
     },
     {
       "mode": 0
     }
+
   ],
 
   "output": {
-    "item": "manicmechanics:neutralized_phosphothallite_mixture",
-    "count": 2
+    "item": "minecraft:raw_iron",
+    "count": 3
   }
 }

@@ -13,6 +13,7 @@ import com.iznaroth.manicmechanics.networking.packet.FluidSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
 //import com.iznaroth.manicmechanics.recipe.CondenserRecipe;
+import com.iznaroth.manicmechanics.recipe.CondenserRecipe;
 import com.iznaroth.manicmechanics.util.NonItemRecipeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,6 +29,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,10 +67,7 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return switch (slot) {
-                case 0 -> stack.getItem() == MMItems.LUMINOUS_PHOSPHOTHALLITE_MIXTURE.get();
-                case 1 -> stack.getItem() == MMItems.NEUTRALIZED_PHOSPHOTHALLITE_MIXTURE.get();
-                case 2 -> stack.getItem() == Items.WATER_BUCKET; //NOTE - might fuck up recipe
+            return switch (slot) { //For later
                 default -> super.isItemValid(slot, stack);
             };
         }
@@ -276,7 +275,7 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
 
     public static void craft(CondenserBlockEntity pEntity){
 
-        /**
+
         SimpleContainer inv = new SimpleContainer(pEntity.itemHandler.getSlots());
         for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
             inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
@@ -288,7 +287,7 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
 
             System.out.println("Recipe works.");
 
-            if(pEntity.itemHandler.getStackInSlot(1).getCount() >= pEntity.itemHandler.getSlotLimit(1) || (!pEntity.itemHandler.getStackInSlot(1).getItem().equals(iRecipe.getResultItem().getItem()) && !pEntity.itemHandler.getStackInSlot(1).getItem().equals(Items.AIR))){
+            if(pEntity.itemHandler.getStackInSlot(6).getCount() >= pEntity.itemHandler.getSlotLimit(1) || (!pEntity.itemHandler.getStackInSlot(1).getItem().equals(iRecipe.getResultItem().getItem()) && !pEntity.itemHandler.getStackInSlot(1).isEmpty())){
                 System.out.println("No room.");
                 return; //Can't perform the craft, slot is full or holds a different itemstack.
             }
@@ -298,7 +297,6 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
                     pEntity.progress++;
                     MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
                     pEntity.energyStorage.energyOperation(4);
-                    pEntity.FLUID_TANK.drain(4, IFluidHandler.FluidAction.EXECUTE);
                 }
             } else {
                 System.out.println("Progress hit " + pEntity.progress + ", crafting.");
@@ -313,14 +311,19 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
                 MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
             }
         });
-         **/
+
     }
 
 
 
     private void craftTheItem(ItemStack output){
         itemHandler.extractItem(0, 1, false);
-        itemHandler.insertItem(1, output, false);
+        itemHandler.extractItem(1, 1, false);
+        itemHandler.extractItem(2, 1, false);
+        itemHandler.extractItem(3, 1, false);
+        itemHandler.extractItem(4, 1, false);
+        itemHandler.extractItem(5, 1, false);
+        itemHandler.insertItem(6, output, false);
     }
 
     public int getCraftProgress(){
@@ -360,13 +363,13 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
     public void cycleForward(int which) {
 
         if(which < 5) {
-            if (modes[which] == 2) {
+            if (modes[which] == 3) {
                 modes[which] = 0;
             } else {
                 modes[which]++;
             }
         } else {
-            if (modes[which] == 3) {
+            if (modes[which] == 4) {
                 modes[which] = 0;
             } else {
                 modes[which]++;

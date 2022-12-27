@@ -1,24 +1,18 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "manicmechanics:block/infuser"
-    },
-    "facing=up": {
-      "model": "manicmechanics:block/infuser"
-    },
     "facing=north": {
-      "model": "manicmechanics:block/infuser"
+      "model": "manicmechanics:block/simple_communicator"
     },
     "facing=south": {
-      "model": "manicmechanics:block/infuser",
+      "model": "manicmechanics:block/simple_communicator",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/infuser",
+      "model": "manicmechanics:block/simple_communicator",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/infuser",
+      "model": "manicmechanics:block/simple_communicator",
       "y": 90
     }
   }

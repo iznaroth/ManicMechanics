@@ -313,7 +313,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
             }
 
             if(pEntity.progress < 120){ //Only increment progress if we can take energy.
-                if(pEntity.energyStorage.getEnergyStored() > 0) { //gotta double-nest since prog. is a hard requirement
+                if(pEntity.energyStorage.getEnergyStored() > 0 && pEntity.FLUID_TANK.getFluidAmount() > 0) { //gotta double-nest since prog. is a hard requirement
                     pEntity.progress++;
                     MMMessages.sendToClients(new ProgressSyncS2CPacket(pEntity.progress, pEntity.getBlockPos()));
                     pEntity.energyStorage.energyOperation(4);

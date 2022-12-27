@@ -1,23 +1,32 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " X ",
-    "BXB",
-    "XRX"
+    "SXS",
+    "PGP",
+    "IRI"
   ],
   "key": {
-    "X": {
-      "item": "manicmechanics:dyspersium_alloy"
+    "P": {
+      "item": "manicmechanics:phosphorite_ingot"
     },
-    "B": {
-      "item": "minecraft:iron_bars"
+    "S": {
+      "item": "minecraft:stone_bricks"
     },
     "R": {
       "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "manicmechanics:dyspersium_alloy"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
     }
   },
   "result": {
-    "item": "manicmechanics:ecp",
+    "item": "manicmechanics:simple_communicator",
     "count": 1
   }
 }

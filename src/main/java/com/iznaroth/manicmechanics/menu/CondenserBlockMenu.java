@@ -172,7 +172,7 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
 
         int progress = this.getBlockEntity().getCraftProgress();
         int maxProgress = 120;
-        int progressArrowSize = 22;
+        int progressArrowSize = 137;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
