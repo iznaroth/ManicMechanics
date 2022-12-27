@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "BXB",
+    "XRX"
+  ],
+  "key": {
+    "X": {
+      "item": "manicmechanics:dyspersium_alloy"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "manicmechanics:ecp",
+    "count": 1
+  }
+}

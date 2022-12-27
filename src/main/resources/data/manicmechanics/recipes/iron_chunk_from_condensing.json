@@ -1,0 +1,40 @@
+{
+  "type": "manicmechanics:infuser",
+
+  "duration": 20,
+
+  "ingredients": [
+    {
+      "item": "manicmechanics:luminous_phosphothallite_mixture"
+    }
+  ],
+
+  "fluids": [
+    {
+      "fluid": "minecraft:water"
+    },
+    {
+      "fluid": "minecraft:empty"
+    },
+    {
+      "fluid": "minecraft:empty"
+    }
+  ],
+
+  "modes": [
+    {
+      "mode": 0
+    },
+    {
+      "mode": 1
+    },
+    {
+      "mode": 0
+    }
+  ],
+
+  "output": {
+    "item": "manicmechanics:neutralized_phosphothallite_mixture",
+    "count": 2
+  }
+}
