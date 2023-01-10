@@ -20,6 +20,8 @@ public class MMBlockEntities {
 
     public static final RegistryObject<BlockEntityType<CondenserBlockEntity>> CONDENSER_BE = BLOCK_ENTITIES.register("condenser", () -> BlockEntityType.Builder.of(CondenserBlockEntity::new, MMBlocks.CONDENSER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<AssemblerBlockEntity>> ASSEMBLER_BE = BLOCK_ENTITIES.register("assembler", () -> BlockEntityType.Builder.of(AssemblerBlockEntity::new, MMBlocks.ASSEMBLER.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_TILE = BLOCK_ENTITIES.register("hep", () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, MMBlocks.HEP.get()).build(null)); //FIGURE THIS SHIT OUT!
 
 

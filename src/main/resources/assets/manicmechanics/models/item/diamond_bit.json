@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "manicmechanics:item/mechanical_arm"
+    "layer0": "manicmechanics:item/diamond_bit"
   }
 }

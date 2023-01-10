@@ -38,6 +38,9 @@ public class MMMenus {
     public static final RegistryObject<MenuType<CondenserBlockMenu>> CONDENSER_MENU =
             registerMenuType(CondenserBlockMenu::new, "condenser");
 
+    public static final RegistryObject<MenuType<AssemblerBlockMenu>> ASSEMBLER_MENU =
+            registerMenuType(AssemblerBlockMenu::new, "assembler");
+
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,

@@ -9,7 +9,6 @@ import com.iznaroth.manicmechanics.item.MMItems;
 import com.iznaroth.manicmechanics.menu.CondenserBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.EnergySyncS2CPacket;
-import com.iznaroth.manicmechanics.networking.packet.FluidSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.networking.packet.ProgressSyncS2CPacket;
 //import com.iznaroth.manicmechanics.recipe.CondenserRecipe;
@@ -33,15 +32,10 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -139,36 +133,11 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
         }
     };
 
-    private final FluidTank FLUID_TANK = new FluidTank(16000) {
-        @Override
-        protected void onContentsChanged() {
-            setChanged();
-            if(!level.isClientSide()) {
-                MMMessages.sendToClients(new FluidSyncS2CPacket(this.fluid, worldPosition));
-            }
-        }
-
-        @Override
-        public boolean isFluidValid(FluidStack stack) {
-            return true;
-        }
-    };
-
-    public void setFluid(FluidStack stack) {
-        this.FLUID_TANK.setFluid(stack);
-    }
-
-    public FluidStack getFluidStack() {
-        return this.FLUID_TANK.getFluid();
-    }
-
 
     protected final ContainerData data;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IEnergyStorage> lazyEnergyStorage = LazyOptional.empty();
-
-    private LazyOptional<IFluidHandler> lazyFluidStorage = LazyOptional.empty();
 
     private int counter;
 
@@ -265,13 +234,6 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
         this.energyStorage.setEnergy(to);
     }
 
-    public static void checkForBuckets(CondenserBlockEntity pEntity){
-        if(pEntity.itemHandler.getStackInSlot(2).getItem().equals(Items.WATER_BUCKET.asItem())){ //TODO - ForgeTags check for fluid bucket
-            pEntity.FLUID_TANK.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE);
-            pEntity.itemHandler.setStackInSlot(2, new ItemStack(Items.BUCKET.asItem(), 1));
-        }
-    }
-
 
     public static void craft(CondenserBlockEntity pEntity){
 
@@ -339,7 +301,6 @@ public class CondenserBlockEntity extends BlockEntity implements IHasInvHandler,
         if(level.isClientSide)
             return;
 
-        checkForBuckets(pEntity);
         craft(pEntity);
     }
 

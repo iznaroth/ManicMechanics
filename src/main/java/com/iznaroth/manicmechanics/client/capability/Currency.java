@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.client.capability;
 
 import com.iznaroth.manicmechanics.api.ICurrency;
+import com.iznaroth.manicmechanics.client.gui.GuiCurrencyHUD;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -24,6 +25,7 @@ public class Currency implements ICurrency {
     @Override
     public int addCurrency(int mddToAdd) {
         this.setBalance(this.getCurrentBalance() + mddToAdd);
+        GuiCurrencyHUD.triggerChangeCountdown(mddToAdd, true);
         return this.getCurrentBalance();
     }
 
@@ -31,6 +33,7 @@ public class Currency implements ICurrency {
     public int removeCurrency(int mddToRemove) {
         if(mddToRemove < 0)
             mddToRemove = 0;
+        GuiCurrencyHUD.triggerChangeCountdown(mddToRemove, false);
         this.setBalance(this.getCurrentBalance() - mddToRemove);
         return this.getCurrentBalance();
     }

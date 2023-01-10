@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "manicmechanics:item/sticky_thallite"
+    "layer0": "manicmechanics:item/copper_baseplate"
   }
 }

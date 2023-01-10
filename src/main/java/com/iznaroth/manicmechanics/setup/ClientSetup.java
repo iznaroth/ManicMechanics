@@ -1,13 +1,17 @@
 package com.iznaroth.manicmechanics.setup;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.client.gui.GuiCurrencyHUD;
 import com.iznaroth.manicmechanics.render.AnimationTickCounter;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,8 +42,6 @@ public class ClientSetup {
         MinecraftForge.EVENT_BUS.register(AnimationTickCounter.class);  // counts ticks, used for animation
     }
 
-
-
     //For textures that aren't referenced by a block model JSON.
     @SubscribeEvent
     public static void onTextureStitchEvent(TextureStitchEvent.Pre event) {
@@ -59,4 +61,15 @@ public class ClientSetup {
     }
 
     private static final Logger LOGGER = LogManager.getLogger();
+
+    @Mod.EventBusSubscriber(modid = ManicMechanics.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientModBusEvents {
+
+        @SubscribeEvent
+        public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+            System.out.println("REGISTER CURRENCY!");
+            event.registerAboveAll("currency", GuiCurrencyHUD.HUD_CURR);
+        }
+
+    }
 }

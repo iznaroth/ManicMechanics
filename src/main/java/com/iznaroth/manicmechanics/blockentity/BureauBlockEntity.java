@@ -52,10 +52,7 @@ public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, Me
 
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-            return switch (slot) {
-                case 0 -> stack.getItem() == Items.BRICK;
-                default -> super.isItemValid(slot, stack);
-            };
+            return true;
         }
     };
 

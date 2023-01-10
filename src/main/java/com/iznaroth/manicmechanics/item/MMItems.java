@@ -31,7 +31,7 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS).durability(400)));
 
     public static final RegistryObject<Item> WALLET = ITEMS.register("wallet",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+            () -> new WalletItem(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> LINK_TOOL = ITEMS.register("link_tool",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
@@ -49,6 +49,12 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> AUTHORIZED_SECURITY_BRICK = ITEMS.register("security_brick",
+            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> MECHANICAL_ARM = ITEMS.register("mechanical_arm",
+            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> DIAMOND_BIT = ITEMS.register("diamond_bit",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 
@@ -80,6 +86,9 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> SEALANT = ITEMS.register("sealant",
+            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> COPPER_BASEPLATE = ITEMS.register("copper_baseplate",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 
@@ -115,20 +124,6 @@ public class MMItems {
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> UNSTABLE_NITROL_INGOT = ITEMS.register("volatile_nitrol_ingot",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
-
-
-    //Aspectus Crystals - Early
-    public static final RegistryObject<Item> JAGGED_CRYSTAL = ITEMS.register("jagged_crystal",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
-
-    public static final RegistryObject<Item> SLANTED_CRYSTAL = ITEMS.register("slanted_crystal",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
-
-    public static final RegistryObject<Item> LANGUID_CRYSTAL = ITEMS.register("languid_crystal",
-            () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
-
-    public static final RegistryObject<Item> BULBOUS_CRYSTAL = ITEMS.register("bulbous_crystal",
             () -> new Item(new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 

@@ -1,0 +1,27 @@
+{
+  "type": "manicmechanics:assembler",
+
+  "duration": 80,
+
+  "tooling": {
+    "item": "manicmechanics:diamond_bit",
+    "count": 1
+  },
+
+  "ingredients": [
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+
+  "counts": [
+    {
+      "quantity": 5
+    }
+  ],
+
+  "output": {
+    "item": "manicmechanics:copper_baseplate",
+    "count": 2
+  }
+}

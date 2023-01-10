@@ -43,7 +43,6 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
         blockEntity = (CondenserBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
-        this.fluidStack = blockEntity.getFluidStack();
 
 
         layoutPlayerInventorySlots(10, 84, inv);
@@ -181,12 +180,5 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
         return blockEntity.getModeFor(whichButton);
     }
 
-    public void setFluid(FluidStack fluidStack) {
-        this.fluidStack = fluidStack;
-    }
-
-    public FluidStack getFluidStack() {
-        return fluidStack;
-    }
 
 }

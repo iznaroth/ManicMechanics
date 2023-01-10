@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.AssemblerBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -30,16 +30,16 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CondenserBlock extends UpgradableMachineBlock {
+public class AssemblerBlock extends UpgradableMachineBlock {
 
 
-    public CondenserBlock(Properties properties) {
+    public AssemblerBlock(Properties properties) {
         super(properties);
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new CondenserBlockEntity(pos, state); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new AssemblerBlockEntity(pos, state); }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -67,8 +67,8 @@ public class CondenserBlock extends UpgradableMachineBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof CondenserBlockEntity) {
-                ((CondenserBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof AssemblerBlockEntity) {
+                ((AssemblerBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -80,9 +80,9 @@ public class CondenserBlock extends UpgradableMachineBlock {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             System.out.println(blockEntity);
-            if (blockEntity instanceof CondenserBlockEntity) {
+            if (blockEntity instanceof AssemblerBlockEntity) {
 
-                NetworkHooks.openScreen((ServerPlayer) player, (CondenserBlockEntity) blockEntity, blockEntity.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) player, (AssemblerBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
             }
@@ -93,7 +93,7 @@ public class CondenserBlock extends UpgradableMachineBlock {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter reader, List<Component> list, TooltipFlag flags) {
         if(Screen.hasShiftDown()){
-            list.add(Component.translatable("message.condenser.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
+            list.add(Component.translatable("message.assembler.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
         } else {
             list.add(Component.translatable("message.manicmechanics.tooltip").withStyle(ChatFormatting.GRAY));
         }
@@ -102,6 +102,6 @@ public class CondenserBlock extends UpgradableMachineBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
-        return createTickerHelper(type, MMBlockEntities.CONDENSER_BE.get(), CondenserBlockEntity::tick);
+        return createTickerHelper(type, MMBlockEntities.ASSEMBLER_BE.get(), AssemblerBlockEntity::tick);
     }
 }

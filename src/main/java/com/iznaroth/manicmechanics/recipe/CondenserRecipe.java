@@ -3,24 +3,17 @@ package com.iznaroth.manicmechanics.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
-import com.iznaroth.manicmechanics.blockentity.InfuserBlockEntity;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -55,8 +48,8 @@ public class CondenserRecipe implements Recipe<SimpleContainer> {
             }
         }
 
-        System.out.println("Recipe wants these modes: " + Arrays.toString(modes));
-        System.out.println("Entity has these modes: " + entity.getModeFor(0) + " " + entity.getModeFor(1) + " " + entity.getModeFor(2));
+        //System.out.println("Recipe wants these modes: " + Arrays.toString(modes));
+        //System.out.println("Entity has these modes: " + entity.getModeFor(0) + " " + entity.getModeFor(1) + " " + entity.getModeFor(2));
         for(int i = 0; i < modes.length; i++){
             if(entity.getModeFor(i) != modes[i])
                 return false; //compare mode mismatch
@@ -112,7 +105,7 @@ public class CondenserRecipe implements Recipe<SimpleContainer> {
     public static class Type implements RecipeType<CondenserRecipe> {
         private Type() { }
         public static final Type INSTANCE = new Type();
-        public static final String ID = "infuser";
+        public static final String ID = "condenser";
     }
 
     public static class Serializer implements RecipeSerializer<CondenserRecipe> {

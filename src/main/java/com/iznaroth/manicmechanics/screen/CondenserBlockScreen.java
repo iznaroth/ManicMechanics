@@ -97,11 +97,14 @@ public class CondenserBlockScreen extends AbstractContainerScreen<CondenserBlock
 
     private void renderProgressArrow(PoseStack stack, int x, int y){
         blit(stack, x + 31, y + 31, 180, 35, Math.min(menu.getScaledProgress(), 9), 17); //Near prog arrow
+
+        blit(stack, x + 59, y + 34, 203, 45, Math.min((Math.max(menu.getScaledProgress() - 29, 0)), 7), 7); //Dots
+        blit(stack, x + 84, y + 34, 203, 45, Math.min((Math.max(menu.getScaledProgress() - 53, 0)), 7), 7);
+        blit(stack, x + 109, y + 34, 203, 45, Math.min((Math.max(menu.getScaledProgress() - 78, 0)), 7), 7);
+        blit(stack, x + 134, y + 34, 203, 45, Math.min((Math.max(menu.getScaledProgress() - 103, 0)), 7), 7);
+
+
         blit(stack, x + 159, y + 33, 191, 36, Math.min((Math.max(menu.getScaledProgress() - 128, 0)), 11), 16); //Far prog arrow
-
-        System.out.println(menu.getScaledProgress());
-
-        //TODO - add dots
     }
 
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {

@@ -10,6 +10,7 @@ import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -60,7 +61,7 @@ public class MMBlocks {
 
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new CondenserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new AssemblerBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new InfuserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
@@ -78,6 +79,7 @@ public class MMBlocks {
     public static final RegistryObject<Block> GAS_TUBE = registerBlock("gas_tube", () -> new GasTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> POWER_TUBE = registerBlock("power_tube", () -> new PowerTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
+    public static final RegistryObject<Block> JAGGED_CRYSTAL = registerBlock("jagged_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
 
     public static final RegistryObject<Block> TUBE_BUNDLE = registerBlock("tube_bundle", () -> new TubeBundleBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> BELT = registerBlock("belt", () -> new BeltBlock(BlockBehaviour.Properties.of(Material.METAL).strength(5).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);

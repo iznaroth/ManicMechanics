@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.blockentity.CondenserBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.AssemblerBlockEntity;
 import com.iznaroth.manicmechanics.item.MMItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,41 +20,43 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.Arrays;
 import java.util.List;
 
-public class CondenserBlockMenu extends AbstractContainerMenu {
+public class AssemblerBlockMenu extends AbstractContainerMenu {
 
-    private CondenserBlockEntity blockEntity;
+    private AssemblerBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
     private Player playerEntity;
     private IItemHandler playerInventory;
-    private FluidStack fluidStack;
 
 
     private static final Minecraft minecraft = Minecraft.getInstance();
 
 
-    public CondenserBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id, inv, (CondenserBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    public AssemblerBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+        this(id, inv, (AssemblerBlockEntity) inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public CondenserBlockMenu(int windowId, Inventory inv, CondenserBlockEntity entity, ContainerData data) {
-        super(MMMenus.CONDENSER_MENU.get(), windowId);
+    public AssemblerBlockMenu(int windowId, Inventory inv, AssemblerBlockEntity entity, ContainerData data) {
+        super(MMMenus.ASSEMBLER_MENU.get(), windowId);
         checkContainerSize(inv, 3);
-        blockEntity = (CondenserBlockEntity) entity;
+        blockEntity = (AssemblerBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
-        this.fluidStack = blockEntity.getFluidStack();
 
 
         layoutPlayerInventorySlots(10, 84, inv);
         blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
-            addSlot(new SlotItemHandler(h, 0, 31, 50));
-            addSlot(new SlotItemHandler(h, 1, 42, 29));
-            addSlot(new SlotItemHandler(h, 2, 67, 29));
-            addSlot(new SlotItemHandler(h, 3, 92, 29));
-            addSlot(new SlotItemHandler(h, 4, 117, 29));
-            addSlot(new SlotItemHandler(h, 5, 142, 29));
-            addSlot(new SlotItemHandler(h, 6, 153, 50));
+            addSlot(new SlotItemHandler(h, 0, 33, 18));
+            addSlot(new SlotItemHandler(h, 1, 63, 18));
+            addSlot(new SlotItemHandler(h, 2, 81, 18));
+            addSlot(new SlotItemHandler(h, 3, 99, 18));
+            addSlot(new SlotItemHandler(h, 4, 63, 36));
+            addSlot(new SlotItemHandler(h, 5, 81, 36));
+            addSlot(new SlotItemHandler(h, 6, 99, 36));
+            addSlot(new SlotItemHandler(h, 7, 63, 54));
+            addSlot(new SlotItemHandler(h, 8, 81, 54));
+            addSlot(new SlotItemHandler(h, 9, 99, 54));
+            addSlot(new SlotItemHandler(h, 10, 146, 36));
         });
 
         addDataSlots(data);
@@ -67,13 +69,13 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
         return blockEntity.getCapability(ForgeCapabilities.ENERGY).map(IEnergyStorage::getEnergyStored).orElse(0);
     }
 
-    public CondenserBlockEntity getBlockEntity(){
+    public AssemblerBlockEntity getBlockEntity(){
         return this.blockEntity;
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.CONDENSER.get());
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.ASSEMBLER.get());
     }
 
 
@@ -93,7 +95,7 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 7;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 11;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
@@ -172,21 +174,10 @@ public class CondenserBlockMenu extends AbstractContainerMenu {
 
         int progress = this.getBlockEntity().getCraftProgress();
         int maxProgress = 120;
-        int progressArrowSize = 137;
+        int progressArrowSize = 24;
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 
-    public int getModeFor(int whichButton){
-        return blockEntity.getModeFor(whichButton);
-    }
-
-    public void setFluid(FluidStack fluidStack) {
-        this.fluidStack = fluidStack;
-    }
-
-    public FluidStack getFluidStack() {
-        return fluidStack;
-    }
 
 }
