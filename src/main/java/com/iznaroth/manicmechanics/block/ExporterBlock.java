@@ -1,9 +1,7 @@
 package com.iznaroth.manicmechanics.block;
 
 
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
-import com.iznaroth.manicmechanics.logistics.ILogisticTube;
-import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.ExporterBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -31,17 +29,17 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BureauBlock extends MMBaseEntityBlock implements ILogisticTube {
+public class ExporterBlock extends MMBaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public BureauBlock(Properties properties) {
+    public ExporterBlock(Properties properties) {
         super(properties);
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new BureauBlockEntity(pos, state); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new ExporterBlockEntity(pos, state); }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -69,8 +67,8 @@ public class BureauBlock extends MMBaseEntityBlock implements ILogisticTube {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof BureauBlockEntity) {
-                ((BureauBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof ExporterBlockEntity) {
+                ((ExporterBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -81,9 +79,9 @@ public class BureauBlock extends MMBaseEntityBlock implements ILogisticTube {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof BureauBlockEntity) {
+            if (blockEntity instanceof ExporterBlockEntity) {
 
-                NetworkHooks.openScreen((ServerPlayer) player, (BureauBlockEntity) blockEntity, blockEntity.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) player, (ExporterBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
             }

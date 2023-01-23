@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.block;
 
 
-import com.iznaroth.manicmechanics.blockentity.ExporterBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.ImporterBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -29,17 +29,17 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ExporterBlock extends MMBaseEntityBlock {
+public class ImporterBlock extends MMBaseEntityBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public ExporterBlock(Properties properties) {
+    public ImporterBlock(Properties properties) {
         super(properties);
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new ExporterBlockEntity(pos, state); }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state){ return new ImporterBlockEntity(pos, state); }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -67,8 +67,8 @@ public class ExporterBlock extends MMBaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ExporterBlockEntity) {
-                ((ExporterBlockEntity) blockEntity).drops();
+            if (blockEntity instanceof ImporterBlockEntity) {
+                ((ImporterBlockEntity) blockEntity).drops();
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
@@ -79,9 +79,9 @@ public class ExporterBlock extends MMBaseEntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof ExporterBlockEntity) {
+            if (blockEntity instanceof ImporterBlockEntity) {
 
-                NetworkHooks.openScreen((ServerPlayer) player, (ExporterBlockEntity) blockEntity, blockEntity.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer) player, (ImporterBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {
                 throw new IllegalStateException("Our named container provider is missing!");
             }

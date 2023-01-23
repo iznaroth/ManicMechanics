@@ -71,11 +71,13 @@ public class GuiCurrencyHUD {
         int q = minecraft.font.width(tc);
         minecraft.font.drawShadow(poseStack, tc, (float)((screenWidth*0.5) + 78 + 32), (float)(height - 8), 16777215);
 
+        Component ac = Component.literal(" " + amount);
+
         if(countdown > 0){
             if(dir){
-                minecraft.font.drawShadow(poseStack, tc, (float)((screenWidth*0.5) + 78 + 32) + q, (float)(height - 8), 0x1B5E20); //Add cash!
+                minecraft.font.drawShadow(poseStack, ac, (float)((screenWidth*0.5) + 78 + 32) + q, (float)(height - 8), 0x09FF00); //Add cash!
             } else {
-                minecraft.font.drawShadow(poseStack, tc, (float)((screenWidth*0.5) + 78 + 32) + q, (float)(height - 8), 0xB71C1C); //Lose cash!
+                minecraft.font.drawShadow(poseStack, ac, (float)((screenWidth*0.5) + 78 + 32) + q, (float)(height - 8), 0xFF0000); //Lose cash!
             }
 
             countdown--;

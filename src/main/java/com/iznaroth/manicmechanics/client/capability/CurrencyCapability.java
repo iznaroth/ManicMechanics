@@ -25,6 +25,8 @@ public class CurrencyCapability implements ICapabilityProvider, INBTSerializable
     //@AutoRegisterCapability(ICurrency.class)
     public static final Capability<ICurrency> CURRENCY_CAPABILITY = CapabilityManager.get(new CapabilityToken<ICurrency>() { });
 
+    public static final Direction DEFAULT_FACING = null;
+
     private ICurrency currency = null;
 
     private final LazyOptional<ICurrency> optional = LazyOptional.of(this::createCurrency);
@@ -39,6 +41,9 @@ public class CurrencyCapability implements ICapabilityProvider, INBTSerializable
 
     public static final ResourceLocation ID = new ResourceLocation(ManicMechanics.MOD_ID, "currency");
 
+    public static LazyOptional<ICurrency> getBalance(final LivingEntity entity){
+        return entity.getCapability(CURRENCY_CAPABILITY, DEFAULT_FACING);
+    }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @org.jetbrains.annotations.Nullable Direction side) {

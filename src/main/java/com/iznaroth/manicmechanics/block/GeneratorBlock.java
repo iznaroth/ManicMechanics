@@ -1,10 +1,8 @@
 package com.iznaroth.manicmechanics.block;
 
 
-import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
-import com.iznaroth.manicmechanics.blockentity.SimpleCommunicatorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;

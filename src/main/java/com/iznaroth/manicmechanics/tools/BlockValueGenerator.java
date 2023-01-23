@@ -13,6 +13,18 @@ public class BlockValueGenerator {
     static Class blocks = net.minecraft.world.level.block.Blocks.class;
 
 
+    public static int getValOrPopulate(Item key){
+        if(current_mapping.isEmpty()){
+            populateEconomyMapping(1, 1);
+        }
+
+        if(current_mapping.containsKey(key)){
+            return current_mapping.get(key);
+        } else {
+            return 0;
+        }
+    }
+
     public static HashMap<Item, Integer> populateEconomyMapping(int biome_key, double seed){
         Field[] fields = blocks.getDeclaredFields();
         if(!current_mapping.isEmpty()) {

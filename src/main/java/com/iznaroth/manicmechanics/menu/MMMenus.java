@@ -1,10 +1,8 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.network.IContainerFactory;
@@ -26,8 +24,11 @@ public class MMMenus {
     public static final RegistryObject<MenuType<GeneratorBlockMenu>> GENERATOR_MENU =
             registerMenuType(GeneratorBlockMenu::new, "generator");
 
-    public static final RegistryObject<MenuType<BureauBlockMenu>> BUREAU_MENU =
-            registerMenuType(BureauBlockMenu::new, "bureau");
+    public static final RegistryObject<MenuType<ExporterBlockMenu>> EXPORTER_MENU =
+            registerMenuType(ExporterBlockMenu::new, "exporter");
+
+    public static final RegistryObject<MenuType<ImporterBlockMenu>> IMPORTER_MENU =
+            registerMenuType(ImporterBlockMenu::new, "importer");
 
     public static final RegistryObject<MenuType<SealingChamberBlockMenu>> SEALER_MENU =
             registerMenuType(SealingChamberBlockMenu::new, "sealer");

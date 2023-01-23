@@ -1,20 +1,16 @@
 package com.iznaroth.manicmechanics.blockentity;
 
-import com.iznaroth.manicmechanics.ManicMechanics;
-import com.iznaroth.manicmechanics.block.ECPBlock;
-import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
-import com.iznaroth.manicmechanics.item.MMItems;
-import com.iznaroth.manicmechanics.menu.BureauBlockMenu;
-import com.iznaroth.manicmechanics.menu.SimpleCommunicatorBlockMenu;
+import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
+import com.iznaroth.manicmechanics.menu.ExporterBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
+import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -34,14 +30,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
-import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.util.HashMap;
 
-public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(13) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -71,8 +66,8 @@ public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, Me
     protected final ContainerData data;
 
 
-    public BureauBlockEntity(BlockPos pos, BlockState state) {
-        super(MMBlockEntities.BUREAU_BE.get(), pos, state);
+    public ExporterBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.EXPORTER_BE.get(), pos, state);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
@@ -138,7 +133,7 @@ public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, Me
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, BureauBlockEntity pEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, ExporterBlockEntity pEntity) {
         //pEntity.readInput();
     }
 
@@ -152,6 +147,37 @@ public class BureauBlockEntity extends BlockEntity implements IHasInvHandler, Me
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
         System.out.println("CREATING MENU FROM BE");
-        return new BureauBlockMenu(p_39954_, p_39955_, this, this.data);
+        return new ExporterBlockMenu(p_39954_, p_39955_, this, this.data);
+    }
+
+    public void sellEverything(Player player){
+
+        HashMap<Item, Integer> mappings = BlockValueGenerator.populateEconomyMapping(1, 1); //TEMP - how the fuck do I get the world seed?
+
+        for(int i = 0; i < 12; i++){
+            ItemStack to_sell = itemHandler.getStackInSlot(i);
+
+            if(to_sell == ItemStack.EMPTY){
+                System.out.println("Empty slot.");
+            } else {
+
+                Integer profit = mappings.get(to_sell.getItem());
+                System.out.println("Try to sell: " + to_sell);
+
+                if(profit == null){
+                    System.out.println("I don't got a value for that item: " + to_sell);
+                } else {
+                    profit = profit * to_sell.getCount();
+
+                    ICurrency curr = CurrencyCapability.getBalance(player).orElse(null);
+                    if(curr == null) {
+                        System.out.println("This dude has no money.");
+                    }
+
+                    curr.addCurrency(profit);
+                    itemHandler.setStackInSlot(i, Items.AIR.getDefaultInstance().copy());
+                }
+            }
+        }
     }
 }

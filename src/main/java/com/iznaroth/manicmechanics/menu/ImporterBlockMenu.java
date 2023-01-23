@@ -1,7 +1,7 @@
 package com.iznaroth.manicmechanics.menu;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.blockentity.ExporterBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.ImporterBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,7 +14,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ExporterBlockMenu extends AbstractContainerMenu {
+public class ImporterBlockMenu extends AbstractContainerMenu {
     private BlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
@@ -23,33 +23,21 @@ public class ExporterBlockMenu extends AbstractContainerMenu {
 
     private static final Minecraft minecraft = Minecraft.getInstance();
 
-    public ExporterBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+    public ImporterBlockMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public ExporterBlockMenu(int windowId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(MMMenus.EXPORTER_MENU.get(), windowId);
+    public ImporterBlockMenu(int windowId, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(MMMenus.IMPORTER_MENU.get(), windowId);
         checkContainerSize(inv, 1);
-        blockEntity = (ExporterBlockEntity) entity;
+        blockEntity = (ImporterBlockEntity) entity;
         this.level = inv.player.level;
         this.data = data;
 
         layoutPlayerInventorySlots(10, 84, inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 10, 12));
-            this.addSlot(new SlotItemHandler(handler, 1, 28, 12));
-            this.addSlot(new SlotItemHandler(handler, 2, 46, 12));
-            this.addSlot(new SlotItemHandler(handler, 3, 64, 12));
-            this.addSlot(new SlotItemHandler(handler, 4, 10, 30));
-            this.addSlot(new SlotItemHandler(handler, 5, 28, 30));
-            this.addSlot(new SlotItemHandler(handler, 6, 46, 30));
-            this.addSlot(new SlotItemHandler(handler, 7, 64, 30));
-            this.addSlot(new SlotItemHandler(handler, 8, 10, 48));
-            this.addSlot(new SlotItemHandler(handler, 9, 28, 48));
-            this.addSlot(new SlotItemHandler(handler, 10, 46, 48));
-            this.addSlot(new SlotItemHandler(handler, 11, 64, 48));
-            this.addSlot(new SlotItemHandler(handler, 12, 127, 51));
+            this.addSlot(new SlotItemHandler(handler, 0, 65, 51));
 
         });
 
@@ -58,13 +46,13 @@ public class ExporterBlockMenu extends AbstractContainerMenu {
     }
 
 
-    public ExporterBlockEntity getBlockEntity(){
-        return (ExporterBlockEntity) this.blockEntity;
+    public ImporterBlockEntity getBlockEntity(){
+        return (ImporterBlockEntity) this.blockEntity;
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.EXPORTER.get());
+        return stillValid(ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos()), playerIn, MMBlocks.IMPORTER.get());
     }
 
 
@@ -84,7 +72,7 @@ public class ExporterBlockMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
     // THIS YOU HAVE TO DEFINE!
-    private static final int TE_INVENTORY_SLOT_COUNT = 13;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 1;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {

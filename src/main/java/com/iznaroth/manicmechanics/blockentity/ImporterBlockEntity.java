@@ -3,7 +3,7 @@ package com.iznaroth.manicmechanics.blockentity;
 import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
 import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
-import com.iznaroth.manicmechanics.menu.ExporterBlockMenu;
+import com.iznaroth.manicmechanics.menu.ImporterBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
@@ -35,8 +35,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(13) {
+public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -66,8 +66,8 @@ public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, 
     protected final ContainerData data;
 
 
-    public ExporterBlockEntity(BlockPos pos, BlockState state) {
-        super(MMBlockEntities.EXPORTER_BE.get(), pos, state);
+    public ImporterBlockEntity(BlockPos pos, BlockState state) {
+        super(MMBlockEntities.IMPORTER_BE.get(), pos, state);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
@@ -133,21 +133,21 @@ public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, 
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, ExporterBlockEntity pEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, ImporterBlockEntity pEntity) {
         //pEntity.readInput();
     }
 
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("screen.manicmechanics.bureau");
+        return Component.translatable("screen.manicmechanics.importer");
     }
 
     @org.jetbrains.annotations.Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        System.out.println("CREATING MENU FROM BE");
-        return new ExporterBlockMenu(p_39954_, p_39955_, this, this.data);
+        System.out.println("CREATING IMPORTER MENU FROM BE");
+        return new ImporterBlockMenu(p_39954_, p_39955_, this, this.data);
     }
 
     public void sellEverything(Player player){

@@ -1,7 +1,5 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
-import com.iznaroth.manicmechanics.blockentity.GeneratorBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.ChatFormatting;

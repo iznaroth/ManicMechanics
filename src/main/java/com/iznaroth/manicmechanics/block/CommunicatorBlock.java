@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.block;
 
-import com.iznaroth.manicmechanics.blockentity.BureauBlockEntity;
+import com.iznaroth.manicmechanics.blockentity.ExporterBlockEntity;
 import com.iznaroth.manicmechanics.blockentity.CommunicatorBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -53,7 +53,7 @@ public class CommunicatorBlock extends MMBaseEntityBlock {
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!world.isClientSide) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof BureauBlockEntity) {
+            if (blockEntity instanceof ExporterBlockEntity) {
 
                 NetworkHooks.openScreen((ServerPlayer) player, (CommunicatorBlockEntity) blockEntity, blockEntity.getBlockPos());
             } else {

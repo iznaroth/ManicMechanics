@@ -1,8 +1,6 @@
 package com.iznaroth.manicmechanics;
 
-import com.iznaroth.manicmechanics.block.InfuserBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.menu.CommunicatorBlockMenu;
 import com.iznaroth.manicmechanics.menu.MMMenus;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
 import com.iznaroth.manicmechanics.entity.custom.PinchEntity;
@@ -21,7 +19,6 @@ import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
 import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
@@ -159,11 +156,12 @@ public class ManicMechanics
             MenuScreens.register(MMMenus.SIMPLE_COMMUNICATOR_MENU.get(), SimpleCommunicatorBlockScreen::new);
             MenuScreens.register(MMMenus.COMMUNICATOR_MENU.get(), CommunicatorBlockScreen::new);
             MenuScreens.register(MMMenus.GENERATOR_MENU.get(), GeneratorBlockScreen::new);
-            MenuScreens.register(MMMenus.BUREAU_MENU.get(), BureauBlockScreen::new);
+            MenuScreens.register(MMMenus.EXPORTER_MENU.get(), ExporterBlockScreen::new);
             MenuScreens.register(MMMenus.SEALER_MENU.get(), SealingChamberBlockScreen::new);
             MenuScreens.register(MMMenus.INFUSER_MENU.get(), InfuserBlockScreen::new);
             MenuScreens.register(MMMenus.CONDENSER_MENU.get(), CondenserBlockScreen::new);
             MenuScreens.register(MMMenus.ASSEMBLER_MENU.get(), AssemblerBlockScreen::new);
+            MenuScreens.register(MMMenus.IMPORTER_MENU.get(), ImporterBlockScreen::new);
 
             //EntityRenderers.register(ModEntityTypes.PINCH.get(), ChomperRenderer::new);
         }

@@ -24,7 +24,7 @@ public class ClientSetup {
     public static void init(final FMLClientSetupEvent event) {
         //ScreenManager.register(MMMenus.GENERATOR_MENU.get(), GeneratorBlockScreen::new);
 
-        //ScreenManager.register(MMMenus.BUREAU_MENU.get(), BureauBlockScreen::new);
+        //ScreenManager.register(MMMenus.EXPORTER_MENU.get(), BureauBlockScreen::new);
 
         //ScreenManager.register(MMMenus.COMMUNICATOR_MENU.get(), CommunicatorBlockScreen::new);
 

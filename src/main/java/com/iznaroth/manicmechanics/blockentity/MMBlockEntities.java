@@ -1,6 +1,7 @@
 package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.block.ImporterBlock;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,7 +15,10 @@ public class MMBlockEntities {
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ManicMechanics.MOD_ID);
 
 
-    public static final RegistryObject<BlockEntityType<BureauBlockEntity>> BUREAU_BE = BLOCK_ENTITIES.register("currency_bureau", () -> BlockEntityType.Builder.of(BureauBlockEntity::new, MMBlocks.CURRENCY_BUREAU.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ExporterBlockEntity>> EXPORTER_BE = BLOCK_ENTITIES.register("exporter", () -> BlockEntityType.Builder.of(ExporterBlockEntity::new, MMBlocks.EXPORTER.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ImporterBlockEntity>> IMPORTER_BE = BLOCK_ENTITIES.register("importer", () -> BlockEntityType.Builder.of(ImporterBlockEntity::new, MMBlocks.IMPORTER.get()).build(null));
+
 
     public static final RegistryObject<BlockEntityType<InfuserBlockEntity>> INFUSER_BE = BLOCK_ENTITIES.register("infuser", () -> BlockEntityType.Builder.of(InfuserBlockEntity::new, MMBlocks.INFUSER.get()).build(null));
 
