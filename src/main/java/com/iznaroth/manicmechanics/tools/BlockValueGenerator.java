@@ -25,6 +25,14 @@ public class BlockValueGenerator {
         }
     }
 
+    public static HashMap<Item, Integer> getInitializeMap(){
+        if(current_mapping.isEmpty()){
+            populateEconomyMapping(1, 1);
+        }
+
+        return current_mapping;
+    }
+
     public static HashMap<Item, Integer> populateEconomyMapping(int biome_key, double seed){
         Field[] fields = blocks.getDeclaredFields();
         if(!current_mapping.isEmpty()) {

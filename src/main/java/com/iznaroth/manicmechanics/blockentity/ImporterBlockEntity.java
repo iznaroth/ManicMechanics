@@ -150,34 +150,4 @@ public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, 
         return new ImporterBlockMenu(p_39954_, p_39955_, this, this.data);
     }
 
-    public void sellEverything(Player player){
-
-        HashMap<Item, Integer> mappings = BlockValueGenerator.populateEconomyMapping(1, 1); //TEMP - how the fuck do I get the world seed?
-
-        for(int i = 0; i < 12; i++){
-            ItemStack to_sell = itemHandler.getStackInSlot(i);
-
-            if(to_sell == ItemStack.EMPTY){
-                System.out.println("Empty slot.");
-            } else {
-
-                Integer profit = mappings.get(to_sell.getItem());
-                System.out.println("Try to sell: " + to_sell);
-
-                if(profit == null){
-                    System.out.println("I don't got a value for that item: " + to_sell);
-                } else {
-                    profit = profit * to_sell.getCount();
-
-                    ICurrency curr = CurrencyCapability.getBalance(player).orElse(null);
-                    if(curr == null) {
-                        System.out.println("This dude has no money.");
-                    }
-
-                    curr.addCurrency(profit);
-                    itemHandler.setStackInSlot(i, Items.AIR.getDefaultInstance().copy());
-                }
-            }
-        }
-    }
 }
