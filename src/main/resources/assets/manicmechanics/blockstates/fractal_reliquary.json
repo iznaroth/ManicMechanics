@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/fractal_reliquary"
     },
     "facing=up": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/fractal_reliquary"
     },
     "facing=north": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/fractal_reliquary"
     },
     "facing=south": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/fractal_reliquary",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/fractal_reliquary",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/fractal_reliquary",
       "y": 90
     }
   },

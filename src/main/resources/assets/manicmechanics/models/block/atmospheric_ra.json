@@ -1,6 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "manicmechanics:block/amber_sandstone"
+    "down": "manicmechanics:block/atmospheric_array_bottom",
+    "up": "manicmechanics:block/atmospheric_array_side",
+    "north": "manicmechanics:block/atmospheric_array_front",
+    "south": "manicmechanics:block/atmospheric_array_side",
+    "east": "manicmechanics:block/atmospheric_array_side",
+    "west": "manicmechanics:block/atmospheric_array_side"
   }
 }

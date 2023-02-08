@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "manicmechanics:block/nitrol_ore"
+    "all": "manicmechanics:block/amber_sandstone"
   }
 }

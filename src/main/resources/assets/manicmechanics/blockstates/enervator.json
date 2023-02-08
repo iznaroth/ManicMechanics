@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/crystallizer"
+      "model": "manicmechanics:block/enervator"
     },
     "facing=up": {
-      "model": "manicmechanics:block/crystallizer"
+      "model": "manicmechanics:block/enervator"
     },
     "facing=north": {
-      "model": "manicmechanics:block/crystallizer"
+      "model": "manicmechanics:block/enervator"
     },
     "facing=south": {
-      "model": "manicmechanics:block/crystallizer",
+      "model": "manicmechanics:block/enervator",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/crystallizer",
+      "model": "manicmechanics:block/enervator",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/crystallizer",
+      "model": "manicmechanics:block/enervator",
       "y": 90
     }
   },

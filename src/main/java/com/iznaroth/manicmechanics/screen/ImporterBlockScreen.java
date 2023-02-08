@@ -17,6 +17,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -188,7 +189,9 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         }
 
         if((p_97748_ > x+9 && p_97748_ < x+45) && (p_97749_ > y+54 && p_97749_ < y+66)){ //ORDER
-            orderItem();
+            //orderItem();
+
+            this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0);
         }
 
 
@@ -247,7 +250,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
 
         pos = 0;
 
-        listed[0].rebuildOnCycle(filteredItemSet.size() > 0 ? filteredItemSet.get(pos) : Items.AIR);
+        listed[0].rebuildOnCycle(filteredItemSet.size() > 0 ? filteredItemSet.get(pos) : Items.AIR); //mediocre solution to overfilter
         listed[1].rebuildOnCycle(filteredItemSet.size() > 1 ? filteredItemSet.get(pos+1) : Items.AIR);
         listed[2].rebuildOnCycle(filteredItemSet.size() > 2 ? filteredItemSet.get(pos+2) : Items.AIR);
      }
@@ -256,23 +259,14 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         selected = listed[which].getEntryItem().getDefaultInstance();
      }
 
-     public void orderItem(){
 
-         ICurrency curr = CurrencyCapability.getBalance(this.minecraft.player).orElse(null);
-         if(curr == null) {
-             System.out.println("This dude has no money.");
-         }
-
-         curr.removeCurrency(BlockValueGenerator.getValOrPopulate(selected.getItem()) * order_quantity);
-
-        this.menu.getBlockEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(selected.getItem(), order_quantity), false);
-     }
 
     //TODO - export to static method
     private boolean isMouseAboveArea(int pMouseX, int pMouseY, int x, int y, int offsetX, int offsetY, int width, int height) {
         return MouseUtil.isMouseOver(pMouseX, pMouseY, x + offsetX, y + offsetY, width, height);
     }
 
+    //TODO - inconsistent reaction to backspace, E is not captured and still closes menu
     @Override
     public boolean keyPressed(int p_97765_, int p_97766_, int p_97767_) {
 

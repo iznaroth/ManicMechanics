@@ -1,6 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "manicmechanics:block/amber_sandstone"
+    "down": "manicmechanics:block/crystallizer_tb",
+    "up": "manicmechanics:block/crystallizer_tb",
+    "north": "manicmechanics:block/crystallizer_front",
+    "south": "manicmechanics:block/crystallizer_side",
+    "east": "manicmechanics:block/crystallizer_side",
+    "west": "manicmechanics:block/crystallizer_side"
   }
 }

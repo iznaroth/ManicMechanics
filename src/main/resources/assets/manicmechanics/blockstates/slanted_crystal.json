@@ -1,28 +1,28 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/languid_crystal",
+      "model": "manicmechanics:block/slanted_crystal",
       "x": 180
     },
     "facing=east": {
-      "model": "manicmechanics:block/languid_crystal",
+      "model": "manicmechanics:block/slanted_crystal",
       "x": 90,
       "y": 90
     },
     "facing=north": {
-      "model": "manicmechanics:block/languid_crystal",
+      "model": "manicmechanics:block/slanted_crystal",
       "x": 90
     },
     "facing=south": {
-      "model": "manicmechanics:block/languid_crystal",
+      "model": "manicmechanics:block/slanted_crystal",
       "x": 90,
       "y": 180
     },
     "facing=up": {
-      "model": "manicmechanics:block/languid_crystal"
+      "model": "manicmechanics:block/slanted_crystal"
     },
     "facing=west": {
-      "model": "manicmechanics:block/languid_crystal",
+      "model": "manicmechanics:block/slanted_crystal",
       "x": 90,
       "y": 270
     }

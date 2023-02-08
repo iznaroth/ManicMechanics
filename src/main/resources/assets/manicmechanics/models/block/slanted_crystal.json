@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "manicmechanics:block/jagged_crystal"
+    "cross": "manicmechanics:block/slanted_crystal"
   },
   "render_type": "cutout"
 }

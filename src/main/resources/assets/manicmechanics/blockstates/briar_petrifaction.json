@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/briar_petrifaction"
     },
     "facing=up": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/briar_petrifaction"
     },
     "facing=north": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/briar_petrifaction"
     },
     "facing=south": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/briar_petrifaction",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/briar_petrifaction",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/briar_petrifaction",
       "y": 90
     }
   },

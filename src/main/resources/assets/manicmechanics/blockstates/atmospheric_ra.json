@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/morton_controller"
+      "model": "manicmechanics:block/atmospheric_ra"
     },
     "facing=up": {
-      "model": "manicmechanics:block/morton_controller"
+      "model": "manicmechanics:block/atmospheric_ra"
     },
     "facing=north": {
-      "model": "manicmechanics:block/morton_controller"
+      "model": "manicmechanics:block/atmospheric_ra"
     },
     "facing=south": {
-      "model": "manicmechanics:block/morton_controller",
+      "model": "manicmechanics:block/atmospheric_ra",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/morton_controller",
+      "model": "manicmechanics:block/atmospheric_ra",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/morton_controller",
+      "model": "manicmechanics:block/atmospheric_ra",
       "y": 90
     }
   },

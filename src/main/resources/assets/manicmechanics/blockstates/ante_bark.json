@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/ante_bark"
     },
     "facing=up": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/ante_bark"
     },
     "facing=north": {
-      "model": "manicmechanics:block/enervator"
+      "model": "manicmechanics:block/ante_bark"
     },
     "facing=south": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/ante_bark",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/ante_bark",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/enervator",
+      "model": "manicmechanics:block/ante_bark",
       "y": 90
     }
   },

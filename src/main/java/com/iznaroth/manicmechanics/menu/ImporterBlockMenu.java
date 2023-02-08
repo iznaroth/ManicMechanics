@@ -1,9 +1,13 @@
 package com.iznaroth.manicmechanics.menu;
 
+import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.blockentity.ImporterBlockEntity;
+import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
+import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ServerboundContainerButtonClickPacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -133,6 +137,20 @@ public class ImporterBlockMenu extends AbstractContainerMenu {
         // Hotbar
         topRow += 58;
         addSlotRange(inv, 0, leftCol, topRow, 9, 18);
+    }
+
+    public void orderItem(){
+
+        //NOTE - Welcome back. Current issue-to-fix is using the MC paradigm of screen button -> ContainerButtonClick handle -> menu logic. You need to relocate info and sync so that the quantity and item selected are accessible.
+
+        ICurrency curr = CurrencyCapability.getBalance(this.minecraft.player).orElse(null);
+        if(curr == null) {
+            System.out.println("This dude has no money.");
+        }
+
+        //curr.removeCurrency(BlockValueGenerator.getValOrPopulate(selected.getItem()) * order_quantity);
+
+        //this.getBlockEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(selected.getItem(), order_quantity), false);
     }
 
 }
