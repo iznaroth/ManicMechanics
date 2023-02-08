@@ -1,26 +1,5 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "manicmechanics:block/archaic_floe"
-    },
-    "facing=up": {
-      "model": "manicmechanics:block/archaic_floe"
-    },
-    "facing=north": {
-      "model": "manicmechanics:block/archaic_floe"
-    },
-    "facing=south": {
-      "model": "manicmechanics:block/archaic_floe",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "manicmechanics:block/archaic_floe",
-      "y": 270
-    },
-    "facing=east": {
-      "model": "manicmechanics:block/archaic_floe",
-      "y": 90
-    }
-  },
-  "render_type": "translucent"
+    "": { "model": "manicmechanics:block/archaic_floe" }
+  }
 }

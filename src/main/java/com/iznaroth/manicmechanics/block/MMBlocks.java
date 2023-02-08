@@ -9,6 +9,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -66,15 +67,15 @@ public class MMBlocks {
     public static final RegistryObject<Block> COMMUNICATOR = registerBlock("communicator", () -> new CommunicatorBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
     //MAGIC TIER 1
-    public static final RegistryObject<Block> ENERVATOR = registerBlock("enervator", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> LRCU = registerBlock("lrcu", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> MANAMULCHER = registerBlock("manamulcher", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> CRYSTALLIZER = registerBlock("crystallizer", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> HOLYFORGE = registerBlock("holyforge", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> INTERPRETER = registerBlock("interpreter", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> MORTON_CONTROLLER = registerBlock("morton_controller", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ENERVATOR = registerBlock("enervator", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> LRCU = registerBlock("lrcu", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> MANAMULCHER = registerBlock("manamulcher", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> CRYSTALLIZER = registerBlock("crystallizer", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> HOLYFORGE = registerBlock("holyforge", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> INTERPRETER = registerBlock("interpreter", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> MORTON_CONTROLLER = registerBlock("morton_controller", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
-    public static final RegistryObject<Block> STONEFINGER_BATTERY = registerBlock("stonefinger_battery", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> STONEFINGER_BATTERY = registerBlock("stonefinger_battery", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> BLANK_FOCUS = registerBlock("blank_focus", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> SEETHING_FOCUS = registerBlock("seething_focus", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> LILTING_FOCUS = registerBlock("lilting_focus", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
@@ -83,30 +84,20 @@ public class MMBlocks {
 
 
     //RICH RESOURCES AND HARVESTERS
-    public static final RegistryObject<Block> AMBER_SANDSTONE = registerBlock("amber_sandstone", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> WITHERING_VEIN = registerBlock("withering_vein", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> FRACTAL_RELIQUARY = registerBlock("fractal_reliquary", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ARCHAIC_FLOE = registerBlock("archaic_floe", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> BRIAR_PETRIFACTION = registerBlock("briar_petrifaction", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ANTE_BARK = registerBlock("ante_bark", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.WOOD).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> DELICATE_CORALKNOT = registerBlock("delicate_coralknot", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> VITREOUS_SPOUT = registerBlock("vitreous_spout", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> AMBER_SANDSTONE = registerBlock("amber_sandstone", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> WITHERING_VEIN = registerBlock("withering_vein", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> FRACTAL_RELIQUARY = registerBlock("fractal_reliquary", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> ARCHAIC_FLOE = registerBlock("archaic_floe", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> BRIAR_PETRIFACTION = registerBlock("briar_petrifaction", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> ANTE_BARK = registerBlock("ante_bark", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> DELICATE_CORALKNOT = registerBlock("delicate_coralknot", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> VITREOUS_SPOUT = registerBlock("vitreous_spout", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_RESOURCES);
 
-    public static final RegistryObject<Block> SUPERTAP = registerBlock("supertap", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> DRILL_GANTRY = registerBlock("drill_gantry", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> PSEUDOMORTAL_CB = registerBlock("pseudomortal_cb", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ATMOSPHERIC_RA = registerBlock("atmospheric_ra", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> SUPERTAP = registerBlock("supertap", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> DRILL_GANTRY = registerBlock("drill_gantry", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> PSEUDOMORTAL_CB = registerBlock("pseudomortal_cb", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ATMOSPHERIC_RA = registerBlock("atmospheric_ra", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
-
-    //
-
-    //LOGISTICS
-    public static final RegistryObject<Block> VACUUM_HIGHWAY_SEGMENT = registerBlock("vacuum_highway_segment", () -> new VacuumHighwaySegmentBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> HIGHWAY_CONTROLLER = registerBlock("highway_controller", () -> new HighwayControllerBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> TRANSPORT_TUBE = registerBlock("transport_tube", () -> new TransportTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> FLUID_TUBE = registerBlock("fluid_tube", () -> new FluidTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> GAS_TUBE = registerBlock("gas_tube", () -> new GasTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> POWER_TUBE = registerBlock("power_tube", () -> new PowerTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
     public static final RegistryObject<Block> JAGGED_CRYSTAL = registerBlock("jagged_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> SLANTED_CRYSTAL = registerBlock("slanted_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
@@ -121,6 +112,14 @@ public class MMBlocks {
 
     public static final RegistryObject<Block> BOUNDING_TESTER = registerBlock("bounding_tester", () -> new BoundingBoxTesting(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
+
+    //LOGISTICS
+    public static final RegistryObject<Block> VACUUM_HIGHWAY_SEGMENT = registerBlock("vacuum_highway_segment", () -> new VacuumHighwaySegmentBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> HIGHWAY_CONTROLLER = registerBlock("highway_controller", () -> new HighwayControllerBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> TRANSPORT_TUBE = registerBlock("transport_tube", () -> new TransportTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> FLUID_TUBE = registerBlock("fluid_tube", () -> new FluidTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> GAS_TUBE = registerBlock("gas_tube", () -> new GasTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> POWER_TUBE = registerBlock("power_tube", () -> new PowerTubeBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
 
 

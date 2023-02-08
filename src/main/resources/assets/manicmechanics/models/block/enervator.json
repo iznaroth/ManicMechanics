@@ -1,11 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "down": "manicmechanics:block/crystallizer_tb",
-    "up": "manicmechanics:block/crystallizer_tb",
-    "north": "manicmechanics:block/crystallizer_front",
-    "south": "manicmechanics:block/crystallizer_side",
-    "east": "manicmechanics:block/crystallizer_side",
-    "west": "manicmechanics:block/crystallizer_side"
+    "down": "manicmechanics:block/enervator_tb",
+    "up": "manicmechanics:block/enervator_tb",
+    "north": "manicmechanics:block/enervator_front",
+    "south": "manicmechanics:block/enervator_side",
+    "east": "manicmechanics:block/enervator_side",
+    "west": "manicmechanics:block/enervator_side"
   }
 }

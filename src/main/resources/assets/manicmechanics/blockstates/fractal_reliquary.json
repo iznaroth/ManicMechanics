@@ -1,26 +1,5 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "manicmechanics:block/fractal_reliquary"
-    },
-    "facing=up": {
-      "model": "manicmechanics:block/fractal_reliquary"
-    },
-    "facing=north": {
-      "model": "manicmechanics:block/fractal_reliquary"
-    },
-    "facing=south": {
-      "model": "manicmechanics:block/fractal_reliquary",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "manicmechanics:block/fractal_reliquary",
-      "y": 270
-    },
-    "facing=east": {
-      "model": "manicmechanics:block/fractal_reliquary",
-      "y": 90
-    }
-  },
-  "render_type": "translucent"
+    "": { "model": "manicmechanics:block/fractal_reliquary" }
+  }
 }

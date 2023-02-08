@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "manicmechanics:item/bulb"
+    "layer0": "manicmechanics:item/copper_wire"
   }
 }

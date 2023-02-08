@@ -1,11 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "down": "manicmechanics:block/holyforge_top",
-    "up": "manicmechanics:block/holyforge_top",
-    "north": "manicmechanics:block/holyforge_front",
-    "south": "manicmechanics:block/holyforge_side",
-    "east": "manicmechanics:block/holyforge_side",
-    "west": "manicmechanics:block/holyforge_side"
+    "down": "manicmechanics:block/manamulcher_bottom",
+    "up": "manicmechanics:block/manamulcher_top",
+    "north": "manicmechanics:block/manamulcher_side",
+    "south": "manicmechanics:block/manamulcher_side",
+    "east": "manicmechanics:block/manamulcher_side",
+    "west": "manicmechanics:block/manamulcher_side"
   }
 }

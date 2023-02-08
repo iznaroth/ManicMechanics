@@ -1,11 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "down": "manicmechanics:block/holyforge_top",
-    "up": "manicmechanics:block/holyforge_top",
-    "north": "manicmechanics:block/holyforge_front",
-    "south": "manicmechanics:block/holyforge_side",
-    "east": "manicmechanics:block/holyforge_side",
-    "west": "manicmechanics:block/holyforge_side"
+    "down": "minecraft:block/bone_block_top",
+    "up": "minecraft:block/bone_block_top",
+    "north": "manicmechanics:block/withering_vein_side",
+    "south": "manicmechanics:block/withering_vein_side",
+    "east": "manicmechanics:block/withering_vein_side",
+    "west": "manicmechanics:block/withering_vein_side"
   }
 }
