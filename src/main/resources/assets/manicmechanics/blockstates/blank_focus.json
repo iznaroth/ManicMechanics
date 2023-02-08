@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/amber_sandstone"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/amber_sandstone"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/amber_sandstone"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/amber_sandstone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/amber_sandstone",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/amber_sandstone",
+      "y": 90
+    }
+  },
+  "render_type": "translucent"
+}
