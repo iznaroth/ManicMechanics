@@ -1,20 +1,20 @@
 {
-  "parent": "manicmechanics:block/etcher",
+  "parent": "manicmechanics:block/node_pointer_forearm",
   "display": {
     "thirdperson_righthand": {
-      "rotation": [ 152, 35, 180 ],
+      "rotation": [ 48, -43, -3 ],
       "translation": [ 0, 0, 0],
-      "scale":[ 0.25, 0.25, 0.25]
+      "scale":[ 0.5, 0.5, 0.5]
     },
     "firstperson_righthand": {
-      "rotation": [ 152, 35, 180 ],
+      "rotation": [ 48, -43, -3 ],
       "translation": [ 0, 3, 0],
-      "scale":[ 0.25, 0.25, 0.25]
+      "scale":[ 0.5, 0.5, 0.5]
     },
     "gui": {
-      "rotation": [ -152, -35, -180 ],
-      "translation": [ 0, 0, 0],
-      "scale":[ 0.63, 0.63, 0.63]
+      "rotation": [ 48, -43, -3 ],
+      "translation": [ 1, 0, 0],
+      "scale":[ 1, 1, 1]
     },
     "ground": {
       "rotation": [ 0, 0, 0 ],

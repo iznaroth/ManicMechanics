@@ -168,6 +168,10 @@ public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, 
         int blockID = (int) Math.floor((double)data / 100);
         int quantity = data % 100;
 
+        System.out.println(quantity);
+
+        Item toBuy = (Item)ForgeRegistries.ITEMS.getValues().toArray()[blockID]; //THIS IS STUPID!
+        System.out.println(toBuy + " sold!");
 
 
         assert this.level != null;
@@ -176,9 +180,9 @@ public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, 
             System.out.println("This dude has no money.");
         }
 
-        //curr.removeCurrency(BlockValueGenerator.getValOrPopulate(selected.getItem()) * quantity);
+        curr.removeCurrency(BlockValueGenerator.getValOrPopulate(toBuy) * quantity);
 
-        //this.getBlockEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(selected.getItem(), quantity), false);
+        this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(toBuy, quantity), false);
     }
 
 }

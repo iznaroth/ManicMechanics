@@ -1,31 +1,61 @@
 {
   "multipart": [
-    {
-      "apply": { "model": "manicmechanics:block/gas_core"}
+    {   "when": { "forearm": "up" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "x": 90 }
     },
 
-    {   "when": { "north": "true" },
-      "apply": { "model": "manicmechanics:block/tube_north"}
+    {   "when": { "forearm": "down" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "x": 270 }
     },
 
-    {   "when": { "east": "true" },
-      "apply": { "model": "manicmechanics:block/tube_east" }
+    {   "when": { "forearm": "south" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm"}
     },
 
-    {   "when": { "south": "true" },
-      "apply": { "model": "manicmechanics:block/tube_south"}
+    {   "when": { "forearm": "north" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+      "y": 180 }
     },
 
-    {   "when": { "west": "true" },
-      "apply": { "model": "manicmechanics:block/tube_west"}
+    {   "when": { "forearm": "west" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "y": 90 }
     },
 
-    {   "when": { "up": "true" },
-      "apply": { "model": "manicmechanics:block/tube_up"}
+    {   "when": { "forearm": "east" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+      "y": 270 }
+    },
+    {   "when": { "upper_arm": "up" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "x": 270 }
     },
 
-    {   "when": { "down": "true" },
-      "apply": { "model": "manicmechanics:block/tube_down"}
+    {   "when": { "upper_arm": "down" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "x": 90 }
+    },
+
+    {   "when": { "upper_arm": "north" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm"}
+    },
+
+    {   "when": { "upper_arm": "south" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 180 }
+    },
+
+    {   "when": { "upper_arm": "east" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 90 }
+    },
+
+    {   "when": { "upper_arm": "west" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 270,
+        "render_type": "translucent"}
     }
   ]
 }

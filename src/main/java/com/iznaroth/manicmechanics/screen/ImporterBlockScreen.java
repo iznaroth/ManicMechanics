@@ -4,6 +4,9 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
 import com.iznaroth.manicmechanics.menu.ImporterBlockMenu;
+import com.iznaroth.manicmechanics.networking.MMMessages;
+import com.iznaroth.manicmechanics.networking.packet.ButtonCycleC2SPacket;
+import com.iznaroth.manicmechanics.networking.packet.PayloadButtonC2SPacket;
 import com.iznaroth.manicmechanics.screen.renderer.MarketEntry;
 import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
 import com.iznaroth.manicmechanics.util.MouseUtil;
@@ -189,9 +192,11 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         }
 
         if((p_97748_ > x+9 && p_97748_ < x+45) && (p_97749_ > y+54 && p_97749_ < y+66)){ //ORDER
-            //orderItem();
+            ArrayList<Item> col = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 
-            this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0);
+            MMMessages.sendToServer(new PayloadButtonC2SPacket(0, (col.indexOf(selected.getItem()) * 100 + order_quantity), this.menu.getBlockEntity().getBlockPos()));
+
+            //this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0);
         }
 
 

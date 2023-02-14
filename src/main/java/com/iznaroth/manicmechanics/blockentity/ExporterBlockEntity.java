@@ -2,11 +2,13 @@ package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasPayloadButton;
 import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
 import com.iznaroth.manicmechanics.menu.ExporterBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -35,7 +37,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
+public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider, IHasPayloadButton {
     private final ItemStackHandler itemHandler = new ItemStackHandler(13) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -179,5 +181,10 @@ public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, 
                 }
             }
         }
+    }
+
+    @Override
+    public void pressPayloadButton(int which, int payload) { //no other buttons as of now.
+        this.sellEverything(Minecraft.getInstance().player);
     }
 }

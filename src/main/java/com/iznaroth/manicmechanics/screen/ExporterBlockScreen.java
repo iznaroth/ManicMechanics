@@ -4,6 +4,7 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.menu.ExporterBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.ButtonCycleC2SPacket;
+import com.iznaroth.manicmechanics.networking.packet.PayloadButtonC2SPacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -48,7 +49,7 @@ public class ExporterBlockScreen extends AbstractContainerScreen<ExporterBlockMe
         System.out.println("CLICKED AT " + p_97748_ + " " + p_97749_);
 
         if((p_97748_ > x+51 && p_97748_ < x+79) && (p_97749_ > y+67 && p_97749_ < y+79)){ //in BUTTON 1
-            this.menu.getBlockEntity().sellEverything(this.minecraft.player);
+            MMMessages.sendToServer(new PayloadButtonC2SPacket(0, 0, this.menu.getBlockEntity().getBlockPos()));
         }
 
         return super.mouseClicked(p_97748_, p_97749_, p_97750_);

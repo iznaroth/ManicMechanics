@@ -58,14 +58,14 @@ public class MMBlocks {
 
     public static final RegistryObject<Block> SEALER = registerBlock("sealing_chamber", () -> new SealingChamberBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
-    public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    //public static final RegistryObject<Block> ELECTRIC_FURNACE = registerBlock("electric_furnace", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new CondenserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new AssemblerBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new InfuserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    //public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    //public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    //public static final RegistryObject<Block> REEXTENDER = registerBlock("reextender", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> COMMUNICATOR = registerBlock("communicator", () -> new CommunicatorBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
     //MAGIC TIER 1
@@ -105,6 +105,8 @@ public class MMBlocks {
     public static final RegistryObject<Block> SLANTED_CRYSTAL = registerBlock("slanted_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> LANGUID_CRYSTAL = registerBlock("languid_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
     public static final RegistryObject<Block> BULBOUS_CRYSTAL = registerBlock("bulbous_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+
+    public static final RegistryObject<Block> RUBY_NODE_POINTER = registerBlock("ruby_node_pointer", () -> new NodePointerBlock(BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
 
 
     //RESEARCH

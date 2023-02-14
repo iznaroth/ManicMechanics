@@ -65,5 +65,6 @@
 				"down": {"uv": [15, 6, 13, 7], "texture": "#0"}
 			}
 		}
-	]
+	],
+	"render_type": "translucent"
 }

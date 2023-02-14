@@ -19,6 +19,8 @@ import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
 import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
@@ -164,6 +166,7 @@ public class ManicMechanics
             MenuScreens.register(MMMenus.IMPORTER_MENU.get(), ImporterBlockScreen::new);
 
             //EntityRenderers.register(ModEntityTypes.PINCH.get(), ChomperRenderer::new);
+
         }
     }
 }

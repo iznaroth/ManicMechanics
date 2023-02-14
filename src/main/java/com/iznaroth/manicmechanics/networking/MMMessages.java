@@ -58,6 +58,12 @@ public class MMMessages {
                 .consumerMainThread(ButtonCycleC2SPacket::handle)
                 .add();
 
+        net.messageBuilder(PayloadButtonC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(PayloadButtonC2SPacket::new)
+                .encoder(PayloadButtonC2SPacket::toBytes)
+                .consumerMainThread(PayloadButtonC2SPacket::handle)
+                .add();
+
 
 
 
