@@ -1,24 +1,24 @@
 {
   "variants": {
     "facing=down": {
-      "model": "manicmechanics:block/mmi_model"
+      "model": "manicmechanics:block/mds_model"
     },
     "facing=up": {
-      "model": "manicmechanics:block/mmi_model"
+      "model": "manicmechanics:block/mds_model"
     },
     "facing=north": {
-      "model": "manicmechanics:block/mmi_model"
+      "model": "manicmechanics:block/mds_model"
     },
     "facing=south": {
-      "model": "manicmechanics:block/mmi_model",
+      "model": "manicmechanics:block/mds_model",
       "y": 180
     },
     "facing=west": {
-      "model": "manicmechanics:block/mmi_model",
+      "model": "manicmechanics:block/mds_model",
       "y": 270
     },
     "facing=east": {
-      "model": "manicmechanics:block/mmi_model",
+      "model": "manicmechanics:block/mds_model",
       "y": 90
     }
   },

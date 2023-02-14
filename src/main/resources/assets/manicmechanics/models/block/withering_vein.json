@@ -1,11 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "down": "minecraft:block/bone_block_top",
-    "up": "minecraft:block/bone_block_top",
-    "north": "manicmechanics:block/withering_vein_side",
-    "south": "manicmechanics:block/withering_vein_side",
-    "east": "manicmechanics:block/withering_vein_side",
-    "west": "manicmechanics:block/withering_vein_side"
+    "end": "minecraft:block/bone_block_top",
+    "side": "manicmechanics:block/withering_vein_side"
   }
 }

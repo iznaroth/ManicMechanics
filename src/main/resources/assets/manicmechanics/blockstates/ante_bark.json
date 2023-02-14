@@ -1,26 +1,13 @@
 {
   "variants": {
-    "facing=down": {
+    "axis=x": {
       "model": "manicmechanics:block/ante_bark"
     },
-    "facing=up": {
+    "axis=y": {
       "model": "manicmechanics:block/ante_bark"
     },
-    "facing=north": {
+    "axis=z": {
       "model": "manicmechanics:block/ante_bark"
-    },
-    "facing=south": {
-      "model": "manicmechanics:block/ante_bark",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "manicmechanics:block/ante_bark",
-      "y": 270
-    },
-    "facing=east": {
-      "model": "manicmechanics:block/ante_bark",
-      "y": 90
     }
-  },
-  "render_type": "translucent"
+  }
 }

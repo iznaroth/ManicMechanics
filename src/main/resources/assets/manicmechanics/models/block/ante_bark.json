@@ -1,11 +1,7 @@
 {
-  "parent": "block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "down": "manicmechanics:block/ante_top",
-    "up": "manicmechanics:block/ante_top",
-    "north": "manicmechanics:block/ante_bark",
-    "south": "manicmechanics:block/ante_bark",
-    "east": "manicmechanics:block/ante_bark",
-    "west": "manicmechanics:block/ante_bark"
+    "end": "manicmechanics:block/ante_top",
+    "side": "manicmechanics:block/ante_bark"
   }
 }

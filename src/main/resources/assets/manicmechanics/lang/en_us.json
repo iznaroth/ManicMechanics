@@ -32,9 +32,12 @@
 
 
   "block.manicmechanics.dyspersium_ore": "Dyspersium Ore",
+  "block.manicmechanics.dyspersium_deepslate_ore": "Dyspersium Deepslate Ore",
   "block.manicmechanics.thallite_ore": "Thallite Ore",
   "block.manicmechanics.phosphorite_ore": "Phosphorite Ore",
+  "block.manicmechanics.phosphorite_deepslate_ore": "Phosphorite Deepslate Ore",
   "block.manicmechanics.nitrol_ore": "Nitrol Ore",
+  "block.manicmechanics.nitrol_deepslate_ore": "Nitrol Deepslate Ore",
   "block.manicmechanics.hep": "Hyperfield Extraction Polarizer",
   "block.manicmechanics.exporter": "Exporter",
   "block.manicmechanics.importer": "Importer",
@@ -82,6 +85,9 @@
   "block.manicmechanics.atmospheric_ra": "Atmospheric Realization Array",
   "block.manicmechanics.pseudomortal_cb": "Pseudomortal Entrapment Beacon",
   "block.manicmechanics.stonefinger_battery": "Stonefinger Battery",
+  "block.manicmechanics.mmi": "Multithreaded Material Inspector",
+  "block.manicmechanics.synchronizer": "Research Synchronizer",
+  "block.manicmechanics.mds": "Material Decryption Station",
 
 
 

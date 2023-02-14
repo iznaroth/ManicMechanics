@@ -9,7 +9,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -59,7 +61,7 @@ public class MMBlocks {
     public static final RegistryObject<Block> INDUSTRIAL_FURNACE = registerBlock("industrial_furnace", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> CONDENSER = registerBlock("condenser", () -> new CondenserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ASSEMBLER = registerBlock("assembler", () -> new AssemblerBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
-    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new UpgradableMachineBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> ETCHER = registerBlock("etcher", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> INFUSER = registerBlock("infuser", () -> new InfuserBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> DEMYSTIFIER = registerBlock("demystifier", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> ALCHEMIZER = registerBlock("alchemizer", () -> new MMBlockWrapper(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
@@ -99,10 +101,17 @@ public class MMBlocks {
     public static final RegistryObject<Block> ATMOSPHERIC_RA = registerBlock("atmospheric_ra", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f)), MMItemGroup.MM_MACHINES);
 
 
-    public static final RegistryObject<Block> JAGGED_CRYSTAL = registerBlock("jagged_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> SLANTED_CRYSTAL = registerBlock("slanted_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> LANGUID_CRYSTAL = registerBlock("languid_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
-    public static final RegistryObject<Block> BULBOUS_CRYSTAL = registerBlock("bulbous_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> JAGGED_CRYSTAL = registerBlock("jagged_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> SLANTED_CRYSTAL = registerBlock("slanted_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> LANGUID_CRYSTAL = registerBlock("languid_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+    public static final RegistryObject<Block> BULBOUS_CRYSTAL = registerBlock("bulbous_crystal", () -> new ChargableCrystalBlock(7, 3, BlockBehaviour.Properties.of(Material.AMETHYST).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_RESOURCES);
+
+
+    //RESEARCH
+    public static final RegistryObject<Block> MULTITHREADED_INSPECTOR = registerBlock("mmi", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f).noOcclusion()), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> SYNCHRONIZER = registerBlock("synchronizer", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f).noOcclusion()), MMItemGroup.MM_MACHINES);
+    public static final RegistryObject<Block> DECRYPTION_STATION = registerBlock("mds", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f).noOcclusion()), MMItemGroup.MM_MACHINES);
+
 
     public static final RegistryObject<Block> TUBE_BUNDLE = registerBlock("tube_bundle", () -> new TubeBundleBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> BELT = registerBlock("belt", () -> new BeltBlock(BlockBehaviour.Properties.of(Material.METAL).strength(5).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
