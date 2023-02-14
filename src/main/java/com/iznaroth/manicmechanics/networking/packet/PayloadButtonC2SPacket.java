@@ -2,6 +2,7 @@ package com.iznaroth.manicmechanics.networking.packet;
 
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCyclableButton;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasPayloadButton;
 import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 //import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
 import net.minecraft.client.Minecraft;
@@ -13,26 +14,26 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class ButtonCycleC2SPacket {
+public class PayloadButtonC2SPacket {
     private final int which;
-    private final int dir;
+    private final int payload;
     private final BlockPos pos;
 
-    public ButtonCycleC2SPacket(int which, int dir, BlockPos pos) {
+    public PayloadButtonC2SPacket(int which, int payload, BlockPos pos) {
         this.which = which;
-        this.dir = dir;
+        this.payload = payload;
         this.pos = pos;
     }
 
-    public ButtonCycleC2SPacket(FriendlyByteBuf buf) {
+    public PayloadButtonC2SPacket(FriendlyByteBuf buf) {
         this.which = buf.readInt();
-        this.dir = buf.readInt();
+        this.payload = buf.readInt();
         this.pos = buf.readBlockPos();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(which);
-        buf.writeInt(dir);
+        buf.writeInt(payload);
         buf.writeBlockPos(pos);
     }
 
@@ -41,12 +42,9 @@ public class ButtonCycleC2SPacket {
         ServerLevel destination = context.getSender().getLevel();
         context.enqueueWork(() -> {
             BlockEntity blockEntity = destination.getBlockEntity(pos);
-            if(blockEntity instanceof IHasCyclableButton) {
-                switch(this.dir){
-                    case 0: ((IHasCyclableButton) blockEntity).cycleBackward(which);
-                    case 1: ((IHasCyclableButton) blockEntity).cycleForward(which);
-                }
+            if(blockEntity instanceof IHasPayloadButton) {
 
+                ((IHasPayloadButton) blockEntity).pressPayloadButton(this.which, this.payload);
                 System.out.println("Updating button state for entity! " + Minecraft.getInstance().level.isClientSide);
             }
         });

@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.blockentity.interfaces;
 
-public interface IHasButtonState {
+public interface IHasCyclableButton {
 
     public void cycleForward(int which);
 

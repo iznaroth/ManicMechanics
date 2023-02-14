@@ -2,11 +2,13 @@ package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.api.ICurrency;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasPayloadButton;
 import com.iznaroth.manicmechanics.client.capability.CurrencyCapability;
 import com.iznaroth.manicmechanics.menu.ImporterBlockMenu;
 import com.iznaroth.manicmechanics.networking.MMMessages;
 import com.iznaroth.manicmechanics.networking.packet.ItemStackSyncS2CPacket;
 import com.iznaroth.manicmechanics.tools.BlockValueGenerator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -29,13 +31,15 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.Objects;
 
-public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider {
+public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, MenuProvider, IHasPayloadButton {
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -148,6 +152,33 @@ public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
         System.out.println("CREATING IMPORTER MENU FROM BE");
         return new ImporterBlockMenu(p_39954_, p_39955_, this, this.data);
+    }
+
+    public void pressPayloadButton(int which, int payload){
+        if(which == 0){
+            orderItem(payload);
+        }
+    }
+
+    public void orderItem(int data){
+
+        //NOTE - Welcome back. Current issue-to-fix is using the MC paradigm of screen button -> ContainerButtonClick handle -> menu logic. You need to relocate info and sync so that the quantity and item selected are accessible.
+        //DATA stores the Item as an ID reference * 100 + the quantity
+        //We floor data / 100 to get block ID, and we %100 to get quantity.
+        int blockID = (int) Math.floor((double)data / 100);
+        int quantity = data % 100;
+
+
+
+        assert this.level != null;
+        ICurrency curr = CurrencyCapability.getBalance(Minecraft.getInstance().player).orElse(null);
+        if(curr == null) {
+            System.out.println("This dude has no money.");
+        }
+
+        //curr.removeCurrency(BlockValueGenerator.getValOrPopulate(selected.getItem()) * quantity);
+
+        //this.getBlockEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(selected.getItem(), quantity), false);
     }
 
 }
