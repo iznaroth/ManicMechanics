@@ -139,19 +139,5 @@ public class ImporterBlockMenu extends AbstractContainerMenu {
         addSlotRange(inv, 0, leftCol, topRow, 9, 18);
     }
 
-    public void orderItem(){
-
-        //NOTE - Welcome back. Current issue-to-fix is using the MC paradigm of screen button -> ContainerButtonClick handle -> menu logic. You need to relocate info and sync so that the quantity and item selected are accessible.
-
-        ICurrency curr = CurrencyCapability.getBalance(this.minecraft.player).orElse(null);
-        if(curr == null) {
-            System.out.println("This dude has no money.");
-        }
-
-        //curr.removeCurrency(BlockValueGenerator.getValOrPopulate(selected.getItem()) * order_quantity);
-
-        //this.getBlockEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(selected.getItem(), order_quantity), false);
-    }
-
 }
 

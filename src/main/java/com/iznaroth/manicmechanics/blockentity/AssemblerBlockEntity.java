@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.blockentity;
 
-import com.iznaroth.manicmechanics.blockentity.interfaces.IHasButtonState;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCyclableButton;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;

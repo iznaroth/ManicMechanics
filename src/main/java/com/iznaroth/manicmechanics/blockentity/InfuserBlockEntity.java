@@ -2,7 +2,7 @@ package com.iznaroth.manicmechanics.blockentity;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.block.tube.AbstractTubeBlock;
-import com.iznaroth.manicmechanics.blockentity.interfaces.IHasButtonState;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCyclableButton;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCraftProgress;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasInvHandler;
@@ -60,7 +60,7 @@ import javax.lang.model.util.AbstractTypeVisitor6;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, IHasButtonState, MenuProvider {
+public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, IHasEnergyStorage, IHasCraftProgress, IHasCyclableButton, MenuProvider {
 
 
     int progress = 0;

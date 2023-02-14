@@ -1,6 +1,6 @@
 package com.iznaroth.manicmechanics.networking.packet;
 
-import com.iznaroth.manicmechanics.blockentity.interfaces.IHasButtonState;
+import com.iznaroth.manicmechanics.blockentity.interfaces.IHasCyclableButton;
 import com.iznaroth.manicmechanics.blockentity.interfaces.IHasEnergyStorage;
 import com.iznaroth.manicmechanics.menu.SealingChamberBlockMenu;
 //import com.iznaroth.manicmechanics.blockentity.SealingChamberBlockEntity;
@@ -41,10 +41,10 @@ public class ButtonCycleC2SPacket {
         ServerLevel destination = context.getSender().getLevel();
         context.enqueueWork(() -> {
             BlockEntity blockEntity = destination.getBlockEntity(pos);
-            if(blockEntity instanceof IHasButtonState) { //TODO - All machines ought to generally implement this thru hasCapability or something
+            if(blockEntity instanceof IHasCyclableButton) {
                 switch(this.dir){
-                    case 0: ((IHasButtonState) blockEntity).cycleBackward(which);
-                    case 1: ((IHasButtonState) blockEntity).cycleForward(which);
+                    case 0: ((IHasCyclableButton) blockEntity).cycleBackward(which);
+                    case 1: ((IHasCyclableButton) blockEntity).cycleForward(which);
                 }
 
                 System.out.println("Updating button state for entity! " + Minecraft.getInstance().level.isClientSide);
