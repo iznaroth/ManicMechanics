@@ -2,7 +2,9 @@ package com.iznaroth.manicmechanics.item;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
 //import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
+import com.iznaroth.manicmechanics.block.MMBlocks;
 import com.iznaroth.manicmechanics.entity.ModEntityTypes;
+import com.iznaroth.manicmechanics.item.custom.AnimatedBlockItem;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -215,6 +217,10 @@ public class MMItems {
 
 
     //MACHINE CORES
+
+    //SPECIAL BLOCKITEMS
+    public static final RegistryObject<Item> THRACKING_PYLON = ITEMS.register("thracking_pylon_item",
+            () -> new AnimatedBlockItem(MMBlocks.THRACKING_PYLON.get(), new Item.Properties().tab(MMItemGroup.MM_MACHINES)));
 
 
     public static void register(IEventBus eventBus){

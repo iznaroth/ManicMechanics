@@ -1,11 +1,14 @@
 package com.iznaroth.manicmechanics.setup;
 
 import com.iznaroth.manicmechanics.ManicMechanics;
+import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
+import com.iznaroth.manicmechanics.blockentity.client.AnimatedBlockRenderer;
 import com.iznaroth.manicmechanics.client.gui.GuiCurrencyHUD;
 import com.iznaroth.manicmechanics.render.AnimationTickCounter;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -70,6 +73,14 @@ public class ClientSetup {
             System.out.println("REGISTER CURRENCY!");
             event.registerAboveAll("currency", GuiCurrencyHUD.HUD_CURR);
         }
+
+        @SubscribeEvent
+        public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+            System.out.println("REGISTER RENDERERS!");
+            event.registerBlockEntityRenderer(MMBlockEntities.ANIMATED_BE.get(), AnimatedBlockRenderer::new);
+        }
+
+
 
     }
 }

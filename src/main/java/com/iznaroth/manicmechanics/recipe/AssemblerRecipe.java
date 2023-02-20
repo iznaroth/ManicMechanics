@@ -40,30 +40,28 @@ public class AssemblerRecipe implements Recipe<SimpleContainer> {
 
     public boolean matches(SimpleContainer pContainer, Level pLevel, AssemblerBlockEntity entity) {
 
-        System.out.println("Call for match");
-
         if(pLevel.isClientSide()) {
             return false;
         }
 
         if(!tooling.getItem().equals(pContainer.getItem(0).getItem())){
-            System.out.println(tooling.getItem());
-            System.out.println(pContainer.getItem(0));
+            //System.out.println(tooling.getItem());
+            //System.out.println(pContainer.getItem(0));
             return false;
         }
 
         for(int i = 0; i < recipeItems.size(); i++) {
             if (!recipeItems.get(i).test(pContainer.getItem(i + 1))) {
-                System.out.println(recipeItems.get(i));
-                System.out.println(pContainer.getItem(i));
+               // System.out.println(recipeItems.get(i));
+                //System.out.println(pContainer.getItem(i));
                 return false;
             }
         }
 
         for(int i = 0; i < quantities.length; i++) {
             if (quantities[i] != pContainer.getItem(i + 1).getCount() && !pContainer.getItem(i + 1).isEmpty()) {
-                System.out.println(quantities[i]);
-                System.out.println(pContainer.getItem(i + 1).getCount() + " " + pContainer.getItem(i + 1));
+                //System.out.println(quantities[i]);
+                //System.out.println(pContainer.getItem(i + 1).getCount() + " " + pContainer.getItem(i + 1));
                 return false;
             }
         } 

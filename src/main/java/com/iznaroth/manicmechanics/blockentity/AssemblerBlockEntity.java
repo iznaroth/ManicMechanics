@@ -243,8 +243,6 @@ public class AssemblerBlockEntity extends BlockEntity implements IHasInvHandler,
             inv.setItem(i, pEntity.itemHandler.getStackInSlot(i));
         }
 
-        System.out.println("Ticking for craft in assembler");
-
         //TODO - add support for vanilla recipes
         //Optional<CraftingRecipe> recipe = pEntity.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, new CraftingContainer(), pEntity.level);
 

@@ -1,31 +1,14 @@
 {
   "multipart": [
     {
-      "apply": { "model": "manicmechanics:block/bundle_core"}
+      "apply": { "model": "manicmechanics:block/thracking_base"}
     },
 
-    {   "when": { "north": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_north"}
+    {   "when": { "has_crystal": "true" },
+      "apply": { "model": "manicmechanics:block/thracking_pylon"}
     },
-
-    {   "when": { "east": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_east" }
-    },
-
-    {   "when": { "south": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_south"}
-    },
-
-    {   "when": { "west": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_west"}
-    },
-
-    {   "when": { "up": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_up"}
-    },
-
-    {   "when": { "down": "true" },
-      "apply": { "model": "manicmechanics:block/bundle_down"}
+    {   "when": { "has_crystal": "true" },
+      "apply": { "model": "manicmechanics:block/obamium_block"}
     }
   ]
 }

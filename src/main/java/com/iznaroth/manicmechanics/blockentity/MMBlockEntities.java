@@ -43,6 +43,8 @@ public class MMBlockEntities {
 
     public static final RegistryObject<BlockEntityType<SealingChamberBlockEntity>> SEALER_TILE = BLOCK_ENTITIES.register("sealer_tile", () -> BlockEntityType.Builder.of(SealingChamberBlockEntity::new, MMBlocks.SEALER.get()).build(null)); //FIGURE THIS SHIT OUT!
 
+    public static final RegistryObject<BlockEntityType<AnimatedBlockEntity>> ANIMATED_BE = BLOCK_ENTITIES.register("animated_be", () -> BlockEntityType.Builder.of(AnimatedBlockEntity::new, MMBlocks.THRACKING_PYLON.get()).build(null)); //FIGURE THIS SHIT OUT!
+
 
 
     public static void register(IEventBus eventBus) {

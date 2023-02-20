@@ -21,8 +21,10 @@ import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.block.BeaconBeamBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
@@ -154,7 +156,6 @@ public class ManicMechanics
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            System.out.println("Do we ever actually see onClientSetup?");
             MenuScreens.register(MMMenus.SIMPLE_COMMUNICATOR_MENU.get(), SimpleCommunicatorBlockScreen::new);
             MenuScreens.register(MMMenus.COMMUNICATOR_MENU.get(), CommunicatorBlockScreen::new);
             MenuScreens.register(MMMenus.GENERATOR_MENU.get(), GeneratorBlockScreen::new);

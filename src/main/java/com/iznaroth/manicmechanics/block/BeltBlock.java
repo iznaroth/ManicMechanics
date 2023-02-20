@@ -17,7 +17,7 @@ public class BeltBlock extends MMBlockWrapper {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(BlockStateProperties.FACING); //syntactically incorrect? tutorial used createBlockStateDefinition
+        builder.add(BlockStateProperties.FACING);
     }
 
     @Nullable

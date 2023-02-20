@@ -1,11 +1,11 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "down": "manicmechanics:block/lrcu_side_udew",
-    "up": "manicmechanics:block/lrcu_side_udew",
+    "down": "manicmechanics:block/lrcu_bottom",
+    "up": "manicmechanics:block/lrcu_top",
     "north": "manicmechanics:block/lrcu_side_n",
     "south": "manicmechanics:block/lrcu_side_s",
-    "east": "manicmechanics:block/lrcu_side_udew",
-    "west": "manicmechanics:block/lrcu_side_udew"
+    "east": "manicmechanics:block/lrcu_east",
+    "west": "manicmechanics:block/lrcu_west"
   }
 }

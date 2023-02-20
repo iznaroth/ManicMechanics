@@ -115,6 +115,10 @@ public class MMBlocks {
     public static final RegistryObject<Block> DECRYPTION_STATION = registerBlock("mds", () -> new RotatableBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
 
+    //ESOTERIC PRODUCTION AND AMPLIFICATION
+    public static final RegistryObject<Block> THRACKING_PYLON = registerBlockWithoutBlockItem("thracking_pylon", () -> new AnimatedBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(2.5f).noOcclusion()));
+
+
     public static final RegistryObject<Block> TUBE_BUNDLE = registerBlock("tube_bundle", () -> new TubeBundleBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
     public static final RegistryObject<Block> BELT = registerBlock("belt", () -> new BeltBlock(BlockBehaviour.Properties.of(Material.METAL).strength(5).requiresCorrectToolForDrops().strength(10f).noOcclusion()), MMItemGroup.MM_MACHINES);
 
@@ -143,6 +147,10 @@ public class MMBlocks {
 
     private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block, CreativeModeTab tab){
         MMItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+    }
+
+    private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
+        return BLOCKS.register(name, block);
     }
 
 
