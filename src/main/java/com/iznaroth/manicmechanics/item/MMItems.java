@@ -3,13 +3,11 @@ package com.iznaroth.manicmechanics.item;
 import com.iznaroth.manicmechanics.ManicMechanics;
 //import com.iznaroth.manicmechanics.item.custom.ModSpawnEggItem;
 import com.iznaroth.manicmechanics.block.MMBlocks;
-import com.iznaroth.manicmechanics.entity.ModEntityTypes;
+import com.iznaroth.manicmechanics.entity.MMEntityTypes;
 import com.iznaroth.manicmechanics.item.custom.AnimatedBlockItem;
 import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.RecordItem;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -190,7 +188,13 @@ public class MMItems {
     //        () -> new ModSpawnEggItem(ModEntityTypes.COP_CAR, 0x464F56, 0x1D6336, new Item.Properties().tab(ModItemGroup.MM_ITEMS)));
 
     public static final RegistryObject<Item> DIMENSION_STRETCHER = ITEMS.register("dimension_stretcher",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+            () -> new ForgeSpawnEggItem(MMEntityTypes.PINCH, 0x464F56, 0x1D6336, new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> GRID_SKATER_SPAWN_EGG = ITEMS.register("grid_skater_spawn_egg",
+            () -> new ForgeSpawnEggItem(MMEntityTypes.GRID_SKATER, 0x000000, 0xa88702, new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
+
+    public static final RegistryObject<Item> CRYSTAL_WARLOCK_SPAWN_EGG = ITEMS.register("crystal_warlock_spawn_egg",
+            () -> new ForgeSpawnEggItem(MMEntityTypes.CRYSTAL_WARLOCK, 0x2e027a, 0x750820, new Item.Properties().tab(MMItemGroup.MM_ITEMS)));
 
 
     //SPECIAL

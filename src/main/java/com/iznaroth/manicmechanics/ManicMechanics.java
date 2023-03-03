@@ -1,8 +1,9 @@
 package com.iznaroth.manicmechanics;
 
 import com.iznaroth.manicmechanics.block.MMBlocks;
+import com.iznaroth.manicmechanics.entity.render.GridSkaterRenderer;
 import com.iznaroth.manicmechanics.menu.MMMenus;
-import com.iznaroth.manicmechanics.entity.ModEntityTypes;
+import com.iznaroth.manicmechanics.entity.MMEntityTypes;
 import com.iznaroth.manicmechanics.entity.custom.PinchEntity;
 import com.iznaroth.manicmechanics.entity.render.CopCarRenderer;
 import com.iznaroth.manicmechanics.entity.render.PinchRenderer;
@@ -19,12 +20,9 @@ import com.iznaroth.manicmechanics.util.ModSoundEvents;
 import com.iznaroth.manicmechanics.world.feature.MMConfiguredFeatures;
 import com.iznaroth.manicmechanics.world.feature.MMPlacedFeatures;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
@@ -42,6 +40,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.geckolib3.GeckoLib;
 
 import java.util.stream.Collectors;
 
@@ -68,7 +67,7 @@ public class ManicMechanics
         MMPlacedFeatures.register(eventBus);
 
         ModSoundEvents.register(eventBus);
-        ModEntityTypes.register(eventBus);
+        MMEntityTypes.register(eventBus);
 
         MMBlockEntities.register(eventBus);
 
@@ -98,6 +97,8 @@ public class ManicMechanics
         forgeEventBus.register(ActiveConnectionQueue.class);
         forgeEventBus.register(new ModEvents());
 
+        GeckoLib.initialize();
+
         eventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in
@@ -106,7 +107,7 @@ public class ManicMechanics
 
     public void setup(final FMLCommonSetupEvent event)
     {
-        SpawnPlacements.register(ModEntityTypes.PINCH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PinchEntity::checkSpawnRules);
+        SpawnPlacements.register(MMEntityTypes.PINCH.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PinchEntity::checkSpawnRules);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -115,18 +116,9 @@ public class ManicMechanics
         //NOTE - May need to rearrange for order compliance?
         FMLJavaModLoadingContext.get().getModEventBus().register(com.iznaroth.manicmechanics.setup.ClientSetup.class);
 
-        EntityRenderers.register(ModEntityTypes.COP_CAR.get(), CopCarRenderer::new);
-        EntityRenderers.register(ModEntityTypes.PINCH.get(), PinchRenderer::new);
+        EntityRenderers.register(MMEntityTypes.COP_CAR.get(), CopCarRenderer::new);
+        EntityRenderers.register(MMEntityTypes.PINCH.get(), PinchRenderer::new);
 
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            MMMessages.register();
-        });
-
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -149,6 +141,10 @@ public class ManicMechanics
 
         //----------------
         eventBus.register(com.iznaroth.manicmechanics.setup.CommonSetup.class);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+
     }
 
 

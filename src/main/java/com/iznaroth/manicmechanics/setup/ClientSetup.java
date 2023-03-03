@@ -4,7 +4,11 @@ import com.iznaroth.manicmechanics.ManicMechanics;
 import com.iznaroth.manicmechanics.blockentity.MMBlockEntities;
 import com.iznaroth.manicmechanics.blockentity.client.AnimatedBlockRenderer;
 import com.iznaroth.manicmechanics.client.gui.GuiCurrencyHUD;
+import com.iznaroth.manicmechanics.entity.MMEntityTypes;
+import com.iznaroth.manicmechanics.entity.render.CrystalWarlockRenderer;
+import com.iznaroth.manicmechanics.entity.render.GridSkaterRenderer;
 import com.iznaroth.manicmechanics.render.AnimationTickCounter;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
@@ -78,6 +82,8 @@ public class ClientSetup {
         public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
             System.out.println("REGISTER RENDERERS!");
             event.registerBlockEntityRenderer(MMBlockEntities.ANIMATED_BE.get(), AnimatedBlockRenderer::new);
+            event.registerEntityRenderer(MMEntityTypes.GRID_SKATER.get(), GridSkaterRenderer::new);
+            event.registerEntityRenderer(MMEntityTypes.CRYSTAL_WARLOCK.get(), CrystalWarlockRenderer::new);
         }
 
 

@@ -18,7 +18,7 @@ public class AnimatedBlockModel extends AnimatedGeoModel<AnimatedBlockEntity> {
 
     @Override
     public ResourceLocation getTextureResource(AnimatedBlockEntity object) {
-        return new ResourceLocation(ManicMechanics.MOD_ID, "textures/block/animated/thracking_pylon_whole.png");
+        return new ResourceLocation(ManicMechanics.MOD_ID, "textures/block/thracking_pylon_whole.png");
     }
 
     public ResourceLocation getSecondaryTextureResource(AnimatedBlockEntity object) {
