@@ -1,5 +1,5 @@
 # Manic Mechanics
-*I promise I'll add a logo soon edition* *ver. 0.3.34*
+*I promise I'll add a logo soon edition* | *ver. 0.3.34*
 
 This is the repository for Manic Mechanics, a mod for Minecraft version 1.19.2 (port pending! I'm waiting for 1.20.) It is a conventional "tech-mod" with an automation focused gameplay loop bracketed over the traditional Minecraft experience of, well, mining and crafting. It is currently in a fairly early pre-alpha phase with a lot of *sketched*, broken or otherwise unfinished content. Everything is subject to change. 
 
@@ -10,7 +10,7 @@ Manic Mechanics is similar to other tech-mods in that it follows a rotating loop
 ### Planning
 *The process of figuring out what to do next, how much space it will take, and what things you'll need to accomplish the task.*
 - MM currently uses [Patchouli](https://github.com/VazkiiMods/Patchouli), a free data-driven documentation solution that presents itself in-game as a readable book with iteratively-unlocking chapters. This is not necessarily a permanent solution, but it allows for the most direct delivery of otherwise obscure gameplay information.
-- MM is compatible and intended to be used with [Just Enough Items] (https://github.com/mezz/JustEnoughItems) to some degree, allowing for quick access to any recipe hierarchy. 
+- MM is compatible and intended to be used with [Just Enough Items](https://github.com/mezz/JustEnoughItems) to some degree, allowing for quick access to any recipe hierarchy. 
 - A series of ingame advancements and "quest triggers" allow for the immersive delivery of story landmarks as the player progresses, quietly directing their action.
 - A loose and currently unstable system of quasi-email the player can engage in to recieve advice, items and other resources from helpful NPCs. 
 
@@ -39,7 +39,7 @@ Manic Mechanics is similar to other tech-mods in that it follows a rotating loop
 
 All of this exists in the mod in *some* form. A lot of it is admittedly unfinished. Once complete, it will constitute the first major version of the mod (1.0.0). 
 
-# How do I play it?
+## How do I play it?
 It's a little harder now than it would be otherwise. There aren't any production builds yet, so you can't drag-and-drop it like a traditional minecraft mod. I also do not have a maven set-up, so you can't declare it as a dependency. Currently, the only way to try out Manic Mechanics is to download this repo and set it up as a workspace. It's actually fairly self-explanatory, as much of it is already automated:
 - Clone this repo into any folder.
 - Open it in your IDE of choice (these instructions are written for IntelliJ, but it should work in Eclipse or any other Java IDE)
