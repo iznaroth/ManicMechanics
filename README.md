@@ -43,9 +43,11 @@ All of this exists in the mod in *some* form. A lot of it is admittedly unfinish
 It's a little harder now than it would be otherwise. There aren't any production builds yet, so you can't drag-and-drop it like a traditional minecraft mod. I also do not have a maven set-up, so you can't declare it as a dependency. Currently, the only way to try out Manic Mechanics is to download this repo and set it up as a workspace. It's actually fairly self-explanatory, as much of it is already automated:
 - Clone this repo into any folder.
 - Open it in your IDE of choice (these instructions are written for IntelliJ, but it should work in Eclipse or any other Java IDE)
-- Let Gradle use the build.gradle to download dependencies and set-up the workspace. On IntelliJ, you just have to click on the little elephant reload icon. somewhere in the code panel. 
-- Open the gradle menu, expand the 'forgegradle runs' folder, and run the script titled 'gen"X"Runs' where X corresponds to your IDE of choice (mine would say genIntellijRuns)
+- Let Gradle use the build.gradle to download dependencies and set-up the workspace. On IntelliJ, you just have to click on the little elephant reload icon somewhere in the code panel. 
+- Open the gradle menu, expand the 'forgegradle runs' folder, and run the script titled 'genXRuns' where X corresponds to your IDE of choice (mine would say genIntellijRuns)
 - Use the runClient run configuration. If you run into any issues, snag the console output and let me know!
+
+You need to be at JDK 17 minimum for this to work. 
 
 This repo is not currently open to pull requests. Once I reach a 'content-complete' phase in development, I'll probably open it up. For now, feel free to fire any burning reccomendations or code-criticisms to my email, iznaroth@gmail.com. I'm always happy to hear them, no matter how brutal!
 
