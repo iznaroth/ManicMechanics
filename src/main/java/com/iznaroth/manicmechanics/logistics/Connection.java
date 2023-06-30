@@ -18,6 +18,10 @@ public class Connection {
     //This connection is signaled by its parent to track what kind of jobs it will schedule, and has a passthrough function for
     //each of the tube types which it will try to schedule against
 
+    //TODO - Total logistic rewrite. The system is more fully-speculated, so a lot of stuff needs to be strategically
+    //reevaluated. In short - keep the connection-bodytile system to keep ticking tiles down, but a total rewrite of pathing, identification
+    // and subnetwork splitting needs to be made.
+
     public Connection(TubeBundleBE parent, BlockEntity attached, Direction from){
         this.parent = parent;
 
@@ -119,7 +123,7 @@ public class Connection {
             return;
         }
 
-        int fromSlot; //This is a shit implementation to get and reuse gNIO's slot read and pass it down to the job.
+        int fromSlot; //This is a bad implementation to get and reuse gNIO's slot read and pass it down to the job.
 
         //Check if this is a novel job. If it is, build a new cache.
         ItemStack compare = this.getNewItemOutput();

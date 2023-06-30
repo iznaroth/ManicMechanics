@@ -180,6 +180,10 @@ public class ImporterBlockEntity extends BlockEntity implements IHasInvHandler, 
             System.out.println("This dude has no money.");
         }
 
+        if(curr.getCurrentBalance() <= 0){
+            System.out.println("Handle below-zero debt-acc order here (ImporterBlockEntity line 184");
+        }
+
         curr.removeCurrency(BlockValueGenerator.getValOrPopulate(toBuy) * quantity);
 
         this.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null).insertItem(0, new ItemStack(toBuy, quantity), false);

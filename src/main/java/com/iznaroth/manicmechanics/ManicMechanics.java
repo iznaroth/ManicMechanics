@@ -144,7 +144,7 @@ public class ManicMechanics
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        MMMessages.register();
     }
 
 

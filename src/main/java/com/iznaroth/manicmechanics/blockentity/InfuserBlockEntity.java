@@ -80,7 +80,7 @@ public class InfuserBlockEntity extends BlockEntity implements IHasInvHandler, I
             return switch (slot) {
                 case 0 -> stack.getItem() == MMItems.LUMINOUS_PHOSPHOTHALLITE_MIXTURE.get();
                 case 1 -> stack.getItem() == MMItems.NEUTRALIZED_PHOSPHOTHALLITE_MIXTURE.get();
-                case 2 -> stack.getItem() == Items.WATER_BUCKET; //NOTE - might fuck up recipe
+                case 2 -> stack.getItem() == Items.WATER_BUCKET; //NOTE - might screw up recipe
                 default -> super.isItemValid(slot, stack);
             };
         }

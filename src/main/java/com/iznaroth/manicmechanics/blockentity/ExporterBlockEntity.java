@@ -154,7 +154,7 @@ public class ExporterBlockEntity extends BlockEntity implements IHasInvHandler, 
 
     public void sellEverything(Player player){
 
-        HashMap<Item, Integer> mappings = BlockValueGenerator.populateEconomyMapping(1, 1); //TEMP - how the fuck do I get the world seed?
+        HashMap<Item, Integer> mappings = BlockValueGenerator.populateEconomyMapping(1, 1); //TEMP - look for worldseed?
 
         for(int i = 0; i < 12; i++){
             ItemStack to_sell = itemHandler.getStackInSlot(i);

@@ -38,10 +38,10 @@ public class ImporterBlockMenu extends AbstractContainerMenu {
         this.level = inv.player.level;
         this.data = data;
 
-        layoutPlayerInventorySlots(10, 84, inv);
+        layoutPlayerInventorySlots(133, 83, inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 65, 51));
+            this.addSlot(new SlotItemHandler(handler, 0, 248, 38));
 
         });
 

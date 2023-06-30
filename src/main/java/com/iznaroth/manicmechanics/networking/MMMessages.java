@@ -26,6 +26,7 @@ public class MMMessages {
                 .simpleChannel();
 
         INSTANCE = net;
+        System.out.println("Network handler registered!");
 
         net.messageBuilder(ItemStackSyncS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(ItemStackSyncS2CPacket::new)

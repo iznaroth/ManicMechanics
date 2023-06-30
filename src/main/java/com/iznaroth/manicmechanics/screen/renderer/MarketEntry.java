@@ -34,7 +34,7 @@ public class MarketEntry extends GuiComponent {
 
     public MarketEntry(Item init, int currAnchor, int xMin, int yMin){
         System.out.println(xMin + " " + yMin);
-        area = new Rect2i(xMin + 92, yMin + 21 + (currAnchor * 18), 10, 50);
+        area = new Rect2i(xMin + 30, yMin + 31 + (currAnchor * 18), 50, 10);
         entryItem = init;
         price = BlockValueGenerator.getValOrPopulate(init);
         rankAnchor = currAnchor;

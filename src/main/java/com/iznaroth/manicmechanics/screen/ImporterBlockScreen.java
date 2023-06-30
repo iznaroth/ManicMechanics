@@ -35,9 +35,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 
 public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMenu> {
-    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/importer.png");
+    private ResourceLocation GUI = new ResourceLocation(ManicMechanics.MOD_ID, "textures/gui/importer_upscale.png");
 
-    private MarketEntry[] listed = new MarketEntry[3];
+    private MarketEntry[] listed = new MarketEntry[7];
 
     private ArrayList<Item> filteredItemSet;
     int pos;
@@ -55,6 +55,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
 
     public ImporterBlockScreen(ImporterBlockMenu container, Inventory inv, Component name) {
         super(container, inv, name);
+        this.imageWidth = 301;
 
         filteredItemSet = new ArrayList<>(BlockValueGenerator.getInitializeMap().keySet());
     }
@@ -63,17 +64,20 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
     protected void init() {
         super.init();
 
+        //this.imageHeight = 512;
+        //this.imageWidth = 512;
+
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         System.out.println(relX + " " + relY);
         Iterator<Item> itr = filteredItemSet.iterator();
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 7; i++){
             listed[i] = new MarketEntry(itr.next(), i, relX, relY);
         }
 
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-        this.searchBox = new EditBox(this.font, this.leftPos + 92, this.topPos + 9, 69, 8, Component.translatable("itemGroup.search"));
+        this.searchBox = new EditBox(this.font, this.leftPos + 30, this.topPos + 18, 69, 8, Component.translatable("itemGroup.search"));
         this.searchBox.setMaxLength(50);
         this.searchBox.setBordered(false);
         this.searchBox.setVisible(true);
@@ -83,7 +87,8 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
 
     @Override
     protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        super.renderLabels(pPoseStack, pMouseX, pMouseX);
+        //super.renderLabels(pPoseStack, pMouseX, pMouseX);
+        this.font.draw(pPoseStack, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
@@ -91,16 +96,28 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
     }
 
     private void renderMarketEntryTooltips(PoseStack pPoseStack, int pMouseX, int pMouseY, int x, int y) {
-        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 92, 21, 16, 16)) {
+        if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 31, 16, 16)) {
             renderTooltip(pPoseStack, listed[0].getTooltip(),
                     Optional.empty(), pMouseX - x, pMouseY - y);
-        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 92, 39, 16, 16)) {
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 49, 16, 16)) {
             renderTooltip(pPoseStack, listed[1].getTooltip(),
                     Optional.empty(), pMouseX - x, pMouseY - y);
-        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 92, 57, 16, 16)) {
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 67, 16, 16)) {
             renderTooltip(pPoseStack, listed[2].getTooltip(),
                     Optional.empty(), pMouseX - x, pMouseY - y);
-        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 65, 6, 16, 16)){
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 85, 16, 16)) {
+            renderTooltip(pPoseStack, listed[3].getTooltip(),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 103, 16, 16)) {
+            renderTooltip(pPoseStack, listed[4].getTooltip(),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 121, 16, 16)) {
+            renderTooltip(pPoseStack, listed[5].getTooltip(),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 30, 139, 16, 16)) {
+            renderTooltip(pPoseStack, listed[6].getTooltip(),
+                    Optional.empty(), pMouseX - x, pMouseY - y);
+        } else if(isMouseAboveArea(pMouseX, pMouseY, x, y, 133, 10, 16, 16)){
             renderTooltip(pPoseStack, selected.getTooltipLines(null, TooltipFlag.Default.NORMAL),
                     Optional.empty(), pMouseX - x, pMouseY - y);
         }
@@ -120,7 +137,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         RenderSystem.setShaderTexture(0, GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
-        this.blit(poseStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight, 512, 256);
 
         for(MarketEntry entry : listed){
             if(entry != null)
@@ -128,10 +145,10 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         }
 
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-        renderer.renderGuiItem(selected, relX + 65, relY + 6);
+        renderer.renderGuiItem(selected, relX + 133, relY + 10);
 
-        Minecraft.getInstance().font.drawShadow(poseStack, Component.literal(" " + order_quantity + " "), relX + 63, relY + 27, 0xFFFFFF);
-        Minecraft.getInstance().font.drawShadow(poseStack, Component.literal(" " + tick_delay + " "), relX + 63, relY + 36, 0xFFFFFF);
+        Minecraft.getInstance().font.drawShadow(poseStack, Component.literal(" " + order_quantity + " "), relX + 136, relY + 33, 0xFFFFFF);
+        Minecraft.getInstance().font.drawShadow(poseStack, Component.literal(" " + tick_delay + " "), relX + 136, relY + 49, 0xFFFFFF);
         //Minecraft.getInstance().font.drawShadow(poseStack, Component.literal(" " + BlockValueGenerator.current_mapping.get(selected.getItem()) * order_quantity + " "), relX, relY + 28, 0xFF0000);
 
         this.searchBox.render(poseStack, mouseX, mouseY, partialTicks);
@@ -143,39 +160,57 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         System.out.println("CLICKED AT " + p_97748_ + " " + p_97749_);
-        if((p_97748_ > x+60 && p_97748_ < x+66) && (p_97749_ > y+25 && p_97749_ < y+31)){ //Set 1 - Increase quantity of import
+        if((p_97748_ > x+131 && p_97748_ < x+137) && (p_97749_ > y+34 && p_97749_ < y+40)){ //Set 1 - Increase quantity of import
             order_quantity--;
             if(order_quantity < 0){
                 order_quantity = 64;
             }
         }
-        if((p_97748_ > x+79 && p_97748_ < x+85) && (p_97749_ > y+25 && p_97749_ < y+31)){ //
+        if((p_97748_ > x+154 && p_97748_ < x+160) && (p_97749_ > y+34 && p_97749_ < y+40)){ //
             order_quantity++;
             if(order_quantity > 64){
                 order_quantity = 0;
             }
         }
 
-        if((p_97748_ > x+60 && p_97748_ < x+66) && (p_97749_ > y+33 && p_97749_ < y+39)){ //Set 2 - Increase delay on auto import
+        if((p_97748_ > x+154 && p_97748_ < x+158) && (p_97749_ > y+51 && p_97749_ < y+57)){ //Set 2 - Increase delay on auto import
             tick_delay--;
+            if(tick_delay < 0){
+                tick_delay = 0;
+            }
         }
-        if((p_97748_ > x+79 && p_97748_ < x+85) && (p_97749_ > y+33 && p_97749_ < y+39)){ //
+        if((p_97748_ > x+164 && p_97748_ < x+170) && (p_97749_ > y+51 && p_97749_ < y+57)){ //
             tick_delay++; //TODO - wrap func, shift-click to x8
         }
 
-        if((p_97748_ > x+91 && p_97748_ < x+160) && (p_97749_ > y+21 && p_97749_ < y+37)){ //Inside the scrolling market viewer - three entries
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+31 && p_97749_ < y+48)){ //Inside the scrolling market viewer - three entries
             selectEntry(0);
         }
-        if((p_97748_ > x+91 && p_97748_ < x+160) && (p_97749_ > y+38 && p_97749_ < y+55)){ //
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+49 && p_97749_ < y+66)){ //
             selectEntry(1);
         }
-        if((p_97748_ > x+91 && p_97748_ < x+160) && (p_97749_ > y+56 && p_97749_ < y+72)){ //
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+67 && p_97749_ < y+84)){ //
             selectEntry(2);
         }
-        if((p_97748_ > x+161 && p_97748_ < x+168) && (p_97749_ > y+21 && p_97749_ < y+27)){ //Scroll up/down buttons
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+85 && p_97749_ < y+102)){
+            selectEntry(3);
+        }
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+103 && p_97749_ < y+120)){ //
+            selectEntry(4);
+        }
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+121 && p_97749_ < y+138)){ //
+            selectEntry(5);
+        }
+        if((p_97748_ > x+30 && p_97748_ < x+117) && (p_97749_ > y+139 && p_97749_ < y+156)){ //
+            selectEntry(6);
+        }
+
+
+
+        if((p_97748_ > x+119 && p_97748_ < x+123) && (p_97749_ > y+31 && p_97749_ < y+35)){ //Scroll up/down buttons
             this.scrollEntriesUp();
         }
-        if((p_97748_ > x+161 && p_97748_ < x+168) && (p_97749_ > y+66 && p_97749_ < y+72)){ //
+        if((p_97748_ > x+119 && p_97748_ < x+123) && (p_97749_ > y+151 && p_97749_ < y+155)){ //
             this.scrollEntriesDown();
         }
 
@@ -183,7 +218,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
 
         }
 
-        if((p_97748_ > x+92 && p_97748_ < x+168) && (p_97749_ > y+9 && p_97749_ < y+16)){ //click in searchbar
+        if((p_97748_ > x+30 && p_97748_ < x+106) && (p_97749_ > y+18 && p_97749_ < y+25)){ //click in searchbar
             searchbarSelected = true;
             this.searchBox.setFocus(true);
         } else { //any other click unfocus
@@ -191,7 +226,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
             this.searchBox.setFocus(false);
         }
 
-        if((p_97748_ > x+9 && p_97748_ < x+45) && (p_97749_ > y+54 && p_97749_ < y+66)){ //ORDER
+        if((p_97748_ > x+198 && p_97748_ < x+235) && (p_97749_ > y+39 && p_97749_ < y+52)){ //ORDER
             ArrayList<Item> col = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
 
             MMMessages.sendToServer(new PayloadButtonC2SPacket(0, (col.indexOf(selected.getItem()) * 100 + order_quantity), this.menu.getBlockEntity().getBlockPos()));
@@ -227,6 +262,10 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
             return;
         }
 
+        listed[6].rebuildOnCycle(filteredItemSet.get(pos+6));
+        listed[5].rebuildOnCycle(filteredItemSet.get(pos+5));
+        listed[4].rebuildOnCycle(filteredItemSet.get(pos+4));
+        listed[3].rebuildOnCycle(filteredItemSet.get(pos+3));
         listed[2].rebuildOnCycle(filteredItemSet.get(pos+2));
         listed[1].rebuildOnCycle(filteredItemSet.get(pos+1));
         listed[0].rebuildOnCycle(filteredItemSet.get(pos));
@@ -234,7 +273,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
 
      public void scrollEntriesDown(){
         pos++;
-         if(pos+2 > filteredItemSet.size()-1){
+         if(pos+6 > filteredItemSet.size()-1){
              pos--;
              return;
          }
@@ -242,6 +281,10 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
          listed[0].rebuildOnCycle(filteredItemSet.get(pos));
          listed[1].rebuildOnCycle(filteredItemSet.get(pos + 1));
          listed[2].rebuildOnCycle(filteredItemSet.get(pos + 2));
+         listed[3].rebuildOnCycle(filteredItemSet.get(pos + 3));
+         listed[4].rebuildOnCycle(filteredItemSet.get(pos + 4));
+         listed[5].rebuildOnCycle(filteredItemSet.get(pos + 5));
+         listed[6].rebuildOnCycle(filteredItemSet.get(pos + 6));
 
          for(MarketEntry entry : listed){
              if(entry != null)
@@ -258,6 +301,12 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         listed[0].rebuildOnCycle(filteredItemSet.size() > 0 ? filteredItemSet.get(pos) : Items.AIR); //mediocre solution to overfilter
         listed[1].rebuildOnCycle(filteredItemSet.size() > 1 ? filteredItemSet.get(pos+1) : Items.AIR);
         listed[2].rebuildOnCycle(filteredItemSet.size() > 2 ? filteredItemSet.get(pos+2) : Items.AIR);
+        listed[3].rebuildOnCycle(filteredItemSet.size() > 1 ? filteredItemSet.get(pos+1) : Items.AIR);
+        listed[4].rebuildOnCycle(filteredItemSet.size() > 2 ? filteredItemSet.get(pos+2) : Items.AIR);
+        listed[5].rebuildOnCycle(filteredItemSet.size() > 1 ? filteredItemSet.get(pos+1) : Items.AIR);
+        listed[6].rebuildOnCycle(filteredItemSet.size() > 2 ? filteredItemSet.get(pos+2) : Items.AIR);
+
+
      }
 
      public void selectEntry(int which){
@@ -283,6 +332,7 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
                 }
                 return true;
             }
+            return true;//Testing capture
         }
 
         return super.keyPressed(p_97765_, p_97766_, p_97767_);
@@ -313,5 +363,15 @@ public class ImporterBlockScreen extends AbstractContainerScreen<ImporterBlockMe
         if (this.searchBox != null) {
             this.searchBox.tick();
         }
+    }
+
+    @Override
+    public int getXSize(){
+        return 512;
+    }
+
+    @Override
+    public int getYSize(){
+        return 512;
     }
 }

@@ -74,7 +74,7 @@ public class LinkToolItem extends Item {
 
             System.out.println(vacuum_inv_ct);
 
-            Direction dir; //Lotta unnecessary shit here.
+            Direction dir; //TODO - Unnecessarily verbose. Trim it.
             int dist = 0;
 
             if(x && y){

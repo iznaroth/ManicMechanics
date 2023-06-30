@@ -64,7 +64,7 @@ public class SealingChamberBlockEntity extends BlockEntity implements IHasInvHan
             return switch (slot) {
                 case 0 -> stack.getItem() == MMItems.TUBE_HOUSING.get();
                 case 1 -> stack.getItem() == MMItems.SEALANT.get();
-                case 2 -> Block.byItem(stack.getItem()) instanceof AbstractTubeBlock; //NOTE - might fuck up recipe
+                case 2 -> Block.byItem(stack.getItem()) instanceof AbstractTubeBlock; //NOTE - might mess up recipe
                 default -> super.isItemValid(slot, stack);
             };
         }
