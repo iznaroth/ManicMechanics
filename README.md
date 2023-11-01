@@ -1,6 +1,8 @@
 # Manic Mechanics
 *I promise I'll add a logo soon edition* | *ver. 0.3.34*
 
+**Hey! This project is on hiatus for the near future. If you're curious about what's happening, you can usually read my most recent pursuits on iznaroth.com under blogs or devlogs, depending on the nature of the work. Sorry!**
+
 This is the repository for Manic Mechanics, a mod for Minecraft version 1.19.2 (port pending! I'm waiting for 1.20.) It is a conventional "tech-mod" with an automation focused gameplay loop bracketed over the traditional Minecraft experience of, well, mining and crafting. It is currently in a fairly early pre-alpha phase with a lot of *sketched*, broken or otherwise unfinished content. Everything is subject to change. 
 
 ## What's in it now?
