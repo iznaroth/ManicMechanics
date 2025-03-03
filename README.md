@@ -7,10 +7,10 @@
 \
 Hello! Welcome to the repo for Mad-Manic Magi-Mechanics (or M4), formerly known as Manic Mechanics (lol). This is a mod concerning novel resources, automation, the arcane, and market manipulation.
 
-## What's in it now?
+## Content Package I
 M4 is similar to other tech-mods in that it follows a rotating loop of planning, exploration, and implementing. It is not intended to be a particularly accessible or reasonable experience, with a fairly-multidisciplinary and overcomplicated tangle of intermediary trees and logical control requirements. It has no feature-complete content at this version of Minecraft, so please stay tuned for specifics.
 
-The current dev target, 'Content Package 1', is meant to lay the foundations for a few basic disciplines within the mod's scope. These are divided as such:
+The current dev target, 'Content Package I', is meant to lay the foundations for a few basic disciplines within the mod's scope. These are divided as such:
 <br><br>
 ### THE DAWN OF AUTOMATION
 The player has been re-christened as a wayward Specialist hireling of the I.I.C.'s venerable Frontier Viability Protocol. Automated support does a poor job of indication. Serves as the introduction of basic utilities with unusual quirks opening a number of new crafting routes. Of a number of newfound resources, three become relevant: Thallite, Dyspersium and Photokophrite. The unique properties of these metals allow for the inexact replication of industrial processes like the storage of power or the manipulation of unusual materials. Tools for pilfering new overworld ruins and dimensional 'pinches' permit increasingly-convoluted crafting procedures. The player strives to establish contact with their employers, or to the vandals who appeared to get to their pod before they were awakened...
