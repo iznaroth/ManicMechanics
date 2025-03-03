@@ -1,4 +1,4 @@
-<img src="https://github.com/user-attachments/assets/fd58999f-1bb0-4b30-94a2-7d2c6767cd25" width="48">
+<img src="https://github.com/user-attachments/assets/fd58999f-1bb0-4b30-94a2-7d2c6767cd25" width="192">
 
 # Mad-Manic Magi-Mechanics
 *I added a logo edition!* | *prev ver. 0.3.34*
