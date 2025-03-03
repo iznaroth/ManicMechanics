@@ -1,5 +1,6 @@
 # Mad-Manic Magi-Mechanics
-*I promise I'll add a logo soon edition* | *prev ver. 0.3.34*
+*I added a logo edition!* | *prev ver. 0.3.34*
+![m4logo](https://github.com/user-attachments/assets/b1d10f84-9729-478e-8d25-29e16b28c104)
 
 **NOTE - This is a rebuild of the 1.19 version of the mod, so it lacks substantial history or context - you can poke around the other branches for that**
 Hello! Welcome to the repo for Mad-Manic Magi-Mechanics (or M4), formerly known as Manic Mechanics (lol). This is a mod concerning novel resources, automation, the arcane, and market manipulation. 
