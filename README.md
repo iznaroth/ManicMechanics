@@ -25,10 +25,10 @@ The great beyond is not your sole concern here - relics of an altogether differe
 uncontrolled, volatile and entirely foreign - and none of their notes are legible. Play with fire and see what happens! You may find some unusual utility in their rituals...
 <br><br>
 ### THE GOLDEN AGE
-Scattered across the Overworld are a great many ruins, but perhaps the most attention-grabbing are the anthropic marble sculptures that only seem to crop up with extreme rarity, all caressing devices of unknown make or purpose that continue to perform their archaic arts without any oversight. Could it be possible to decrypt their processes and use them yourself?
+Scattered across the Overworld are a great many ruins, but perhaps the most attention-grabbing are the anthropic marble sculptures that only seem to manifest with extreme rarity and in distant locales, all caressing devices of unknown make or purpose that continue to perform their archaic arts without any oversight. Could it be possible to decrypt their processes and use them yourself?
 <br><br>
 ### NO SHORTAGE OF SECRETS
-There's a lot more going on here. Dense composites with convoluted processing, complex material analysis, a persistent sense that you're being watched...be willing to experiment, and explore with all your might!
+There's a lot more going on here. Dense composites with convoluted processing, complex material analysis, strange new climates and environs, a persistent sense that you're being watched...be willing to experiment, and explore with all the necessary trepidation for your continued survival.
 <br><br>
 ~~
 
