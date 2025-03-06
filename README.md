@@ -32,6 +32,6 @@ There's a lot more going on here. Dense composites with convoluted processing, c
 <br><br>
 ~~
 
-All features are subject to sudden and unprovoked alteration. Apologies are not included, though that does not disqualify your opinion - share it always!
+This is a preliminary branch. It has no release candidate and must be manually downloaded and built as a workspace to use. If you don't know how to do that, dont worry - just wait until a real build. 
 
-This repo is not currently open to pull requests. Once I reach a 'content-complete' phase in development, I'll probably open it up. For now, feel free to fire any burning recommendations or code-criticisms to my email, iznaroth@gmail.com. I'm always happy to hear them, no matter how brutal!
+All features are subject to sudden and unprovoked alteration, often without good reason or coherent vision. This repo is not currently open to pull requests. Once I reach a 'content-complete' phase in development, I'll probably open it up. For now, feel free to fire any burning recommendations or code-criticisms to my email, iznaroth@gmail.com. I'm always happy to hear them, no matter how brutal!
