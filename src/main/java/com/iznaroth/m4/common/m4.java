@@ -1,24 +1,23 @@
-package com.iznaroth.m4;
+package com.iznaroth.m4.common;
 
+import com.iznaroth.m4.common.blockentity.ObliterationPlinthBlockEntity;
+import com.iznaroth.m4.common.registration.M4BlockEntities;
+import com.iznaroth.m4.common.registration.M4Blocks;
+import com.iznaroth.m4.common.registration.M4CreativeTabs;
+import com.iznaroth.m4.common.registration.M4Items;
+import com.iznaroth.m4.datagen.DataGeneration;
+import net.minecraft.util.datafix.fixes.ChunkPalettedStorageFix;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import com.iznaroth.m4.Registration;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,12 +28,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(m4.MODID)
@@ -52,15 +46,23 @@ public class m4
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        Registration.init(modEventBus);
-
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (m4) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        M4Blocks.BLOCKS.register(modEventBus);
+        M4Items.ITEMS.register(modEventBus);
+        M4CreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        M4BlockEntities.BLOCK_ENTITIES.register(modEventBus);
+
         // Register the item to a creative tab
-        modEventBus.addListener(Registration::addCreative);
+        modEventBus.addListener(M4CreativeTabs::addCreative);
+
+        //capabilities
+        modEventBus.addListener(this::registerCapabilities);
+
+        modEventBus.addListener(DataGeneration::generate);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -98,5 +100,13 @@ public class m4
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+    }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                M4BlockEntities.OBLITERATION_PLINTH_ENTITY.get(),
+                (o, direction) -> o.getItemHandler()
+        );
     }
 }

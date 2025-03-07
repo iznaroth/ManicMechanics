@@ -1,4 +1,4 @@
-package com.iznaroth.m4;
+package com.iznaroth.m4.common;
 
 import java.util.List;
 import java.util.Set;
