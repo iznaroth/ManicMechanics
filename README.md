@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/fd58999f-1bb0-4b30-94a2-7d2c6767cd25" width="192">
-  <img alt="Text changing depending on mode. Light: 'So light!' Dark: 'So dark!'" src="https://github.com/user-attachments/assets/23f5dfa7-9be3-4d48-bcf7-973c18c8d6f1" width="192">
+  <img alt="Text changing depending on mode. Light: 'So light!' Dark: 'So dark!'" src="https://github.com/user-attachments/assets/f5b029f3-2bd2-4ed9-8241-0d57555d5177" width="192">
 </picture>
 
 # Mad-Manic Magi-Mechanics
