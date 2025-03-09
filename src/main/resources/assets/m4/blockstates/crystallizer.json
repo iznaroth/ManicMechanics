@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/crystallizer"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/crystallizer"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/crystallizer"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/crystallizer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/crystallizer",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/crystallizer",
+      "y": 90
+    }
+  },
+  "render_type": "translucent"
+}

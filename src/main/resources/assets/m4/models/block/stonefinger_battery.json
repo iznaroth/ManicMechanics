@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "down": "manicmechanics:block/stonefinger_tb",
+    "up": "manicmechanics:block/stonefinger_tb",
+    "north": "manicmechanics:block/stonefinger_placeholder",
+    "south": "manicmechanics:block/stonefinger_placeholder",
+    "east": "manicmechanics:block/stonefinger_placeholder",
+    "west": "manicmechanics:block/stonefinger_placeholder"
+  }
+}

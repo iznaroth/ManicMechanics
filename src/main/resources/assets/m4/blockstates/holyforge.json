@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/holyforge"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/holyforge"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/holyforge"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/holyforge",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/holyforge",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/holyforge",
+      "y": 90
+    }
+  },
+  "render_type": "translucent"
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "manicmechanics:block/ante_top",
+    "side": "manicmechanics:block/ante_bark"
+  }
+}

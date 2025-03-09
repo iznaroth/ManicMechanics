@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "down": "manicmechanics:block/machine_placeholder",
+    "up": "manicmechanics:block/interpreter_top",
+    "north": "manicmechanics:block/interpreter_input",
+    "south": "manicmechanics:block/interpreter_input",
+    "east": "manicmechanics:block/interpreter_input",
+    "west": "manicmechanics:block/interpreter_input"
+  }
+}

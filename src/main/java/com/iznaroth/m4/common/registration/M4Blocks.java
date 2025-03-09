@@ -1,7 +1,10 @@
 package com.iznaroth.m4.common.registration;
 
+import com.iznaroth.m4.common.block.ChargingStationBlock;
+import com.iznaroth.m4.common.block.HEPCBlock;
+import com.iznaroth.m4.common.block.ManufactorumBlock;
 import com.iznaroth.m4.common.block.ObliterationPlinth;
-import com.iznaroth.m4.common.m4;
+import com.iznaroth.m4.common.M4;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -9,11 +12,11 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class M4Blocks {
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(m4.MODID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(M4.MODID);
 
     // BLOCKS
     //Note - This is a segment head.
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    //public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
 
     public static final DeferredBlock<ObliterationPlinth> OBLITERATION_PLINTH = BLOCKS.register("obliteration_plinth", ObliterationPlinth::new);
 
@@ -32,10 +35,14 @@ public class M4Blocks {
     public static final DeferredBlock<Block> LOW_RITUAL_CONVERSION_UNIT = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> MORBID_SOULSTONE_ENERVATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> COPHROLITE_BUFFER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredBlock<Block> MANUFACTORUM = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    */
+    public static final DeferredBlock<Block> MANUFACTORUM = BLOCKS.register("manufactorum", ManufactorumBlock::new);
+    /*
     public static final DeferredBlock<Block> MANIPULATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> INOCULATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredBlock<Block> CHARGING_STATION = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    */
+    public static final DeferredBlock<Block> CHARGING_STATION = BLOCKS.register("charging_station", ChargingStationBlock::new);
+    /*
     public static final DeferredBlock<Block> CONSTRUCTIVE_KINESIS_WORKBENCH = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> OPERATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> IRRIGATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
@@ -46,7 +53,9 @@ public class M4Blocks {
     //MACHINE BLOCKS - The Free Market
     public static final DeferredBlock<Block> EXPORTER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> IMPORTER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredBlock<Block> HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    */
+    public static final DeferredBlock<Block> HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER = BLOCKS.register("hyperfield_extract_polarization_chamber", HEPCBlock::new);
+    /*
     public static final DeferredBlock<Block> PSEUDOEXPLOSIVE_VOLATILE_CATALYSIS_CENTRIFUGE = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> MULTITHREADED_MATERIAL_INSPECTOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> MACRODATA_DECRYPTION_STATION = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));

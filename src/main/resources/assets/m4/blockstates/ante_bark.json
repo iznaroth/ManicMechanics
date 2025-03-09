@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "manicmechanics:block/ante_bark"
+    },
+    "axis=y": {
+      "model": "manicmechanics:block/ante_bark"
+    },
+    "axis=z": {
+      "model": "manicmechanics:block/ante_bark"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "multipart": [
+    {   "when": { "forearm": "up" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "x": 90 }
+    },
+
+    {   "when": { "forearm": "down" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "x": 270 }
+    },
+
+    {   "when": { "forearm": "south" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm"}
+    },
+
+    {   "when": { "forearm": "north" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+      "y": 180 }
+    },
+
+    {   "when": { "forearm": "west" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+        "y": 90 }
+    },
+
+    {   "when": { "forearm": "east" },
+      "apply": { "model": "manicmechanics:block/node_pointer_forearm",
+      "y": 270 }
+    },
+    {   "when": { "upper_arm": "up" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "x": 270 }
+    },
+
+    {   "when": { "upper_arm": "down" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "x": 90 }
+    },
+
+    {   "when": { "upper_arm": "north" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm"}
+    },
+
+    {   "when": { "upper_arm": "south" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 180 }
+    },
+
+    {   "when": { "upper_arm": "east" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 90 }
+    },
+
+    {   "when": { "upper_arm": "west" },
+      "apply": { "model": "manicmechanics:block/node_pointer_upper_arm",
+        "y": 270,
+        "render_type": "translucent"}
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "manicmechanics:block/tube_core"}
+    },
+
+    {   "when": { "north": "true" },
+      "apply": { "model": "manicmechanics:block/tube_north"}
+    },
+
+    {   "when": { "east": "true" },
+      "apply": { "model": "manicmechanics:block/tube_east" }
+    },
+
+    {   "when": { "south": "true" },
+      "apply": { "model": "manicmechanics:block/tube_south"}
+    },
+
+    {   "when": { "west": "true" },
+      "apply": { "model": "manicmechanics:block/tube_west"}
+    },
+
+    {   "when": { "up": "true" },
+      "apply": { "model": "manicmechanics:block/tube_up"}
+    },
+
+    {   "when": { "down": "true" },
+      "apply": { "model": "manicmechanics:block/tube_down"}
+    }
+  ]
+}

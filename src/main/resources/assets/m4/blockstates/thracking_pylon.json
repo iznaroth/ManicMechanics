@@ -1,0 +1,11 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "manicmechanics:block/thracking_base"}
+    },
+
+    {   "when": { "has_crystal": "true" },
+      "apply": { "model": "manicmechanics:block/thracking_pylon"}
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/morton_controller"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/morton_controller"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/morton_controller"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/morton_controller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/morton_controller",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/morton_controller",
+      "y": 90
+    }
+  },
+  "render_type": "translucent"
+}

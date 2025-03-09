@@ -1,0 +1,29 @@
+{
+  "credit": "Made with Blockbench",
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [
+        0.24,
+        0.25,
+        0.24
+      ]
+    },
+    "gui": {
+      "rotation": [
+        29,
+        -33,
+        0
+      ],
+      "translation": [
+        0,
+        -2.5,
+        0
+      ],
+      "scale": [
+        0.57,
+        0.58,
+        0.56
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/synchronizer_model"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/synchronizer_model"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/synchronizer_model"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/synchronizer_model",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/synchronizer_model",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/synchronizer_model",
+      "y": 90
+    }
+  },
+  "render_type": "cutout"
+}

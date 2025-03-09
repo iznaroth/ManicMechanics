@@ -1,7 +1,5 @@
 package com.iznaroth.m4.datagen;
 
-import com.iznaroth.m4.common.m4;
-
 import com.iznaroth.m4.common.registration.M4Blocks;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -21,6 +19,7 @@ public class M4Recipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.OBLITERATION_PLINTH.get())
                 .pattern("dsd")
                 .pattern("dxd")
@@ -32,6 +31,33 @@ public class M4Recipes extends RecipeProvider {
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(
                         ItemPredicate.Builder.item().of(Tags.Items.GEMS_DIAMOND).build()))
                 .save(consumer);
+/*
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get())
+                .pattern("dsd")
+                .pattern("ixi")
+                .pattern("idi")
+                .define('d', ItemTags.DIRT)
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('x', Tags.Items.GEMS_DIAMOND)
+                .define('s', Items.STICK)
+                .group("tutorial")
+                .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        ItemPredicate.Builder.item().of(Tags.Items.INGOTS_IRON).build()))
+                .save(consumer);
 
+
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.CHARGING_STATION.get())
+                .pattern("ixi")
+                .pattern("iii")
+                .define('i', Tags.Items.INGOTS_IRON)
+                .define('x', Tags.Items.GEMS_DIAMOND)
+                .group("tutorial")
+                .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        ItemPredicate.Builder.item().of(Tags.Items.INGOTS_IRON).build()))
+                .save(consumer);
+
+
+*/
     }
 }

@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "down": "manicmechanics:block/drill_gantry_bottom",
+    "up": "manicmechanics:block/drill_gantry_side",
+    "north": "manicmechanics:block/drill_gantry_front",
+    "south": "manicmechanics:block/drill_gantry_side",
+    "east": "manicmechanics:block/drill_gantry_side",
+    "west": "manicmechanics:block/drill_gantry_side"
+  }
+}

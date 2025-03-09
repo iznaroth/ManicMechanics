@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "manicmechanics:block/bulbous_crystal"
+  },
+  "render_type": "cutout"
+}

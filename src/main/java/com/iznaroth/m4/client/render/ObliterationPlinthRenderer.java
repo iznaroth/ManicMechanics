@@ -1,5 +1,5 @@
 package com.iznaroth.m4.client.render;
-import com.iznaroth.m4.common.m4;
+import com.iznaroth.m4.common.M4;
 
 import com.iznaroth.m4.common.blockentity.ObliterationPlinthBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,7 +23,7 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 public class ObliterationPlinthRenderer implements BlockEntityRenderer<ObliterationPlinthBlockEntity> {
-    public static final ResourceLocation LIGHT = ResourceLocation.fromNamespaceAndPath(m4.MODID, "block/light");
+    public static final ResourceLocation LIGHT = ResourceLocation.fromNamespaceAndPath(M4.MODID, "block/light");
 
     public ObliterationPlinthRenderer(BlockEntityRendererProvider.Context context) {
     }

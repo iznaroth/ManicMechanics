@@ -1,25 +1,30 @@
 package com.iznaroth.m4.common.registration;
 
-import com.iznaroth.m4.common.m4;
+import com.iznaroth.m4.common.M4;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static com.iznaroth.m4.common.registration.M4Blocks.EXAMPLE_BLOCK;
-import static com.iznaroth.m4.common.registration.M4Blocks.OBLITERATION_PLINTH;
+import static com.iznaroth.m4.common.registration.M4Blocks.*;
 
 public class M4Items {
 
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(m4.MODID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(M4.MODID);
 
     //BLOCKITEMS
     //Note - This is a segment head.
 
     //Minerals
-    public static final DeferredItem<BlockItem> CRUCIS_QUARTZITE_BLOCK = ITEMS.registerSimpleBlockItem("crucis_quartzite_block", EXAMPLE_BLOCK);
+    //public static final DeferredItem<BlockItem> CRUCIS_QUARTZITE_BLOCK = ITEMS.registerSimpleBlockItem("crucis_quartzite_block", EXAMPLE_BLOCK);
     public static final DeferredItem<Item> OBLITERATION_PLINTH_ITEM = ITEMS.register("obliteration_plinth", () -> new BlockItem(OBLITERATION_PLINTH.get(), new Item.Properties()));
+
+    public static final DeferredItem<Item> MANUFACTORUM_ITEM = ITEMS.register("manufactorum", () -> new BlockItem(MANUFACTORUM.get(), new Item.Properties()));
+    public static final DeferredItem<Item> HEPC_ITEM = ITEMS.register("hyperfield_extract_polarization_station", () -> new BlockItem(HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), new Item.Properties()));
+    public static final DeferredItem<Item> CHARGING_STATION_ITEM = ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
+
+
     /*
     public static final DeferredItem<Item> SOURSTONE = ITEMS.registerSimpleItem("example_item", new Item.Properties());
     public static final DeferredItem<Item> GOLDPOISONED_BLACKSTONE = ITEMS.registerSimpleItem("example_item", new Item.Properties());

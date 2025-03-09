@@ -1,6 +1,6 @@
 package com.iznaroth.m4.common.registration;
 
-import com.iznaroth.m4.common.m4;
+import com.iznaroth.m4.common.M4;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class M4Fluids {
 
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, m4.MODID);
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, M4.MODID);
 
     //Fluids!
     //Note - This is a segment head.

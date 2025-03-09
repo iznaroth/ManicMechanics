@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "manicmechanics:block/manamulcher"
+    },
+    "facing=up": {
+      "model": "manicmechanics:block/manamulcher"
+    },
+    "facing=north": {
+      "model": "manicmechanics:block/manamulcher"
+    },
+    "facing=south": {
+      "model": "manicmechanics:block/manamulcher",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "manicmechanics:block/manamulcher",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "manicmechanics:block/manamulcher",
+      "y": 90
+    }
+  },
+  "render_type": "translucent"
+}

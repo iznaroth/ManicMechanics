@@ -1,0 +1,11 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "down": "manicmechanics:block/structural_panel",
+    "up": "manicmechanics:block/structural_panel",
+    "north": "manicmechanics:block/solidifier_controller",
+    "south": "manicmechanics:block/structural_panel",
+    "east": "manicmechanics:block/structural_panel",
+    "west": "manicmechanics:block/structural_panel"
+  }
+}
