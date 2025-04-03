@@ -24,6 +24,7 @@ public class M4CreativeTabs {
                 output.accept(M4Items.CHARGING_STATION_ITEM.get());
                 output.accept(M4Items.HEPC_ITEM.get());
                 output.accept(M4Items.OBLITERATION_PLINTH_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                output.accept(M4Items.POWER_CABLE_ITEM.get());
             }).build());
 
     // Add the example block item to the building blocks tab

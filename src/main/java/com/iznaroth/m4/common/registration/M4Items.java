@@ -24,6 +24,9 @@ public class M4Items {
     public static final DeferredItem<Item> HEPC_ITEM = ITEMS.register("hyperfield_extract_polarization_station", () -> new BlockItem(HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), new Item.Properties()));
     public static final DeferredItem<Item> CHARGING_STATION_ITEM = ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
 
+    public static final DeferredItem<Item> POWER_CABLE_ITEM = ITEMS.register("power_cable", () -> new BlockItem(POWER_CABLE_BLOCK.get(), new Item.Properties()));
+
+
 
     /*
     public static final DeferredItem<Item> SOURSTONE = ITEMS.registerSimpleItem("example_item", new Item.Properties());

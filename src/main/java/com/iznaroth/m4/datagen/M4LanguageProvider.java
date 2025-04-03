@@ -24,6 +24,7 @@ public class M4LanguageProvider extends LanguageProvider {
         add(ManufactorumBlockEntity.ACTION_SPAWN, "Spawn egg: %s");
         add(M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), "Hyperfield Extract Polarization Chamber");
         add(M4Blocks.CHARGING_STATION.get(), "Charging Station");
+        add(M4Blocks.POWER_CABLE_BLOCK.get(), "Cophrolite Cable");
         add("tab.m4machines", "M4 Machines");
     }
 }

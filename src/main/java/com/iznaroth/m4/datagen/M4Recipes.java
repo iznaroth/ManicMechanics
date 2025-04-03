@@ -31,6 +31,17 @@ public class M4Recipes extends RecipeProvider {
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(
                         ItemPredicate.Builder.item().of(Tags.Items.GEMS_DIAMOND).build()))
                 .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.POWER_CABLE_BLOCK.get())
+                .pattern("iii")
+                .pattern("rrr")
+                .pattern("iii")
+                .define('i', Tags.Items.INGOTS_COPPER)
+                .define('r', Tags.Items.DUSTS_REDSTONE)
+                .group("tutorial")
+                .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        ItemPredicate.Builder.item().of(Tags.Items.INGOTS_IRON).build()))
+                .save(consumer);
 /*
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get())
                 .pattern("dsd")

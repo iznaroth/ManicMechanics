@@ -120,8 +120,8 @@ public class M4
 
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, M4BlockEntities.HEPC_BLOCK_ENTITY.get(), (o, direction) -> o.getItemHandler());
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, M4BlockEntities.HEPC_BLOCK_ENTITY.get(), (o, direction) -> o.getEnergyHandler());
-
         event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, M4BlockEntities.CHARGING_STATION_BLOCK_ENTITY.get(), (o, direction) -> o.getEnergyHandler());
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, M4BlockEntities.CABLE_BLOCK_ENTITY.get(), (o, direction) -> o.getEnergyHandler());
 
     }
 }

@@ -1,9 +1,6 @@
 package com.iznaroth.m4.common.registration;
 
-import com.iznaroth.m4.common.blockentity.ChargingStationBlockEntity;
-import com.iznaroth.m4.common.blockentity.HEPCBlockEntity;
-import com.iznaroth.m4.common.blockentity.ManufactorumBlockEntity;
-import com.iznaroth.m4.common.blockentity.ObliterationPlinthBlockEntity;
+import com.iznaroth.m4.common.blockentity.*;
 import com.iznaroth.m4.common.M4;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,6 +23,12 @@ public class M4BlockEntities {
 
     public static final Supplier<BlockEntityType<ChargingStationBlockEntity>> CHARGING_STATION_BLOCK_ENTITY = BLOCK_ENTITIES.register("charging_station",
             () -> BlockEntityType.Builder.of(ChargingStationBlockEntity::new, M4Blocks.CHARGING_STATION.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CableTubeBlockEntity>> CABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("power_cable",
+            () -> BlockEntityType.Builder.of(CableTubeBlockEntity::new, M4Blocks.POWER_CABLE_BLOCK.get()).build(null));
+
+    //public static final Supplier<BlockEntityType<FacadeBlockEntity>> FACADE_BLOCK_ENTITY = BLOCK_ENTITIES.register("facade_block",
+    //        () -> BlockEntityType.Builder.of(FacadeBlockEntity::new, M4Blocks.FACADE_BLOCK.get()).build(null));
 
 
 }

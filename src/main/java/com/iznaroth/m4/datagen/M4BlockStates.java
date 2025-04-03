@@ -1,6 +1,7 @@
 package com.iznaroth.m4.datagen;
 
 import com.google.gson.JsonObject;
+import com.iznaroth.m4.client.model.CableTubeModelLoader;
 import com.iznaroth.m4.common.M4;
 import com.iznaroth.m4.common.block.ManufactorumBlock;
 import com.iznaroth.m4.common.registration.M4Blocks;
@@ -31,6 +32,7 @@ public class M4BlockStates extends BlockStateProvider {
         simpleBlock(M4Blocks.OBLITERATION_PLINTH.get());
         registerGenerator();
         registerCharger();
+        registerCable();
         //registerCable();
         //registerFacade();
     }
@@ -94,24 +96,25 @@ public class M4BlockStates extends BlockStateProvider {
         }
     }
 
-    /*
+    private void registerCable() {
+        BlockModelBuilder model = models().getBuilder("cable")
+                .parent(models().getExistingFile(mcLoc("cube")))
+                .customLoader((builder, helper) -> new CableLoaderBuilder(CableTubeModelLoader.GENERATOR_LOADER, builder, helper))
+                .end();
+        simpleBlock(M4Blocks.POWER_CABLE_BLOCK.get(), model);
+    }
+
     public static class CableLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
 
-        private final boolean facade;
-
-        public CableLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper,
-                                  boolean facade) {
-            super(loader, parent, existingFileHelper);
-            this.facade = facade;
+        public CableLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
+            super(loader, parent, existingFileHelper, false);
         }
 
         @Override
         public JsonObject toJson(JsonObject json) {
             JsonObject obj = super.toJson(json);
-            obj.addProperty("facade", facade);
             return obj;
         }
     }
-    */
 
 }
