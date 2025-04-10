@@ -27,7 +27,7 @@ public class M4Blocks {
     public static final DeferredBlock<Block> LIQUID_TRANSPORT_TUBE = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> GASEOUS_TRANSPORT_TUBE = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     */
-    public static final DeferredBlock<Block> POWER_CABLE_BLOCK = BLOCKS.register("power_cable", CableTubeBlock::new);
+    public static final DeferredBlock<Block> POWER_CABLE_BLOCK = BLOCKS.register("cable", CableTubeBlock::new);
     //public static final DeferredBlock<Block> FACADE_BLOCK = BLOCKS.register("facade_block", FacadeBlock::new);
 
     /*

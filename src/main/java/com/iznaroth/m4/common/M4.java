@@ -47,6 +47,7 @@ public class M4
 
         M4Blocks.BLOCKS.register(modEventBus);
         M4Items.ITEMS.register(modEventBus);
+        M4Items.BLOCK_ITEMS.register(modEventBus);
         M4CreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         M4BlockEntities.BLOCK_ENTITIES.register(modEventBus);
         M4Containers.MENU_TYPES.register(modEventBus);

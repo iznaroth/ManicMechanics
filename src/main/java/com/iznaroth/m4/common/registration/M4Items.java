@@ -12,6 +12,7 @@ import static com.iznaroth.m4.common.registration.M4Blocks.*;
 public class M4Items {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(M4.MODID);
+    public static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(M4.MODID);
 
     //BLOCKITEMS
     //Note - This is a segment head.
@@ -20,11 +21,11 @@ public class M4Items {
     //public static final DeferredItem<BlockItem> CRUCIS_QUARTZITE_BLOCK = ITEMS.registerSimpleBlockItem("crucis_quartzite_block", EXAMPLE_BLOCK);
 
     //Machines
-    public static final DeferredItem<Item> OBLITERATION_PLINTH_ITEM = ITEMS.register("obliteration_plinth", () -> new BlockItem(OBLITERATION_PLINTH.get(), new Item.Properties()));
-    public static final DeferredItem<Item> MANUFACTORUM_ITEM = ITEMS.register("manufactorum", () -> new BlockItem(MANUFACTORUM.get(), new Item.Properties()));
-    public static final DeferredItem<Item> HEPC_ITEM = ITEMS.register("hyperfield_extract_polarization_station", () -> new BlockItem(HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), new Item.Properties()));
-    public static final DeferredItem<Item> CHARGING_STATION_ITEM = ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
-    public static final DeferredItem<Item> POWER_CABLE_ITEM = ITEMS.register("power_cable", () -> new BlockItem(POWER_CABLE_BLOCK.get(), new Item.Properties()));
+    public static final DeferredItem<Item> OBLITERATION_PLINTH_ITEM = BLOCK_ITEMS.register("obliteration_plinth", () -> new BlockItem(OBLITERATION_PLINTH.get(), new Item.Properties()));
+    public static final DeferredItem<Item> MANUFACTORUM_ITEM = BLOCK_ITEMS.register("manufactorum", () -> new BlockItem(MANUFACTORUM.get(), new Item.Properties()));
+    public static final DeferredItem<Item> HEPC_ITEM = BLOCK_ITEMS.register("hyperfield_extract_polarization_chamber", () -> new BlockItem(HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), new Item.Properties()));
+    public static final DeferredItem<Item> CHARGING_STATION_ITEM = BLOCK_ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
+    public static final DeferredItem<Item> POWER_CABLE_ITEM = BLOCK_ITEMS.register("cable", () -> new BlockItem(POWER_CABLE_BLOCK.get(), new Item.Properties()));
 
 
 
@@ -202,23 +203,23 @@ public class M4Items {
 
     public static final DeferredItem<Item> IRON_PLATE = ITEMS.registerSimpleItem("x1_iron_plate", new Item.Properties());
     public static final DeferredItem<Item> X2_IRON_PLATE = ITEMS.registerSimpleItem("x2_iron_plate", new Item.Properties());
-    public static final DeferredItem<Item> IRON_SHEET = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> IRON_ROD = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> IRON_SCREWS = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> IRON_SHEET = ITEMS.registerSimpleItem("iron_sheet", new Item.Properties());
+    public static final DeferredItem<Item> IRON_ROD = ITEMS.registerSimpleItem("iron_rod", new Item.Properties());
+    public static final DeferredItem<Item> IRON_SCREWS = ITEMS.registerSimpleItem("iron_screws", new Item.Properties());
 
     public static final DeferredItem<Item> DYSPERSIRON_PARALLINGOT = ITEMS.registerSimpleItem("dyspersiron_parallingot", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_SHEET = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_WIRE = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_CABLING = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_ROD = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_SCREWS = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_SHEET = ITEMS.registerSimpleItem("dyspersiron_sheet", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_WIRE = ITEMS.registerSimpleItem("dyspersiron_wire", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_CABLING = ITEMS.registerSimpleItem("dyspersiron_cabling", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_ROD = ITEMS.registerSimpleItem("dyspersiron_rod", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_SCREWS = ITEMS.registerSimpleItem("dyspersiron_screws", new Item.Properties());
 
     public static final DeferredItem<Item> COBBLED_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
-    public static final DeferredItem<Item> COOKED_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
-    public static final DeferredItem<Item> GRANITE_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
-    public static final DeferredItem<Item> ANDESITE_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
-    public static final DeferredItem<Item> DIORITE_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
-    public static final DeferredItem<Item> DEEPSLATE_CORESTONE = ITEMS.registerSimpleItem("cobbled_corestone", new Item.Properties());
+    public static final DeferredItem<Item> COOKED_CORESTONE = ITEMS.registerSimpleItem("cooked_corestone", new Item.Properties());
+    public static final DeferredItem<Item> GRANITE_CORESTONE = ITEMS.registerSimpleItem("granite_corestone", new Item.Properties());
+    public static final DeferredItem<Item> ANDESITE_CORESTONE = ITEMS.registerSimpleItem("andesite_corestone", new Item.Properties());
+    public static final DeferredItem<Item> DIORITE_CORESTONE = ITEMS.registerSimpleItem("diorite_corestone", new Item.Properties());
+    public static final DeferredItem<Item> DEEPSLATE_CORESTONE = ITEMS.registerSimpleItem("deepslate_corestone", new Item.Properties());
     public static final DeferredItem<Item> THREE_CUBE = ITEMS.registerSimpleItem("three_cube", new Item.Properties());
     public static final DeferredItem<Item> THREE_CORE = ITEMS.registerSimpleItem("three_core", new Item.Properties());
 
@@ -226,34 +227,39 @@ public class M4Items {
     public static final DeferredItem<Item> TPLAS_INSULATION = ITEMS.registerSimpleItem("tplas_insulation", new Item.Properties());
     public static final DeferredItem<Item> HH_HOUSING = ITEMS.registerSimpleItem("hh_housing", new Item.Properties());
 
-    public static final DeferredItem<Item> INDUSTRIAL_HOUSING = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> TR_INSULATION = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> COPHROLITE_COIL = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> COPHROLITE_INTAKE_PART = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> INDUSTRIAL_HOUSING = ITEMS.registerSimpleItem("industrial_housing", new Item.Properties());
+    public static final DeferredItem<Item> TR_INSULATION = ITEMS.registerSimpleItem("tr_insulation", new Item.Properties());
+    public static final DeferredItem<Item> COPHROLITE_COIL = ITEMS.registerSimpleItem("cophrolite_coil", new Item.Properties());
+    public static final DeferredItem<Item> COPHROLITE_INTAKE_PART = ITEMS.registerSimpleItem("cophrolite_intake_part", new Item.Properties());
 
-    public static final DeferredItem<Item> DYSPERSIRON_MACHINE_COMPONENTS = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_ARTICULATING_PART = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_MACHINE_COMPONENTS = ITEMS.registerSimpleItem("dyspersiron_machine_components", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_ARTICULATING_PART = ITEMS.registerSimpleItem("dyspersiron_articulating_parts", new Item.Properties());
 
-    public static final DeferredItem<Item> TPLAS_BASEBOARD = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> SOFTENED_GLASS = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> TUBE_MOLDSTONE = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERTIC_FILAMENT = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERTIC_VACUUM_TUBE = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> SIMPLE_P_D_CIRCUIT = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> TPLAS_BASEBOARD = ITEMS.registerSimpleItem("tplas_baseboard", new Item.Properties());
+    public static final DeferredItem<Item> SOFTENED_GLASS = ITEMS.registerSimpleItem("softened_glass", new Item.Properties());
+    public static final DeferredItem<Item> TUBE_MOLDSTONE = ITEMS.registerSimpleItem("tube_moldstone", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERTIC_FILAMENT = ITEMS.registerSimpleItem("dyspertic_filament", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERTIC_VACUUM_TUBE = ITEMS.registerSimpleItem("dyspertic_vacuum_tube", new Item.Properties());
+    public static final DeferredItem<Item> SIMPLE_P_D_CIRCUIT = ITEMS.registerSimpleItem("simple_p_d_circuit", new Item.Properties());
 
-    public static final DeferredItem<Item> INSCRIBED_DYSPERSIRON_SHEET = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> SHODDY_ENTRAPMENT_MATRIX = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> INSCRIBED_DYSPERSIRON_SHEET = ITEMS.registerSimpleItem("inscribed_dyspersiron_sheet", new Item.Properties());
+    public static final DeferredItem<Item> SHODDY_ENTRAPMENT_MATRIX = ITEMS.registerSimpleItem("shoddy_entrapment_matrix", new Item.Properties());
 
-    public static final DeferredItem<Item> DYSPERSIRON_MOTOR_PART = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> INTERNAL_GANTRY = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DRILL = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> HAMMER = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> CHISEL = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_PROCESSING_PART = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_MOTOR_PART = ITEMS.registerSimpleItem("dyspersiron_motor_part", new Item.Properties());
+    public static final DeferredItem<Item> INTERNAL_GANTRY = ITEMS.registerSimpleItem("internal_gantry", new Item.Properties());
+    public static final DeferredItem<Item> DRILL = ITEMS.registerSimpleItem("drill", new Item.Properties());
+    public static final DeferredItem<Item> HAMMER = ITEMS.registerSimpleItem("hammer", new Item.Properties());
+    public static final DeferredItem<Item> CHISEL = ITEMS.registerSimpleItem("chisel", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_PROCESSING_PART = ITEMS.registerSimpleItem("dyspersiron_processing_part", new Item.Properties());
 
-    public static final DeferredItem<Item> IRON_TANK = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> INSCRIBED_TANK = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
-    public static final DeferredItem<Item> DYSPERSIRON_PUMP_PART = ITEMS.registerSimpleItem("toolbox", new Item.Properties());
+    public static final DeferredItem<Item> IRON_TANK = ITEMS.registerSimpleItem("iron_tank", new Item.Properties());
+    public static final DeferredItem<Item> INSCRIBED_TANK = ITEMS.registerSimpleItem("inscribed_tank", new Item.Properties());
+    public static final DeferredItem<Item> DYSPERSIRON_PUMP_PART = ITEMS.registerSimpleItem("dyspersiron_pump_part", new Item.Properties());
+
+    public static final DeferredItem<Item> BINDING_STONE_LIS = ITEMS.registerSimpleItem("binding_stone_lis", new Item.Properties());
+    public static final DeferredItem<Item> BINDING_STONE_EKH = ITEMS.registerSimpleItem("binding_stone_ekh", new Item.Properties());
+    public static final DeferredItem<Item> BINDING_STONE_YOL = ITEMS.registerSimpleItem("binding_stone_yol", new Item.Properties());
+    public static final DeferredItem<Item> BINDING_STONE_MOA = ITEMS.registerSimpleItem("binding_stone_moa", new Item.Properties());
 
 
 
