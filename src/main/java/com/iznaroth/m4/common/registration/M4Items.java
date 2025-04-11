@@ -23,6 +23,8 @@ public class M4Items {
     //Machines
     public static final DeferredItem<Item> OBLITERATION_PLINTH_ITEM = BLOCK_ITEMS.register("obliteration_plinth", () -> new BlockItem(OBLITERATION_PLINTH.get(), new Item.Properties()));
     public static final DeferredItem<Item> MANUFACTORUM_ITEM = BLOCK_ITEMS.register("manufactorum", () -> new BlockItem(MANUFACTORUM.get(), new Item.Properties()));
+    public static final DeferredItem<Item> MANIPULATOR_ITEM = BLOCK_ITEMS.register("manipulator", () -> new BlockItem(MANIPULATOR.get(), new Item.Properties()));
+    public static final DeferredItem<Item> INOCULATOR_ITEM = BLOCK_ITEMS.register("inoculator", () -> new BlockItem(INOCULATOR.get(), new Item.Properties()));
     public static final DeferredItem<Item> HEPC_ITEM = BLOCK_ITEMS.register("hyperfield_extract_polarization_chamber", () -> new BlockItem(HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get(), new Item.Properties()));
     public static final DeferredItem<Item> CHARGING_STATION_ITEM = BLOCK_ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
     public static final DeferredItem<Item> POWER_CABLE_ITEM = BLOCK_ITEMS.register("cable", () -> new BlockItem(POWER_CABLE_BLOCK.get(), new Item.Properties()));

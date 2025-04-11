@@ -37,10 +37,9 @@ public class M4Blocks {
     public static final DeferredBlock<Block> COPHROLITE_BUFFER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     */
     public static final DeferredBlock<Block> MANUFACTORUM = BLOCKS.register("manufactorum", ManufactorumBlock::new);
-    /*
-    public static final DeferredBlock<Block> MANIPULATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredBlock<Block> INOCULATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    */
+    public static final DeferredBlock<Block> MANIPULATOR = BLOCKS.register("manipulator", ManipulatorBlock::new);
+    public static final DeferredBlock<Block> INOCULATOR = BLOCKS.register("inoculator", InoculatorBlock::new);
+
     public static final DeferredBlock<Block> CHARGING_STATION = BLOCKS.register("charging_station", ChargingStationBlock::new);
     /*
     public static final DeferredBlock<Block> CONSTRUCTIVE_KINESIS_WORKBENCH = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));

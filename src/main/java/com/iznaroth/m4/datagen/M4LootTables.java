@@ -41,6 +41,8 @@ public class M4LootTables extends VanillaBlockLoot {
     protected void generate() {
         dropSelf(M4Blocks.OBLITERATION_PLINTH.get());
         dropSelf(M4Blocks.MANUFACTORUM.get());
+        dropSelf(M4Blocks.MANIPULATOR.get());
+        dropSelf(M4Blocks.INOCULATOR.get());
         dropSelf(M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get());
         dropSelf(M4Blocks.CHARGING_STATION.get());
         dropSelf(M4Blocks.POWER_CABLE_BLOCK.get());
