@@ -20,6 +20,7 @@ public class M4Recipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
+        System.out.println("DATAGEN STAGE: Recipes");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, M4Blocks.OBLITERATION_PLINTH.get())
                 .pattern("dsd")

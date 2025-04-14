@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "manicmechanics:block/languid_crystal"
-  },
-  "render_type": "cutout"
-}

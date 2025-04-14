@@ -30,7 +30,7 @@ public class M4ItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-
+        System.out.println("DATAGEN STAGE: Models");
         HashMap<String, Holder<Item>> unregisteredBlockItems = new HashMap<>();
         for(Holder<Item> item : M4Items.BLOCK_ITEMS.getEntries()){
             System.out.println(item.getRegisteredName());

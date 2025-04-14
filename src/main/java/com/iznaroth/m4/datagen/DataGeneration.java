@@ -28,5 +28,7 @@ public class DataGeneration {
         generator.addProvider(event.includeServer(), new M4Recipes(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(M4LootTables::new, LootContextParamSets.BLOCK)), lookupProvider));
+        System.out.println("EXIT: Datagen");
+        generator.addProvider(event.includeServer(), new M4Datapacks(packOutput, lookupProvider));
     }
 }

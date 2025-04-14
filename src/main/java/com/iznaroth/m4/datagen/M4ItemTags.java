@@ -17,5 +17,6 @@ public class M4ItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        System.out.println("DATAGEN STAGE: ItemTags");
     }
 }

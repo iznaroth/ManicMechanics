@@ -35,12 +35,16 @@ public class M4BlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        System.out.println("DATAGEN STAGE: BlockStates");
 
         HashMap<String, Holder<Block>> unregisteredBlocks = new HashMap<>();
         for(Holder<Block> block : M4Blocks.BLOCKS.getEntries()){
             System.out.println(block.getRegisteredName());
             unregisteredBlocks.put(block.getRegisteredName(), block);
         }
+
+        registerAndRemoveSimple(M4Blocks.DYSPERSIUM_ORE.get(), M4Blocks.DYSPERSIUM_ORE.getRegisteredName(), unregisteredBlocks);
+        registerAndRemoveSimple(M4Blocks.DEEPSLATE_DYSPERSIUM_ORE.get(), M4Blocks.DEEPSLATE_DYSPERSIUM_ORE.getRegisteredName(), unregisteredBlocks);
 
         registerAndRemoveSimple(M4Blocks.OBLITERATION_PLINTH.get(), M4Blocks.OBLITERATION_PLINTH.getRegisteredName(), unregisteredBlocks);
         registerGenerator(unregisteredBlocks);

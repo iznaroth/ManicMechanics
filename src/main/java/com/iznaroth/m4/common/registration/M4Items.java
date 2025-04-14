@@ -19,6 +19,8 @@ public class M4Items {
 
     //Minerals
     //public static final DeferredItem<BlockItem> CRUCIS_QUARTZITE_BLOCK = ITEMS.registerSimpleBlockItem("crucis_quartzite_block", EXAMPLE_BLOCK);
+    public static final DeferredItem<Item> DYSPERSIUM_ORE = BLOCK_ITEMS.register("dyspersium_ore", () -> new BlockItem(M4Blocks.DYSPERSIUM_ORE.get(), new Item.Properties()));
+    public static final DeferredItem<Item> DEEPSLATE_DYSPERSIUM_ORE = BLOCK_ITEMS.register("deepslate_dyspersium_ore", () -> new BlockItem(M4Blocks.DEEPSLATE_DYSPERSIUM_ORE.get(), new Item.Properties()));
 
     //Machines
     public static final DeferredItem<Item> OBLITERATION_PLINTH_ITEM = BLOCK_ITEMS.register("obliteration_plinth", () -> new BlockItem(OBLITERATION_PLINTH.get(), new Item.Properties()));
@@ -29,6 +31,7 @@ public class M4Items {
     public static final DeferredItem<Item> CHARGING_STATION_ITEM = BLOCK_ITEMS.register("charging_station", () -> new BlockItem(CHARGING_STATION.get(), new Item.Properties()));
     public static final DeferredItem<Item> POWER_CABLE_ITEM = BLOCK_ITEMS.register("cable", () -> new BlockItem(POWER_CABLE_BLOCK.get(), new Item.Properties()));
 
+    public static final DeferredItem<Item> PORTAL_DEOBFUSCATOR = BLOCK_ITEMS.register("portal_deobfuscator", () -> new BlockItem(M4Blocks.PORTAL_DEOBFUSCATOR.get(), new Item.Properties()));
 
 
     /*

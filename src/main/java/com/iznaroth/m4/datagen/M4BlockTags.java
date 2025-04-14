@@ -18,17 +18,22 @@ public class M4BlockTags extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        System.out.println("DATAGEN STAGE: Tags");
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(M4Blocks.OBLITERATION_PLINTH.get())
                 .add(M4Blocks.MANUFACTORUM.get())
                 .add(M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get())
                 .add(M4Blocks.CHARGING_STATION.get())
-                .add(M4Blocks.POWER_CABLE_BLOCK.get());
+                .add(M4Blocks.POWER_CABLE_BLOCK.get())
+                .add(M4Blocks.DYSPERSIUM_ORE.get())
+                .add(M4Blocks.DEEPSLATE_DYSPERSIUM_ORE.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(M4Blocks.OBLITERATION_PLINTH.get())
                 .add(M4Blocks.MANUFACTORUM.get())
                 .add(M4Blocks.HYPERFIELD_EXTRACT_POLARIZATION_CHAMBER.get())
                 .add(M4Blocks.CHARGING_STATION.get())
-                .add(M4Blocks.POWER_CABLE_BLOCK.get());
+                .add(M4Blocks.POWER_CABLE_BLOCK.get())
+                .add(M4Blocks.DYSPERSIUM_ORE.get())
+                .add(M4Blocks.DEEPSLATE_DYSPERSIUM_ORE.get());
     }
 }

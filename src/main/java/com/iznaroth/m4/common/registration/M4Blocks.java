@@ -2,7 +2,10 @@ package com.iznaroth.m4.common.registration;
 
 import com.iznaroth.m4.common.block.*;
 import com.iznaroth.m4.common.M4;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -17,9 +20,13 @@ public class M4Blocks {
 
     public static final DeferredBlock<ObliterationPlinth> OBLITERATION_PLINTH = BLOCKS.register("obliteration_plinth", ObliterationPlinth::new);
 
-    /*
-    //Natural Resources
 
+    //Natural Resources
+    public static final DeferredBlock<Block> DYSPERSIUM_ORE = BLOCKS.register("dyspersium_ore",  () -> new DropExperienceBlock(UniformInt.of(5, 9), BlockBehaviour.Properties.of().strength(7f).requiresCorrectToolForDrops()));
+    public static final DeferredBlock<Block> DEEPSLATE_DYSPERSIUM_ORE = BLOCKS.register("deepslate_dyspersium_ore", () -> new DropExperienceBlock(UniformInt.of(5, 9), BlockBehaviour.Properties.of().strength(7f).requiresCorrectToolForDrops()));
+
+
+    /*
     //Placable Intermediaries
 
     //Logistics & Power I
@@ -149,7 +156,11 @@ public class M4Blocks {
     //MACHINE BLOCKS - CPAK1 Other
     public static final DeferredBlock<Block> PILFERED_TRIANGULATOR = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> PILFERED_WORKBENCH = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    */
+    public static final DeferredBlock<Block> PORTAL_DEOBFUSCATOR = BLOCKS.register("portal_deobfuscator", PortalDeobfuscatorBlock::new);
 
+
+    /*
 
     //GENERATED STRUCTURE BLOCKS
     public static final DeferredBlock<Block> XACROGLASS = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));

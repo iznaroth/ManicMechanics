@@ -23,6 +23,7 @@ public class M4LanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        System.out.println("DATAGEN STAGE: Lang");
 
         HashMap<String, Holder<Item>> untranslatedItems = new HashMap<>();
         for(Holder<Item> item : M4Items.ITEMS.getEntries()){
