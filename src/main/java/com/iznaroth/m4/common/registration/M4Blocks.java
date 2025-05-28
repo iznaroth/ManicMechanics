@@ -4,12 +4,18 @@ import com.iznaroth.m4.common.block.*;
 import com.iznaroth.m4.common.M4;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class M4Blocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(M4.MODID);
@@ -25,6 +31,7 @@ public class M4Blocks {
     public static final DeferredBlock<Block> DYSPERSIUM_ORE = BLOCKS.register("dyspersium_ore",  () -> new DropExperienceBlock(UniformInt.of(5, 9), BlockBehaviour.Properties.of().strength(7f).requiresCorrectToolForDrops()));
     public static final DeferredBlock<Block> DEEPSLATE_DYSPERSIUM_ORE = BLOCKS.register("deepslate_dyspersium_ore", () -> new DropExperienceBlock(UniformInt.of(5, 9), BlockBehaviour.Properties.of().strength(7f).requiresCorrectToolForDrops()));
 
+    public static final DeferredBlock<Block> WHISPERING_WATER_BLOCK = BLOCKS.register("whispering_water", () -> new LiquidBlock((FlowingFluid) M4Fluids.FLOWING_WHISPERING_WATER.get(), BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY)));
 
     /*
     //Placable Intermediaries
@@ -148,6 +155,8 @@ public class M4Blocks {
     public static final DeferredBlock<Block> POWER_OUTPUT = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> IRON_OUTPUT = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
     public static final DeferredBlock<Block> DROMODYSPERTIC_PORT_COVER = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+
+
 
     //Logistics & Power II
     public static final DeferredBlock<Block> VITALISTIC_CIGNUM_ANTIMETAL_CABLE = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));

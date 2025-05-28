@@ -1,9 +1,13 @@
 package com.iznaroth.m4.common.registration;
 
 import com.iznaroth.m4.common.M4;
+import com.iznaroth.m4.common.item.BucketItemExtension;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -108,6 +112,8 @@ public class M4Items {
     public static final DeferredItem<Item> LARICIGNITE = ITEMS.registerSimpleItem("laricignite", new Item.Properties());
     public static final DeferredItem<Item> EXOTIC_COMPOSITE = ITEMS.registerSimpleItem("exotic_composite", new Item.Properties());
     public static final DeferredItem<Item> CRUCIS_QUARTZITE_FRAGMENT = ITEMS.registerSimpleItem("crucis_quartzite_fragment", new Item.Properties());
+
+    public static final DeferredItem<Item> WHISPERING_WATER_BUCKET = ITEMS.register("whispering_water_bucket", () -> new BucketItemExtension(M4Fluids.WHISPERING_WATER.get(), (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(1)));
 
     //Items - Resources - Entity Drops | Can end up with some unexpected entires - ENTITY is anything !
 

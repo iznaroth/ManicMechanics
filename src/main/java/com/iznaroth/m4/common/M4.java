@@ -3,8 +3,17 @@ package com.iznaroth.m4.common;
 import com.iznaroth.m4.common.registration.*;
 import com.iznaroth.m4.datagen.DataGeneration;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -48,15 +57,19 @@ public class M4
         M4Blocks.BLOCKS.register(modEventBus);
         M4Items.ITEMS.register(modEventBus);
         M4Items.BLOCK_ITEMS.register(modEventBus);
+        M4Fluids.FLUIDS.register(modEventBus);
         M4CreativeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         M4BlockEntities.BLOCK_ENTITIES.register(modEventBus);
         M4Containers.MENU_TYPES.register(modEventBus);
+
 
         // Register the item to a creative tab
         modEventBus.addListener(M4CreativeTabs::addCreative);
 
         //capabilities
         modEventBus.addListener(this::registerCapabilities);
+
+        modEventBus.addListener(M4Fluids::registerFluids);
 
         modEventBus.addListener(DataGeneration::generate);
 
@@ -75,6 +88,8 @@ public class M4
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+
+        NeoForgeMod.enableMilkFluid();
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -97,6 +112,7 @@ public class M4
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
+
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(

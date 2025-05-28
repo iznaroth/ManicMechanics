@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "m4:whispering_water",
+      "required": false
+    },
+    {
+      "id": "minecraft:flowing_whispering_water",
+      "required": false
+    },
+    {
+      "id": "#forge:whispering_water",
+      "required": false
+    }
+  ]
+}
