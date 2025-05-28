@@ -113,7 +113,7 @@ public class M4Items {
     public static final DeferredItem<Item> EXOTIC_COMPOSITE = ITEMS.registerSimpleItem("exotic_composite", new Item.Properties());
     public static final DeferredItem<Item> CRUCIS_QUARTZITE_FRAGMENT = ITEMS.registerSimpleItem("crucis_quartzite_fragment", new Item.Properties());
 
-    public static final DeferredItem<Item> WHISPERING_WATER_BUCKET = ITEMS.register("whispering_water_bucket", () -> new BucketItemExtension(M4Fluids.WHISPERING_WATER.get(), (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final DeferredItem<Item> WHISPERING_WATER_BUCKET = ITEMS.register("whispering_water_bucket", () -> new BucketItem(M4Fluids.WHISPERING_WATER.get(), (new Item.Properties()).craftRemainder(Items.BUCKET).stacksTo(1)));
 
     //Items - Resources - Entity Drops | Can end up with some unexpected entires - ENTITY is anything !
 

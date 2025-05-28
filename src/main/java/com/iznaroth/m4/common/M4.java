@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
@@ -110,6 +111,11 @@ public class M4
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+
+        @SubscribeEvent
+        public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event){
+            M4Fluids.registerFluidExtensions(event);
         }
     }
 
